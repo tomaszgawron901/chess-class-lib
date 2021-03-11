@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/chess-class-lib/v16
+/ChessClassLibrary/obj
+/ChessClassLibrary/bin
+/ChessClassLibraryTests/obj
+/ChessClassLibraryTests/bin
+/packages
