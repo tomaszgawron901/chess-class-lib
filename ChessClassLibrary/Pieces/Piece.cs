@@ -11,8 +11,8 @@ namespace ChessClassLibrary.Pieces
     {
         PieceColor Color { get; }
         PieceType Type { get; }
-        Point? CanKillAchieve(Point position);
-        Point? CanMoveAchieve(Point position);
+        Position? CanKillAchieve(Position position);
+        Position? CanMoveAchieve(Position position);
     }
 
     public abstract class Piece : IPiece
@@ -20,9 +20,9 @@ namespace ChessClassLibrary.Pieces
         protected PieceColor color;
         protected PieceType type;
         protected bool wasMoved;
-        protected Point position;
-        protected static Point[] moveSet;
-        protected static Point[] killSet;
+        protected Position position;
+        protected static Position[] moveSet;
+        protected static Position[] killSet;
 
         /// <summary>
         /// Checks whether piece was moved.
@@ -51,7 +51,7 @@ namespace ChessClassLibrary.Pieces
         /// <summary>
         /// The Position of Piece.
         /// </summary>
-        public Point Position
+        public Position Position
         {
             get { return position; }
             set {
@@ -62,7 +62,7 @@ namespace ChessClassLibrary.Pieces
         /// <summary>
         /// Returns piece move set.
         /// </summary>
-        public virtual Point[] MoveSet
+        public virtual Position[] MoveSet
         {
             get { return moveSet; }
         }
@@ -70,12 +70,12 @@ namespace ChessClassLibrary.Pieces
         /// <summary>
         /// Returns piece kill set.
         /// </summary>
-        public virtual Point[] KillSet
+        public virtual Position[] KillSet
         {
             get { return killSet; }
         }
 
-        protected Piece(PieceColor color, PieceType type, Point position)
+        protected Piece(PieceColor color, PieceType type, Position position)
         {
             this.color = color;
             this.type = type;
@@ -174,7 +174,7 @@ namespace ChessClassLibrary.Pieces
         /// <param name="position">Destination position.</param>
         /// <param name="Movementset">Available movements</param>
         /// <returns></returns>
-        public abstract Point? CanMoveAchieve(Point position);
-        public abstract Point? CanKillAchieve(Point position);
+        public abstract Position? CanMoveAchieve(Position position);
+        public abstract Position? CanKillAchieve(Position position);
     }
 }

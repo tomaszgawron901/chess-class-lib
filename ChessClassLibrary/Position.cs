@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessClassLibrary
 {
-    public struct Point: IEquatable<Point>
+    public struct Position: IEquatable<Position>
     {
         private int x;
         private int y;
@@ -26,7 +26,7 @@ namespace ChessClassLibrary
             get { return y; }
         }
 
-        public Point(int x, int y)
+        public Position(int x, int y)
         {
             this.x = x;
             this.y = y;
@@ -37,7 +37,7 @@ namespace ChessClassLibrary
         /// </summary>
         /// <param name="other">Point to compare.</param>
         /// <returns>True when Points are equal, otherwise false.</returns>
-        public bool Equals(Point other)
+        public bool Equals(Position other)
         {
             if (X == other.X && Y == other.Y)
                 return true;
@@ -51,9 +51,9 @@ namespace ChessClassLibrary
         /// <returns>True when given object equals this Point, otherwise false.</returns>
         public override bool Equals(object other)
         {
-            if (other is Point)
+            if (other is Position)
             {
-                return Equals((Point)other);
+                return Equals((Position)other);
             }
             return false;
         }
@@ -75,9 +75,9 @@ namespace ChessClassLibrary
         /// </summary>
         /// <param name="other">Point to add.</param>
         /// <returns>New Point which is the sum of two Points.</returns>
-        public Point Plus(Point other)
+        public Position Plus(Position other)
         {
-            return new Point(X + other.X, Y + other.Y);
+            return new Position(X + other.X, Y + other.Y);
         }
 
         /// <summary>
@@ -85,27 +85,27 @@ namespace ChessClassLibrary
         /// </summary>
         /// <param name="other">Point to subtract.</param>
         /// <returns>New Point which is the subtraction of this Point and given other Point..</returns>
-        public Point Minus(Point other)
+        public Position Minus(Position other)
         {
-            return new Point(X - other.X, Y - other.Y);
+            return new Position(X - other.X, Y - other.Y);
         }
 
-        public static bool operator ==(Point p1, Point p2)
+        public static bool operator ==(Position p1, Position p2)
         {
             return p1.Equals(p2);
         }
 
-        public static bool operator !=(Point p1, Point p2)
+        public static bool operator !=(Position p1, Position p2)
         {
             return !p1.Equals(p2);
         }
 
-        public static Point operator +(Point left, Point right)
+        public static Position operator +(Position left, Position right)
         {
             return left.Plus(right);
         }
 
-        public static Point operator -(Point left, Point right)
+        public static Position operator -(Position left, Position right)
         {
             return left.Minus(right);
         }

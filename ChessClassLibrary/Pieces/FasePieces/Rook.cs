@@ -9,19 +9,19 @@ namespace ChessClassLibrary.Pieces.FasePieces
 {
     public class Rook : FastPiece
     {
-        protected new static Point[] moveSet = new Point[] {
-                new Point(0, 1),
-                new Point(1, 0),
-                new Point(0, -1),
-                new Point(-1, 0)
+        protected new static Position[] moveSet = new Position[] {
+                new Position(0, 1),
+                new Position(1, 0),
+                new Position(0, -1),
+                new Position(-1, 0)
             };
-        protected new static Point[] killSet = new Point[] {
-                new Point(0, 1),
-                new Point(1, 0),
-                new Point(0, -1),
-                new Point(-1, 0)
+        protected new static Position[] killSet = new Position[] {
+                new Position(0, 1),
+                new Position(1, 0),
+                new Position(0, -1),
+                new Position(-1, 0)
             };
-        public Rook(PieceColor color, Point position) :
+        public Rook(PieceColor color, Position position) :
             base(color, PieceType.Rook, position){}
     }
 }

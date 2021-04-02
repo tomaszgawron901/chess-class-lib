@@ -9,31 +9,31 @@ namespace ChessClassLibrary.Pieces.FasePieces
 {
     public class Queen : FastPiece
     {
-        protected new static Point[] moveSet = new Point[] {
-                new Point(-1, 1),
-                new Point(1, 1),
-                new Point(1, -1),
-                new Point(-1, -1),
+        protected new static Position[] moveSet = new Position[] {
+                new Position(-1, 1),
+                new Position(1, 1),
+                new Position(1, -1),
+                new Position(-1, -1),
 
-                new Point(0, 1),
-                new Point(1, 0),
-                new Point(0, -1),
-                new Point(-1, 0)
+                new Position(0, 1),
+                new Position(1, 0),
+                new Position(0, -1),
+                new Position(-1, 0)
             };
 
-        protected new static Point[] killSet = new Point[] {
-                new Point(-1, 1),
-                new Point(1, 1),
-                new Point(1, -1),
-                new Point(-1, -1),
+        protected new static Position[] killSet = new Position[] {
+                new Position(-1, 1),
+                new Position(1, 1),
+                new Position(1, -1),
+                new Position(-1, -1),
 
-                new Point(0, 1),
-                new Point(1, 0),
-                new Point(0, -1),
-                new Point(-1, 0)
+                new Position(0, 1),
+                new Position(1, 0),
+                new Position(0, -1),
+                new Position(-1, 0)
             };
 
-        public Queen(PieceColor color, Point position) :
+        public Queen(PieceColor color, Position position) :
             base(color, PieceType.Queen, position){}
     }
 }

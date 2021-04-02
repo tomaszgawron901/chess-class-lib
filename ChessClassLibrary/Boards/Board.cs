@@ -10,7 +10,8 @@ namespace ChessClassLibrary.Boards
 {
     public abstract class Board : IEnumerable<Piece>
     {
-        public abstract bool IsInRange(Point position);
+        public abstract bool IsInRange(Position position);
+        public abstract Piece GetPiece(Position position);
 
         public abstract IEnumerator<Piece> GetEnumerator();
 

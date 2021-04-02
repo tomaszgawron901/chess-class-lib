@@ -9,7 +9,7 @@ namespace ChessClassLibrary.Pieces.FasePieces
 {
     public abstract class FastPiece : Piece
     {
-        protected FastPiece(PieceColor color, PieceType type, Point position) :
+        protected FastPiece(PieceColor color, PieceType type, Position position) :
             base(color, type, position)
         { }
 
@@ -19,13 +19,13 @@ namespace ChessClassLibrary.Pieces.FasePieces
         /// <param name="position">Destination position.</param>
         /// <param name="Movementset">Available movements</param>
         /// <returns></returns>
-        public override Point? CanMoveAchieve(Point position)
+        public override Position? CanMoveAchieve(Position position)
         {
             if (this.Position == position)
                 return null;
-            foreach (Point move in moveSet)
+            foreach (Position move in moveSet)
             {
-                if (move == new Point(0, 0))
+                if (move == new Position(0, 0))
                 {
                     continue;
                 }
@@ -37,13 +37,13 @@ namespace ChessClassLibrary.Pieces.FasePieces
             return null;
         }
 
-        public override Point? CanKillAchieve(Point position)
+        public override Position? CanKillAchieve(Position position)
         {
             if (this.Position == position)
                 return null;
-            foreach (Point move in killSet)
+            foreach (Position move in killSet)
             {
-                if (move == new Point(0, 0))
+                if (move == new Position(0, 0))
                 {
                     continue;
                 }
@@ -56,14 +56,14 @@ namespace ChessClassLibrary.Pieces.FasePieces
         }
 
 
-        private bool isInLine(Point destination, Point move)
+        private bool isInLine(Position destination, Position move)
         {
-            Point destinationMove = destination - this.position;
+            Position destinationMove = destination - this.position;
             if (Math.Sign(destinationMove.X) != Math.Sign(move.X))
                 return false;
             if (Math.Sign(destinationMove.Y) != Math.Sign(move.Y))
                 return false;
-            if (move == new Point(0, 0))
+            if (move == new Position(0, 0))
             {
                 if (move == destinationMove)
                     return true;

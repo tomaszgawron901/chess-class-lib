@@ -9,21 +9,21 @@ namespace ChessClassLibrary.Pieces.FasePieces
 {
     public class Bishop : FastPiece
     {
-        protected new static Point[] moveSet = new Point[] {
-                new Point(-1, 1),
-                new Point(1, 1),
-                new Point(1, -1),
-                new Point(-1, -1)
+        protected new static Position[] moveSet = new Position[] {
+                new Position(-1, 1),
+                new Position(1, 1),
+                new Position(1, -1),
+                new Position(-1, -1)
             };
 
-        protected new static Point[] killSet = new Point[] {
-                new Point(-1, 1),
-                new Point(1, 1),
-                new Point(1, -1),
-                new Point(-1, -1)
+        protected new static Position[] killSet = new Position[] {
+                new Position(-1, 1),
+                new Position(1, 1),
+                new Position(1, -1),
+                new Position(-1, -1)
             };
 
-        public Bishop(PieceColor color, Point position) :
+        public Bishop(PieceColor color, Position position) :
             base(color, PieceType.Bishop, position) {}
     }
 }

@@ -9,7 +9,7 @@ namespace ChessClassLibrary.Pieces.SlowPieces
 {
     public abstract class SlowPiece : Piece
     {
-        protected SlowPiece(PieceColor color, PieceType type, Point position) :
+        protected SlowPiece(PieceColor color, PieceType type, Position position) :
             base(color, type, position)
         { }
 
@@ -18,11 +18,11 @@ namespace ChessClassLibrary.Pieces.SlowPieces
         /// </summary>
         /// <param name="position">Destination position.</param>
         /// <returns>First move that can achieve given position or null if cannot achieve given position.</returns>
-        public override Point? CanMoveAchieve(Point position)
+        public override Position? CanMoveAchieve(Position position)
         {
-            foreach (Point move in moveSet)
+            foreach (Position move in moveSet)
             {
-                Point fieldToCheck = this.position + move;
+                Position fieldToCheck = this.position + move;
                 if (position == fieldToCheck)
                     return move;
             }
@@ -34,11 +34,11 @@ namespace ChessClassLibrary.Pieces.SlowPieces
         /// </summary>
         /// <param name="position">Destination position.</param>
         /// <returns> First move that can achieve given position or null if cannot achieve given position.</returns>
-        public override Point? CanKillAchieve(Point position)
+        public override Position? CanKillAchieve(Position position)
         {
-            foreach (Point move in killSet)
+            foreach (Position move in killSet)
             {
-                Point fieldToCheck = this.position + move;
+                Position fieldToCheck = this.position + move;
                 if (position == fieldToCheck)
                     return move;
             }

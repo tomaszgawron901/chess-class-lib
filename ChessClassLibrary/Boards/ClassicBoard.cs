@@ -25,7 +25,7 @@ namespace ChessClassLibrary.Boards
                 Y = 0;
             }
 
-            public Piece Current => board.board[Y][X];
+            public Piece Current => board.pieces[Y][X];
 
             object IEnumerator.Current => Current;
 
@@ -53,7 +53,7 @@ namespace ChessClassLibrary.Boards
 
         private static int width = 8;
         private static int height = 8;
-        private Piece[][] board;
+        private Piece[][] pieces;
         private King whiteKing;
         private King blackKing;
 
@@ -76,7 +76,7 @@ namespace ChessClassLibrary.Boards
         }
         public Piece[][] Board
         {
-            get { return board; }
+            get { return pieces; }
         }
         #endregion
 
@@ -90,15 +90,20 @@ namespace ChessClassLibrary.Boards
             return new ClassicBoardIterator(this);
         }
 
-        public override bool IsInRange(Point position)
+        public override bool IsInRange(Position position)
         {
             return position.X >= 0 && position.X < width && position.Y >= 0 && position.Y < height;
+        }
+
+        public override Piece GetPiece(Position position)
+        {
+            return this.pieces[position.Y][position.X];
         }
 
         #region CreateBoard
         private void  CreateBoard()
         {
-            this.board = new Piece[][] {
+            this.pieces = new Piece[][] {
                 createRichRow(PieceColor.White, 0),
                 createPawnRow(PieceColor.White, 1),
                 new Piece[width],
@@ -108,8 +113,8 @@ namespace ChessClassLibrary.Boards
                 createPawnRow(PieceColor.Black, 6),
                 createRichRow(PieceColor.Black, 7),
             };
-            whiteKing = board[0][4] as King;
-            blackKing = board[7][4] as King;
+            whiteKing = pieces[0][4] as King;
+            blackKing = pieces[7][4] as King;
         }
 
         private Piece[] createPawnRow(PieceColor color, int row)
@@ -119,14 +124,14 @@ namespace ChessClassLibrary.Boards
             {
                 for (int col = 0; col < Width; col++)
                 {
-                    newRow[col] = new WhitePawn(new Point(col, row));
+                    newRow[col] = new WhitePawn(new Position(col, row));
                 }
             }
             else
             {
                 for (int col = 0; col < Width; col++)
                 {
-                    newRow[col] = new BlackPawn(new Point(col, row));
+                    newRow[col] = new BlackPawn(new Position(col, row));
                 }
             }
             return newRow;
@@ -135,14 +140,14 @@ namespace ChessClassLibrary.Boards
         private Piece[] createRichRow(PieceColor color, int row)
         {
             return new Piece[] {
-            new Rook(color, new Point(0, row)),
-            new Knight(color, new Point(1, row)),
-            new Bishop(color, new Point(2, row)),
-            new Queen(color, new Point(3, row)),
-            new King(color, new Point(4, row)),
-            new Bishop(color, new Point(5, row)),
-            new Knight(color, new Point(6, row)),
-            new Rook(color, new Point(7, row)),
+            new Rook(color, new Position(0, row)),
+            new Knight(color, new Position(1, row)),
+            new Bishop(color, new Position(2, row)),
+            new Queen(color, new Position(3, row)),
+            new King(color, new Position(4, row)),
+            new Bishop(color, new Position(5, row)),
+            new Knight(color, new Position(6, row)),
+            new Rook(color, new Position(7, row)),
             };
         }
         #endregion

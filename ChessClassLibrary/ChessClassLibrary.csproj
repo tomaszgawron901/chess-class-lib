@@ -48,8 +48,9 @@
     <Compile Include="enums\PieceType.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Games\ClassicGame.cs" />
-    <Compile Include="Games\Game.cs" />
+    <Compile Include="Games\IGame.cs" />
     <Compile Include="KingPiece.cs" />
+    <Compile Include="Move.cs" />
     <Compile Include="Pieces\FasePieces\Bishop.cs" />
     <Compile Include="Pieces\FasePieces\FastPiece.cs" />
     <Compile Include="Pieces\FasePieces\Queen.cs" />
@@ -59,7 +60,7 @@
     <Compile Include="Pieces\SlowPieces\Knight.cs" />
     <Compile Include="Pieces\SlowPieces\Pawn.cs" />
     <Compile Include="Pieces\SlowPieces\SlowPiece.cs" />
-    <Compile Include="Point.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
