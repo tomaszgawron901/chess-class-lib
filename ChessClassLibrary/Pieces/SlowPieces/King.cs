@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Pieces.SlowPieces
 {
-    public abstract class King : SlowPiece
+    public class King : SlowPiece
     {
         protected new static Point[] moveSet = new Point[] {
                 new Point(-1, 1), new Point(0, 1), new Point(1, 1),

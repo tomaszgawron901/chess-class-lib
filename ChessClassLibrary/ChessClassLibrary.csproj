@@ -41,10 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Boards\Board.cs" />
+    <Compile Include="Boards\ClassicBoard.cs" />
     <Compile Include="ChessBoard.cs" />
     <Compile Include="enums\PieceColor.cs" />
     <Compile Include="enums\PieceType.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Games\ClassicGame.cs" />
+    <Compile Include="Games\Game.cs" />
     <Compile Include="KingPiece.cs" />
     <Compile Include="Pieces\FasePieces\Bishop.cs" />
     <Compile Include="Pieces\FasePieces\FastPiece.cs" />
