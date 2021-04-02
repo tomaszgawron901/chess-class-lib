@@ -14,20 +14,35 @@ namespace ChessClassLibrary.Pieces.SlowPieces
         { }
 
         /// <summary>
-        /// Checks whether given position can by achieved by one of the given movements.
+        /// Checks whether given position can by achieved by 'move' movements.
         /// </summary>
         /// <param name="position">Destination position.</param>
-        /// <param name="Movementset">Available movements</param>
-        /// <returns></returns>
-        public override bool CanAchieve(Point position)
+        /// <returns>First move that can achieve given position or null if cannot achieve given position.</returns>
+        public override Point? CanMoveAchieve(Point position)
         {
-            foreach (Point move in this.MoveSet)
+            foreach (Point move in moveSet)
             {
                 Point fieldToCheck = this.position + move;
                 if (position == fieldToCheck)
-                    return true;
+                    return move;
             }
-            return false;
+            return null;
+        }
+
+        /// <summary>
+        /// Checks whether given position can by achieved by 'kill' movements.
+        /// </summary>
+        /// <param name="position">Destination position.</param>
+        /// <returns> First move that can achieve given position or null if cannot achieve given position.</returns>
+        public override Point? CanKillAchieve(Point position)
+        {
+            foreach (Point move in killSet)
+            {
+                Point fieldToCheck = this.position + move;
+                if (position == fieldToCheck)
+                    return move;
+            }
+            return null;
         }
     }
 }

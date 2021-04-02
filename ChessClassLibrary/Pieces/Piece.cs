@@ -11,7 +11,8 @@ namespace ChessClassLibrary.Pieces
     {
         PieceColor Color { get; }
         PieceType Type { get; }
-        bool CanAchieve(Point position);
+        Point? CanKillAchieve(Point position);
+        Point? CanMoveAchieve(Point position);
     }
 
     public abstract class Piece : IPiece
@@ -173,6 +174,7 @@ namespace ChessClassLibrary.Pieces
         /// <param name="position">Destination position.</param>
         /// <param name="Movementset">Available movements</param>
         /// <returns></returns>
-        public abstract bool CanAchieve(Point position);
+        public abstract Point? CanMoveAchieve(Point position);
+        public abstract Point? CanKillAchieve(Point position);
     }
 }
