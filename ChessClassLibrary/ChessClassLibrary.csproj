@@ -42,16 +42,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChessBoard.cs" />
+    <Compile Include="enums\PieceColor.cs" />
+    <Compile Include="enums\PieceType.cs" />
     <Compile Include="FastPieces.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="KingPiece.cs" />
-    <Compile Include="Piece.cs" />
+    <Compile Include="Pieces\Piece.cs" />
+    <Compile Include="Pieces\SlowPieces\Knight.cs" />
+    <Compile Include="Pieces\SlowPieces\Pawn.cs" />
+    <Compile Include="Pieces\SlowPieces\SlowPiece.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SlowPieces.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="1nstruction.txt" />
+    <Folder Include="Pieces\FasePieces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
