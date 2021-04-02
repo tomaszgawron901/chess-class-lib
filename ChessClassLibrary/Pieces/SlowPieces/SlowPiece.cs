@@ -20,7 +20,7 @@ namespace ChessClassLibrary.Pieces.SlowPieces
         /// <returns>First move that can achieve given position or null if cannot achieve given position.</returns>
         public override Position? CanMoveAchieve(Position position)
         {
-            foreach (Position move in moveSet)
+            foreach (Position move in MoveSet)
             {
                 Position fieldToCheck = this.position + move;
                 if (position == fieldToCheck)
@@ -36,7 +36,7 @@ namespace ChessClassLibrary.Pieces.SlowPieces
         /// <returns> First move that can achieve given position or null if cannot achieve given position.</returns>
         public override Position? CanKillAchieve(Position position)
         {
-            foreach (Position move in killSet)
+            foreach (Position move in KillSet)
             {
                 Position fieldToCheck = this.position + move;
                 if (position == fieldToCheck)

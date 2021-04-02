@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Pieces
 {
-    interface IPiece
+    public interface IPiece
     {
         PieceColor Color { get; }
         PieceType Type { get; }
+        Position[] MoveSet { get; }
+        Position[] KillSet { get; }
         Position? CanKillAchieve(Position position);
         Position? CanMoveAchieve(Position position);
     }
@@ -19,18 +21,9 @@ namespace ChessClassLibrary.Pieces
     {
         protected PieceColor color;
         protected PieceType type;
-        protected bool wasMoved;
         protected Position position;
-        protected static Position[] moveSet;
-        protected static Position[] killSet;
 
-        /// <summary>
-        /// Checks whether piece was moved.
-        /// </summary>
-        public bool WasMoved
-        {
-            get { return this.wasMoved; }
-        }
+        public bool wasMoved;
 
         /// <summary>
         /// Returns piece color.
@@ -59,21 +52,9 @@ namespace ChessClassLibrary.Pieces
             }
         }
 
-        /// <summary>
-        /// Returns piece move set.
-        /// </summary>
-        public virtual Position[] MoveSet
-        {
-            get { return moveSet; }
-        }
+        public abstract Position[] MoveSet { get; }
 
-        /// <summary>
-        /// Returns piece kill set.
-        /// </summary>
-        public virtual Position[] KillSet
-        {
-            get { return killSet; }
-        }
+        public abstract Position[] KillSet  { get; }
 
         protected Piece(PieceColor color, PieceType type, Position position)
         {

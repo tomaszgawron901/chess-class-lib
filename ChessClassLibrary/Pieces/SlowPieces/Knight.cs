@@ -9,14 +9,14 @@ namespace ChessClassLibrary.Pieces.SlowPieces
 {
     public class Knight : SlowPiece
     {
-        protected new static Position[] moveSet = new Position[] {
+        public static Position[] moveSet = new Position[] {
                     new Position(-1, 2), new Position(1, 2),
                     new Position(-1, -2), new Position(1, -2),
                     new Position(-2, -1), new Position(-2, 1),
                     new Position(2, -1), new Position(2, 1),
             };
 
-        protected new static Position[] killSet = new Position[] {
+        public static Position[] killSet = new Position[] {
                     new Position(-1, 2), new Position(1, 2),
                     new Position(-1, -2), new Position(1, -2),
                     new Position(-2, -1), new Position(-2, 1),
@@ -26,6 +26,10 @@ namespace ChessClassLibrary.Pieces.SlowPieces
         public Knight(PieceColor color, Position position) :
             base(color, PieceType.Knight, position)
         { }
+
+        public override Position[] MoveSet => moveSet;
+
+        public override Position[] KillSet => killSet;
 
     }
 }

@@ -92,12 +92,12 @@ namespace ChessClassLibrary.Boards
 
         public override bool IsInRange(Position position)
         {
-            return position.X >= 0 && position.X < width && position.Y >= 0 && position.Y < height;
+            return position.x >= 0 && position.x < width && position.y >= 0 && position.y < height;
         }
 
         public override Piece GetPiece(Position position)
         {
-            return this.pieces[position.Y][position.X];
+            return this.pieces[position.y][position.x];
         }
 
         #region CreateBoard

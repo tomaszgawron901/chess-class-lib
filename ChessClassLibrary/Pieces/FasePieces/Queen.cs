@@ -9,7 +9,7 @@ namespace ChessClassLibrary.Pieces.FasePieces
 {
     public class Queen : FastPiece
     {
-        protected new static Position[] moveSet = new Position[] {
+        protected static Position[] moveSet = new Position[] {
                 new Position(-1, 1),
                 new Position(1, 1),
                 new Position(1, -1),
@@ -21,7 +21,7 @@ namespace ChessClassLibrary.Pieces.FasePieces
                 new Position(-1, 0)
             };
 
-        protected new static Position[] killSet = new Position[] {
+        protected static Position[] killSet = new Position[] {
                 new Position(-1, 1),
                 new Position(1, 1),
                 new Position(1, -1),
@@ -35,5 +35,9 @@ namespace ChessClassLibrary.Pieces.FasePieces
 
         public Queen(PieceColor color, Position position) :
             base(color, PieceType.Queen, position){}
+
+        public override Position[] MoveSet => moveSet;
+
+        public override Position[] KillSet => killSet;
     }
 }

@@ -9,14 +9,14 @@ namespace ChessClassLibrary.Pieces.FasePieces
 {
     public class Bishop : FastPiece
     {
-        protected new static Position[] moveSet = new Position[] {
+        protected static Position[] moveSet = new Position[] {
                 new Position(-1, 1),
                 new Position(1, 1),
                 new Position(1, -1),
                 new Position(-1, -1)
             };
 
-        protected new static Position[] killSet = new Position[] {
+        protected static Position[] killSet = new Position[] {
                 new Position(-1, 1),
                 new Position(1, 1),
                 new Position(1, -1),
@@ -25,5 +25,9 @@ namespace ChessClassLibrary.Pieces.FasePieces
 
         public Bishop(PieceColor color, Position position) :
             base(color, PieceType.Bishop, position) {}
+
+        public override Position[] MoveSet => moveSet;
+
+        public override Position[] KillSet => killSet;
     }
 }

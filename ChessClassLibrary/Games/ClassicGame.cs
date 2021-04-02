@@ -29,6 +29,19 @@ namespace ChessClassLibrary.Games
                 return false;
             }
 
+            if (pickedPiece is King)
+            {
+                return CanMoveKing(pickedPiece as King, move.destination);
+            }
+            else if (pickedPiece is SlowPiece)
+            {
+                return CanMoveSlowPiece(pickedPiece as SlowPiece, move.destination);
+            }
+            else if (pickedPiece is FastPiece)
+            {
+                return CanMoveFastPiece(pickedPiece as FastPiece, move.destination);
+            }
+            return false;
         }
 
         public void PerormMove(Move move)
@@ -91,6 +104,11 @@ namespace ChessClassLibrary.Games
         private bool IsKingStalemated(King king)
         {
             // check is king is stalemated
+            throw new NotImplementedException();
+        }
+
+        private bool PretendMoveAndCheckIfKingIsChecked()
+        {
             throw new NotImplementedException();
         }
     }

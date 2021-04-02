@@ -23,7 +23,7 @@ namespace ChessClassLibrary.Pieces.FasePieces
         {
             if (this.Position == position)
                 return null;
-            foreach (Position move in moveSet)
+            foreach (Position move in MoveSet)
             {
                 if (move == new Position(0, 0))
                 {
@@ -41,7 +41,7 @@ namespace ChessClassLibrary.Pieces.FasePieces
         {
             if (this.Position == position)
                 return null;
-            foreach (Position move in killSet)
+            foreach (Position move in KillSet)
             {
                 if (move == new Position(0, 0))
                 {
@@ -59,9 +59,9 @@ namespace ChessClassLibrary.Pieces.FasePieces
         private bool isInLine(Position destination, Position move)
         {
             Position destinationMove = destination - this.position;
-            if (Math.Sign(destinationMove.X) != Math.Sign(move.X))
+            if (Math.Sign(destinationMove.x) != Math.Sign(move.x))
                 return false;
-            if (Math.Sign(destinationMove.Y) != Math.Sign(move.Y))
+            if (Math.Sign(destinationMove.y) != Math.Sign(move.y))
                 return false;
             if (move == new Position(0, 0))
             {
@@ -70,27 +70,27 @@ namespace ChessClassLibrary.Pieces.FasePieces
                 else return false;
             }
 
-            if (move.X == 0)
+            if (move.x == 0)
             {
-                if (destinationMove.X != 0)
+                if (destinationMove.x != 0)
                     return false;
-                if (destinationMove.Y % move.Y != 0)
+                if (destinationMove.y % move.y != 0)
                     return false;
             }
-            else if (move.Y == 0)
+            else if (move.y == 0)
             {
-                if (destinationMove.Y != 0)
+                if (destinationMove.y != 0)
                     return false;
-                if (destinationMove.X % move.X != 0)
+                if (destinationMove.x % move.x != 0)
                     return false;
             }
             else
             {
-                if (destinationMove.X == 0 || destinationMove.Y == 0)
+                if (destinationMove.x == 0 || destinationMove.y == 0)
                     return false;
-                if (destinationMove.X % move.X != 0 || destinationMove.Y % move.Y != 0)
+                if (destinationMove.x % move.x != 0 || destinationMove.y % move.y != 0)
                     return false;
-                if (destinationMove.X / move.X != destinationMove.Y / move.Y)
+                if (destinationMove.x / move.x != destinationMove.y / move.y)
                     return false;
 
             }

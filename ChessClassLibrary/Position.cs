@@ -8,23 +8,8 @@ namespace ChessClassLibrary
 {
     public struct Position: IEquatable<Position>
     {
-        private int x;
-        private int y;
-
-        /// <summary>
-        /// Returns horizontal coordinate.
-        /// </summary>
-        public int X
-        {
-            get { return x; }
-        }
-        /// <summary>
-        /// Returns vertical coordinate.
-        /// </summary>
-        public int Y
-        {
-            get { return y; }
-        }
+        public readonly int x;
+        public readonly int y;
 
         public Position(int x, int y)
         {
@@ -39,7 +24,7 @@ namespace ChessClassLibrary
         /// <returns>True when Points are equal, otherwise false.</returns>
         public bool Equals(Position other)
         {
-            if (X == other.X && Y == other.Y)
+            if (x == other.x && y == other.y)
                 return true;
             return false;
         }
@@ -77,7 +62,7 @@ namespace ChessClassLibrary
         /// <returns>New Point which is the sum of two Points.</returns>
         public Position Plus(Position other)
         {
-            return new Position(X + other.X, Y + other.Y);
+            return new Position(x + other.x, y + other.y);
         }
 
         /// <summary>
@@ -87,7 +72,7 @@ namespace ChessClassLibrary
         /// <returns>New Point which is the subtraction of this Point and given other Point..</returns>
         public Position Minus(Position other)
         {
-            return new Position(X - other.X, Y - other.Y);
+            return new Position(x - other.x, y - other.y);
         }
 
         public static bool operator ==(Position p1, Position p2)
