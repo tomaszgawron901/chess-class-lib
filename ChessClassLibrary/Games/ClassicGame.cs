@@ -32,9 +32,7 @@ namespace ChessClassLibrary.Games
 
             if (pickedPiece is King && CanCastle(pickedPiece as King, move.destination)) return true;
 
-            if (pickedPiece is SlowPiece && CanMoveSlowPiece(pickedPiece as SlowPiece, move.destination)) return true;
-
-            if (pickedPiece is FastPiece && CanMoveFastPiece(pickedPiece as FastPiece, move.destination)) return true;
+            if (CanMovePiece(pickedPiece, move.destination)) return true;;
 
             return false;
         }
@@ -96,20 +94,55 @@ namespace ChessClassLibrary.Games
         }
         #endregion
 
-        #region Slow Piece Rools
-        private bool CanMoveSlowPiece(SlowPiece piece, Position destination)
+        #region canMoveToPosition
+        private bool canMoveToPosition(Piece piece, Position destination)
         {
-            if (!board.IsInRange(destination)) return false;
-            if (piece == null) return false;
+            if (piece is SlowPiece) return canMoveToPosition(piece as SlowPiece, destination);
 
-            if (canSlowMoveToPosition(piece, destination)) return true;
-
-            if (canSlowKillAtPosition(piece, destination)) return true;
+            if (piece is FastPiece) return canMoveToPosition(piece as FastPiece, destination);
 
             return false;
         }
 
-        private bool canSlowKillAtPosition(SlowPiece piece, Position destination)
+        private bool canMoveToPosition(SlowPiece piece, Position destination)
+        {
+            var moveMovement = piece.CanMoveAchieve(destination);
+            if (moveMovement != null)
+            {
+                var destinationPiece = board.GetPiece(destination);
+                if (destinationPiece != null) return false;
+
+                return PretendMovesAndCheckIfKingIsChecked(new Move(piece.Position, destination));
+            }
+            return false;
+        }
+
+        private bool canMoveToPosition(FastPiece piece, Position destination)
+        {
+            var moveMovement = piece.CanMoveAchieve(destination);
+            if (moveMovement != null)
+            {
+                var destinationPiece = board.GetPiece(destination);
+                if (destinationPiece != null
+                    || !IsPathClear(piece.Position, destination, (Position)moveMovement)) return false;
+
+                return PretendMovesAndCheckIfKingIsChecked(new Move(piece.Position, destination));
+            }
+            return false;
+        }
+        #endregion
+
+        #region canKillAtPosition
+        private bool canKillAtPosition(Piece piece, Position destination)
+        {
+            if (piece is SlowPiece) return canKillAtPosition(piece as SlowPiece, destination);
+
+            if (piece is FastPiece) return canKillAtPosition(piece as FastPiece, destination);
+
+            return false;
+        }
+
+        private bool canKillAtPosition(SlowPiece piece, Position destination)
         {
             var killMovement = piece.CanKillAchieve(destination);
             if (killMovement != null)
@@ -122,35 +155,7 @@ namespace ChessClassLibrary.Games
             return false;
         }
 
-        private bool canSlowMoveToPosition(SlowPiece piece, Position destination)
-        {
-            var moveMovement = piece.CanMoveAchieve(destination);
-            if (moveMovement != null)
-            {
-                var destinationPiece = board.GetPiece(destination);
-                if (destinationPiece != null) return false;
-
-                return PretendMovesAndCheckIfKingIsChecked(new Move(piece.Position, destination));
-            }
-            return false;
-        }
-        #endregion
-
-        #region Fast Piece Rools
-        private bool CanMoveFastPiece(FastPiece piece, Position destination)
-        {
-            if (!board.IsInRange(destination)) return false;
-
-            if (piece == null) return false;
-
-            if (canFastMoveToPosition(piece, destination)) return true;
-
-            if (canFastKillAtPosition(piece, destination)) return true;
-
-            return false;
-        }
-
-        private bool canFastKillAtPosition(FastPiece piece, Position destination)
+        private bool canKillAtPosition(FastPiece piece, Position destination)
         {
             var killMovement = piece.CanKillAchieve(destination);
             if (killMovement != null)
@@ -164,20 +169,43 @@ namespace ChessClassLibrary.Games
             }
             return false;
         }
+        #endregion
 
-        private bool canFastMoveToPosition(FastPiece piece, Position destination)
+        #region canMovePiece
+        private bool CanMovePiece(Piece piece, Position destination)
         {
-            var moveMovement = piece.CanMoveAchieve(destination);
-            if (moveMovement != null)
-            {
-                var destinationPiece = board.GetPiece(destination);
-                if (destinationPiece != null
-                    || !IsPathClear(piece.Position, destination, (Position)moveMovement)) return false;
+            if (piece is SlowPiece) return CanMovePiece(piece as SlowPiece, destination);
 
-                return PretendMovesAndCheckIfKingIsChecked(new Move(piece.Position, destination));
-            }
+            if (piece is FastPiece) return CanMovePiece(piece as FastPiece, destination);
+
             return false;
         }
+
+        private bool CanMovePiece(SlowPiece piece, Position destination)
+        {
+            if (!board.IsInRange(destination)) return false;
+            if (piece == null) return false;
+
+            if (canMoveToPosition(piece, destination)) return true;
+
+            if (canKillAtPosition(piece, destination)) return true;
+
+            return false;
+        }
+
+        private bool CanMovePiece(FastPiece piece, Position destination)
+        {
+            if (!board.IsInRange(destination)) return false;
+
+            if (piece == null) return false;
+
+            if (canMoveToPosition(piece, destination)) return true;
+
+            if (canKillAtPosition(piece, destination)) return true;
+
+            return false;
+        }
+        #endregion
 
         private bool IsPathClear(Position startPosition, Position destination, Position move)
         {
@@ -193,30 +221,62 @@ namespace ChessClassLibrary.Games
             }
             return true;
         }
-        #endregion
+
 
         #region King Rools
         private bool CanCastle(King king, Position destination)
         {
-            // check if can perform slow move and castle move
-            throw new NotImplementedException();
+            if (king.wasMoved) return false;
+
+            if (king.Color == PieceColor.White)
+            {
+                if (destination == new Position(2, 0))
+                {
+                    // right white castle
+                }
+                else if (destination == new Position(6, 0))
+                {
+                    // left white castle
+                }
+            }
+            else if (king.Color == PieceColor.Black)
+            {
+                if (destination == new Position(2, 7))
+                {
+                    // right black castle
+                }
+                else if (destination == new Position(6, 7))
+                {
+                    // left black castle
+                }
+            }
+            return false;
         }
 
         private bool IsKingChecked(King king)
         {
-            // check is king is checked
-            throw new NotImplementedException();
+            return board
+                .Where(x => x.Color != king.Color)
+                .Any(x => canKillAtPosition(x, king.Position));
         }
 
         private bool IsKingCheckmated(King king)
         {
-            // check is king is checkmated
-            throw new NotImplementedException();
+            return IsKingChecked(king) && !canProtectFromDeath(king);
         }
 
         private bool IsKingStalemated(King king)
         {
-            // check is king is stalemated
+            return !IsKingChecked(king) && (!canProtectFromDeath(king) || notEnoughtPieces());
+        }
+
+        private bool canProtectFromDeath(King king)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool notEnoughtPieces()
+        {
             throw new NotImplementedException();
         }
         #endregion
