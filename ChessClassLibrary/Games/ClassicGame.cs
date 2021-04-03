@@ -21,6 +21,7 @@ namespace ChessClassLibrary.Games
             currentPlayerColor = PieceColor.White;
         }
 
+        #region Common Piece Rools
         public bool CanPerformMove(Move move)
         {
             Piece pickedPiece = this.board.GetPiece(move.current);
@@ -44,11 +45,54 @@ namespace ChessClassLibrary.Games
             return false;
         }
 
-        public void PerormMove(Move move)
+        public void TryPerformMove(Move move)
+        {
+            if (CanPerformMove(move))
+            {
+                PerformMove(move);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public void PerformMove(Move move)
         {
             throw new NotImplementedException();
         }
 
+        private bool PretendMoveAndCheckIfKingIsChecked(Piece piece, Position destination)
+        {
+            var backup = new List<PieceBackup>();
+            backup.Add(new PieceBackup(piece, piece.Position));
+
+            Piece pieceAtDestinationPosition = board.GetPiece(destination);
+            if (pieceAtDestinationPosition != null)
+            {
+                backup.Add(new PieceBackup(pieceAtDestinationPosition, destination));
+            }
+
+            board.SetPiece(null, piece.Position);
+            board.SetPiece(piece, destination);
+            bool KingIsChecked = false;
+            if (currentPlayerColor == PieceColor.White)
+            {
+                KingIsChecked = IsKingChecked(board.WhiteKing);
+            }
+            else if (currentPlayerColor == PieceColor.Black)
+            {
+                KingIsChecked = IsKingChecked(board.BlackKing);
+            }
+
+            backup.ForEach( x => {
+                board.SetPiece(x.piece, x.position);
+            });
+            return KingIsChecked;
+        }
+        #endregion
+
+        #region Slow Piece Rools
         private bool CanMoveSlowPiece(SlowPiece piece, Position destination)
         {
             if (!board.IsInRange(destination)) return false;
@@ -59,8 +103,7 @@ namespace ChessClassLibrary.Games
                 var destinationPiece = board.GetPiece(destination);
                 if (destinationPiece == null)
                 {
-                    // check if king is not heckmated
-                    throw new NotImplementedException();
+                    return PretendMoveAndCheckIfKingIsChecked(piece, destination);
                 }
             }
 
@@ -68,21 +111,59 @@ namespace ChessClassLibrary.Games
             if (killMovement != null)
             {
                 var destinationPiece = board.GetPiece(destination);
-                if (destinationPiece == null)
+                if (destinationPiece != null && destinationPiece.Color != piece.Color)
                 {
-                    // check if king is not heckmated
-                    throw new NotImplementedException();
+                    return PretendMoveAndCheckIfKingIsChecked(piece, destination);
+                }
+            }
+            return false;
+        }
+        #endregion
+
+        #region Fast Piece Rools
+        private bool CanMoveFastPiece(FastPiece piece, Position destination)
+        {
+            if (!board.IsInRange(destination)) return false;
+
+            var moveMovement = piece.CanMoveAchieve(destination);
+            if (moveMovement != null)
+            {
+                var destinationPiece = board.GetPiece(destination);
+                if (destinationPiece == null && IsPathClear(piece.Position, destination, (Position)moveMovement))
+                {
+                    return PretendMoveAndCheckIfKingIsChecked(piece, destination);
+                }
+            }
+
+            var killMovement = piece.CanKillAchieve(destination);
+            if (killMovement != null)
+            {
+                var destinationPiece = board.GetPiece(destination);
+                if (destinationPiece != null && destinationPiece.Color != piece.Color && IsPathClear(piece.Position, destination, (Position)moveMovement))
+                {
+                    return PretendMoveAndCheckIfKingIsChecked(piece, destination);
                 }
             }
             return false;
         }
 
-        private bool CanMoveFastPiece(FastPiece piece, Position destination)
+        private bool IsPathClear(Position startPosition, Position destination, Position move)
         {
-            // check if can perform fast move
-            throw new NotImplementedException();
+            for (
+                Position checkedPosition = startPosition + move;
+                checkedPosition != destination;
+                checkedPosition += move)
+            {
+                if (board.GetPiece(checkedPosition) != null)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
+        #endregion
 
+        #region King Rools
         private bool CanMoveKing(King king, Position destination)
         {
             // check if can perform slow move and castle move
@@ -106,10 +187,7 @@ namespace ChessClassLibrary.Games
             // check is king is stalemated
             throw new NotImplementedException();
         }
+        #endregion
 
-        private bool PretendMoveAndCheckIfKingIsChecked()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

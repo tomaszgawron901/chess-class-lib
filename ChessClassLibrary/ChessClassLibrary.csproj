@@ -51,6 +51,7 @@
     <Compile Include="Games\IGame.cs" />
     <Compile Include="KingPiece.cs" />
     <Compile Include="Move.cs" />
+    <Compile Include="PieceBackup.cs" />
     <Compile Include="Pieces\FasePieces\Bishop.cs" />
     <Compile Include="Pieces\FasePieces\FastPiece.cs" />
     <Compile Include="Pieces\FasePieces\Queen.cs" />

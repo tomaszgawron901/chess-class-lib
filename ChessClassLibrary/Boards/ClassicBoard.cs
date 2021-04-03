@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Boards
 {
-    public class ClassicBoard : Board
+    public class ClassicBoard : Board, IEnumerable<Piece>
     {
         private sealed class ClassicBoardIterator : IEnumerator<Piece>
         {
@@ -100,7 +100,37 @@ namespace ChessClassLibrary.Boards
             return this.pieces[position.y][position.x];
         }
 
-        #region CreateBoard
+        /// <summary>
+        /// Add piece to the board at given position and set piece position.
+        /// </summary>
+        public override void SetPiece(Piece piece, Position position)
+        {
+            if (IsInRange(position))
+            {
+                pieces[position.y][position.x] = piece;
+                if (piece != null)
+                {
+                    piece.Position = position;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public override void Clear()
+        {
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    pieces[y][x] = null;
+                }
+            }
+        }
+
+        #region Create Board
         private void  CreateBoard()
         {
             this.pieces = new Piece[][] {
@@ -151,5 +181,22 @@ namespace ChessClassLibrary.Boards
             };
         }
         #endregion
+
+        #region Board Restore
+        public override IEnumerable<PieceBackup> GetBoardBackup()
+        {
+            return this.Where(x => x != null).Select(x => new PieceBackup(x, x.Position));
+        }
+
+        public override void RestoreBoard(IEnumerable<PieceBackup> backup)
+        {
+            Clear();
+            foreach (var pieceBackup in backup)
+            {
+                SetPiece(pieceBackup.piece, pieceBackup.position);
+            }
+        }
+        #endregion
+
     }
 }
