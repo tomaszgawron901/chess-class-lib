@@ -76,17 +76,13 @@ namespace ChessClassLibrary.Boards
         }
 
         /// <summary>
-        /// Add piece to the board at given position and set piece position.
+        /// Add piece to the board at given position.
         /// </summary>
         public override void SetPiece(Piece piece, Position position)
         {
             if (IsInRange(position))
             {
                 Pieces[position.y][position.x] = piece;
-                if (piece != null)
-                {
-                    piece.Position = position;
-                }
             }
             else
             {

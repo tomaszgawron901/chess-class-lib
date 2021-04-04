@@ -14,8 +14,6 @@ namespace ChessClassLibrary.Games.ClassicGame
         private ClassicBoard_8x8 board;
         private PieceColor currentPlayerColor;
         public GameState GameState { get; private set; }
-        public KingState WhiteKingState { get; private set; }
-        public KingState BlackKingState { get; private set; }
 
         public ClassicGame()
         {
@@ -24,8 +22,20 @@ namespace ChessClassLibrary.Games.ClassicGame
             GameState = GameState.NotStarted;
         }
 
+        #region Game status
+        private void UpdateGameStatus()
+        {
+            throw new NotImplementedException();
+        }
 
-        #region Common Piece Rules
+        private void SwapPlayers()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+
+        #region Move manager
         public bool CanPerformMove(Move move)
         {
             Piece pickedPiece = this.board.GetPiece(move.current);
@@ -55,9 +65,52 @@ namespace ChessClassLibrary.Games.ClassicGame
 
         public void PerformMove(Move move)
         {
+            Piece pickedPiece = this.board.GetPiece(move.current);
+
+            if (pickedPiece is ClassicGameKing)
+            {
+                if (IsLeftCastleMove(move))
+                {
+                    DoLeftCastle(pickedPiece as ClassicGameKing);
+                }
+                else if (IsRightCastleMove(move))
+                {
+                    DoRightCastle(pickedPiece as ClassicGameKing);
+                }
+            }
+            else
+            {
+                MovePieceToPosition(pickedPiece, move.destination);
+            }
+            // TODO swap players
             throw new NotImplementedException();
         }
+        #endregion Move manager
 
+
+        private void MovePieceToPosition(Piece piece, Position position)
+        {
+            board.SetPiece(null, piece.Position);
+            board.SetPiece(piece, position);
+            piece.Position = position;
+        }
+
+        private bool IsPathClear(Position startPosition, Position destination, Position move)
+        {
+            for (
+                Position checkedPosition = startPosition + move;
+                checkedPosition != destination;
+                checkedPosition += move)
+            {
+                if (board.GetPiece(checkedPosition) != null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        #region Pretend move
         private bool PretendMovesAndCheckIfKingIsChecked(IEnumerable<Move> moves)
         {
             var backup = new Stack<PieceBackup>();
@@ -70,8 +123,8 @@ namespace ChessClassLibrary.Games.ClassicGame
                 backup.Push(new PieceBackup(pieceAtStartPosition, move.current));
                 backup.Push(new PieceBackup(pieceAtDestinationPosition, move.destination));
 
-                board.SetPiece(null, move.current);
-                board.SetPiece(pieceAtStartPosition, move.destination);
+
+                MovePieceToPosition(pieceAtStartPosition, move.destination);
             }
 
             bool KingIsChecked = false;
@@ -88,6 +141,7 @@ namespace ChessClassLibrary.Games.ClassicGame
             {
                 var pieceBackup = backup.Pop();
                 board.SetPiece(pieceBackup.piece, pieceBackup.position);
+                pieceBackup.piece.Position = pieceBackup.position;
             }
             return KingIsChecked;
         }
@@ -96,7 +150,7 @@ namespace ChessClassLibrary.Games.ClassicGame
         {
             return PretendMovesAndCheckIfKingIsChecked(new List<Move>() { move });
         }
-        #endregion
+        #endregion Pretend move  
 
         #region canMoveToPosition
         private bool canMoveToPosition(Piece piece, Position destination)
@@ -211,24 +265,44 @@ namespace ChessClassLibrary.Games.ClassicGame
         }
         #endregion
 
-        private bool IsPathClear(Position startPosition, Position destination, Position move)
-        {
-            for (
-                Position checkedPosition = startPosition + move;
-                checkedPosition != destination;
-                checkedPosition += move)
-            {
-                if (board.GetPiece(checkedPosition) != null)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         #region King Rules
 
         #region Castle
+        private bool IsCastleMove(Move move)
+        {
+            return IsLeftCastleMove(move) || IsRightCastleMove(move);
+        }
+
+        private bool IsLeftCastleMove(Move move)
+        {
+            if (move.current == new Position(4, 0) && move.destination == new Position(2, 0))
+            {
+                return true;
+            }
+
+            if (move.current == new Position(4, 7) && move.destination == new Position(2, 7))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool IsRightCastleMove(Move move)
+        {
+            if (move.current == new Position(4, 0) && (move.destination == new Position(6, 0)))
+            {
+                return true;
+            }
+
+            if (move.current == new Position(4, 7) && move.destination == new Position(6, 7))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private bool CanCastle(ClassicGameKing king, Position destination)
         {
             if (king.IsChecked) return false;
@@ -275,6 +349,20 @@ namespace ChessClassLibrary.Games.ClassicGame
                 return true;
             }
             return false;
+        }
+
+        private void DoLeftCastle(ClassicGameKing king)
+        {
+            var yPosition = king.Position.y;
+            MovePieceToPosition(king, new Position(2, yPosition));
+            MovePieceToPosition(board.GetPiece(new Position(0, yPosition)), new Position(3, yPosition));
+        }
+
+        private void DoRightCastle(ClassicGameKing king)
+        {
+            var yPosition = king.Position.y;
+            MovePieceToPosition(king, new Position(6, yPosition));
+            MovePieceToPosition(board.GetPiece(new Position(7, yPosition)), new Position(5, yPosition));
         }
         #endregion Castle
 
