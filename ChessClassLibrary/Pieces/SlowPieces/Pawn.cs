@@ -28,7 +28,7 @@ namespace ChessClassLibrary.Pieces.SlowPieces
         {
             get
             {
-                if (this.wasMoved)
+                if (this.WasMoved)
                 {
                     return moveSet;
                 }
@@ -56,7 +56,7 @@ namespace ChessClassLibrary.Pieces.SlowPieces
         {
             get
             {
-                if (this.wasMoved)
+                if (this.WasMoved)
                 {
                     return moveSet;
                 }

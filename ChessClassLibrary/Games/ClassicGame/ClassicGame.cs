@@ -7,17 +7,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChessClassLibrary.Games
+namespace ChessClassLibrary.Games.ClassicGame
 {
     public class ClassicGame : IGame
     {
-        private ClassicBoard board;
+        private ClassicBoard_8x8 board;
         private PieceColor currentPlayerColor;
+        public GameState GameState { get; private set; }
+        public KingState WhiteKingState { get; private set; }
+        public KingState BlackKingState { get; private set; }
+
         public ClassicGame()
         {
-            board = new ClassicBoard();
+            board = new ClassicBoard_8x8();
             currentPlayerColor = PieceColor.White;
+            GameState = GameState.NotStarted;
         }
+
 
         #region Common Piece Rules
         public bool CanPerformMove(Move move)
@@ -28,7 +34,7 @@ namespace ChessClassLibrary.Games
                 return false;
             }
 
-            if (pickedPiece is King && CanCastle(pickedPiece as King, move.destination)) return true;
+            if (pickedPiece is ClassicGameKing && CanCastle(pickedPiece as ClassicGameKing, move.destination)) return true;
 
             if (CanMovePiece(pickedPiece, move.destination)) return true; ;
 
@@ -220,64 +226,95 @@ namespace ChessClassLibrary.Games
             return true;
         }
 
-
         #region King Rules
-        private bool CanCastle(King king, Position destination)
-        {
-            if (king.wasMoved) return false;
 
-            if (king.Color == PieceColor.White)
+        #region Castle
+        private bool CanCastle(ClassicGameKing king, Position destination)
+        {
+            if (king.IsChecked) return false;
+            if (king.WasMoved) return false;
+
+            if (destination == king.Position + king.RightCastleMove)
             {
-                if (destination == new Position(2, 0))
-                {
-                    // right white castle
-                }
-                else if (destination == new Position(6, 0))
-                {
-                    // left white castle
-                }
+                return CanRightCastle(king);
             }
-            else if (king.Color == PieceColor.Black)
+            else if (destination == king.Position + king.LeftCastleMove)
             {
-                if (destination == new Position(2, 7))
-                {
-                    // right black castle
-                }
-                else if (destination == new Position(6, 7))
-                {
-                    // left black castle
-                }
+                return CanLeftCastle(king);
             }
             return false;
         }
-
-        private bool IsKingChecked(King king)
+        private bool CanRightCastle(ClassicGameKing king)
         {
-            return board
-                .Where(x => x.Color != king.Color)
-                .Any(x => canKillAtPosition(x, king.Position));
+            var rookPosition = new Position(7, king.Position.y);
+            Piece rightRook = board.GetPiece(rookPosition);
+            if (rightRook is Rook && !rightRook.WasMoved && rightRook.Color == king.Color)
+            {
+                foreach (var checkedPosition in new Position[] { new Position(5, king.Position.y), new Position(6, king.Position.y) })
+                {
+                    if (board.GetPiece(checkedPosition) != null) return false;
+
+                    if (CanAnyKillAtPosition(board.Where(x => x.Color != king.Color), checkedPosition)) return false;
+                }
+                return true;
+            }
+            return false;
+        }
+        private bool CanLeftCastle(ClassicGameKing king)
+        {
+            var rookPosition = new Position(0, king.Position.y);
+            Piece leftRook = board.GetPiece(rookPosition);
+            if (leftRook is Rook && !leftRook.WasMoved && leftRook.Color == king.Color && board.GetPiece(new Position(1, king.Position.y)) == null)
+            {
+                foreach (var checkedPosition in new Position[] { new Position(2, king.Position.y), new Position(3, king.Position.y) })
+                {
+                    if (board.GetPiece(checkedPosition) != null) return false;
+
+                    if (CanAnyKillAtPosition(board.Where(x => x.Color != king.Color), checkedPosition)) return false;
+                }
+                return true;
+            }
+            return false;
+        }
+        #endregion Castle
+
+        private bool CanAnyKillAtPosition(IEnumerable<Piece> pieces, Position position)
+        {
+            return pieces.Any(x => canKillAtPosition(x, position));
         }
 
-        private bool IsKingCheckmated(King king)
+        private bool IsKingChecked(ClassicGameKing king)
         {
-            return IsKingChecked(king) && !canProtectFromDeath(king);
+            return CanAnyKillAtPosition(board.Where(x => x.Color != king.Color), king.Position);
         }
 
-        private bool IsKingStalemated(King king)
+        private bool IsKingCheckmated(ClassicGameKing king)
         {
-            return !IsKingChecked(king) && (!canProtectFromDeath(king) || notEnoughtPieces());
+            return king.IsChecked && !canProtectFromDeath(king);
         }
 
-        private bool canProtectFromDeath(King king)
+        private bool IsKingStalemated(ClassicGameKing king)
+        {
+            return !king.IsChecked && (!canProtectFromDeath(king) || NotEnoughtPieces());
+        }
+
+        private bool canProtectFromDeath(ClassicGameKing king)
         {
             throw new NotImplementedException();
         }
 
-        private bool notEnoughtPieces()
+        private bool NotEnoughtPieces()
         {
             throw new NotImplementedException();
         }
-        #endregion
+
+        private void UpdateKingState(ClassicGameKing king)
+        {
+            if (IsKingChecked(king)) king.State = KingState.Checked;
+            if (IsKingCheckmated(king)) king.State = KingState.Checkmated;
+            if (IsKingStalemated(king)) king.State = KingState.Stalemated;
+        }
+        #endregion King Rules
 
     }
 }
