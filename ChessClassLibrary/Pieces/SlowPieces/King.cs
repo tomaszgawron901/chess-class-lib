@@ -1,9 +1,4 @@
 ﻿using ChessClassLibrary.enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Pieces.SlowPieces
 {
@@ -22,7 +17,8 @@ namespace ChessClassLibrary.Pieces.SlowPieces
             };
 
         public King(PieceColor color, Position position) :
-            base(color, PieceType.King, position) {}
+            base(color, PieceType.King, position)
+        { }
 
         public override Position[] MoveSet => moveSet;
 

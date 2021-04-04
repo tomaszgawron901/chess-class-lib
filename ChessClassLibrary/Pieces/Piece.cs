@@ -1,9 +1,4 @@
 ﻿using ChessClassLibrary.enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Pieces
 {
@@ -47,14 +42,15 @@ namespace ChessClassLibrary.Pieces
         public Position Position
         {
             get { return position; }
-            set {
+            set
+            {
                 position = value;
             }
         }
 
         public abstract Position[] MoveSet { get; }
 
-        public abstract Position[] KillSet  { get; }
+        public abstract Position[] KillSet { get; }
 
         protected Piece(PieceColor color, PieceType type, Position position)
         {

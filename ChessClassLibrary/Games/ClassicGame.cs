@@ -6,8 +6,6 @@ using ChessClassLibrary.Pieces.SlowPieces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Games
 {
@@ -21,7 +19,7 @@ namespace ChessClassLibrary.Games
             currentPlayerColor = PieceColor.White;
         }
 
-        #region Common Piece Rools
+        #region Common Piece Rules
         public bool CanPerformMove(Move move)
         {
             Piece pickedPiece = this.board.GetPiece(move.current);
@@ -32,7 +30,7 @@ namespace ChessClassLibrary.Games
 
             if (pickedPiece is King && CanCastle(pickedPiece as King, move.destination)) return true;
 
-            if (CanMovePiece(pickedPiece, move.destination)) return true;;
+            if (CanMovePiece(pickedPiece, move.destination)) return true; ;
 
             return false;
         }
@@ -90,7 +88,7 @@ namespace ChessClassLibrary.Games
 
         private bool PretendMovesAndCheckIfKingIsChecked(Move move)
         {
-            return PretendMovesAndCheckIfKingIsChecked(new List<Move>() {move});
+            return PretendMovesAndCheckIfKingIsChecked(new List<Move>() { move });
         }
         #endregion
 
@@ -223,7 +221,7 @@ namespace ChessClassLibrary.Games
         }
 
 
-        #region King Rools
+        #region King Rules
         private bool CanCastle(King king, Position destination)
         {
             if (king.wasMoved) return false;

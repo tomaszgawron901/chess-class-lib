@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary
 {
-    public struct Position: IEquatable<Position>
+    public struct Position : IEquatable<Position>
     {
         public readonly int x;
         public readonly int y;

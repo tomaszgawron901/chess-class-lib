@@ -6,8 +6,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Boards
 {
@@ -131,7 +129,7 @@ namespace ChessClassLibrary.Boards
         }
 
         #region Create Board
-        private void  CreateBoard()
+        private void CreateBoard()
         {
             this.pieces = new Piece[][] {
                 createRichRow(PieceColor.White, 0),

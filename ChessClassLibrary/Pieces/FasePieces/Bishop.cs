@@ -1,9 +1,4 @@
 ﻿using ChessClassLibrary.enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Pieces.FasePieces
 {
@@ -24,7 +19,8 @@ namespace ChessClassLibrary.Pieces.FasePieces
             };
 
         public Bishop(PieceColor color, Position position) :
-            base(color, PieceType.Bishop, position) {}
+            base(color, PieceType.Bishop, position)
+        { }
 
         public override Position[] MoveSet => moveSet;
 
