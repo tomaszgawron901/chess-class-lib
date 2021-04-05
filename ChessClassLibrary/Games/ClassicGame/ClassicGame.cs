@@ -23,14 +23,31 @@ namespace ChessClassLibrary.Games.ClassicGame
         }
 
         #region Game status
-        private void UpdateGameStatus()
+        public void UpdateGameStatus()
         {
-            throw new NotImplementedException();
+            UpdateKingState(board.WhiteKing);
+            UpdateKingState(board.BlackKing);
+            if (board.WhiteKing.IsChecked 
+                || board.WhiteKing.IsCheckmated 
+                || board.WhiteKing.IsStalemated 
+                || board.BlackKing.IsChecked 
+                || board.BlackKing.IsCheckmated 
+                || board.BlackKing.IsStalemated
+                || InsufficientMatingMaterial())
+            {
+                GameState = GameState.Ended;
+            }
         }
 
-        private void SwapPlayers()
+        public void SwapPlayers()
         {
-            throw new NotImplementedException();
+            if (currentPlayerColor == PieceColor.White)
+            {
+                currentPlayerColor = PieceColor.Black;
+            } else
+            {
+                currentPlayerColor = PieceColor.White;
+            }
         }
         #endregion
 
@@ -82,8 +99,14 @@ namespace ChessClassLibrary.Games.ClassicGame
             {
                 MovePieceToPosition(pickedPiece, move.destination);
             }
-            // TODO swap players
-            throw new NotImplementedException();
+
+            AfterMovePerformed();
+        }
+
+        public void AfterMovePerformed()
+        {
+            UpdateGameStatus();
+            SwapPlayers();
         }
         #endregion Move manager
 

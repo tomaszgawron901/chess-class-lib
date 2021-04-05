@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessClassLibrary
 {
-    public class ChessBoard
+    public class ClassicChessBoard
     {
         private static int width = 8;
         private static int height = 8;
@@ -75,7 +75,7 @@ namespace ChessClassLibrary
             get { return board; }
         }
 
-        public ChessBoard()
+        public ClassicChessBoard()
         {
             create();
         }
