@@ -56,7 +56,7 @@ namespace ChessClassLibrary.Games.ClassicGame
         public bool CanPerformMove(Move move)
         {
             Piece pickedPiece = this.board.GetPiece(move.current);
-            if (pickedPiece == null || pickedPiece.Color == currentPlayerColor)
+            if (pickedPiece == null || pickedPiece.Color != currentPlayerColor)
             {
                 return false;
             }
@@ -288,6 +288,59 @@ namespace ChessClassLibrary.Games.ClassicGame
         }
         #endregion
 
+        #region Can Move Anywhere
+        private bool canMoveAnywhere(Piece piece)
+        {
+            if (piece is SlowPiece)
+            {
+                return canMoveEnywhere(piece as SlowPiece);
+            }
+            else if (piece is FastPiece)
+            {
+                return canMoveEnywhere(piece as FastPiece);
+            }
+            return false;
+        }
+
+        private bool canMoveEnywhere(SlowPiece piece)
+        {
+            return piece.MoveSet.Any(moveMovement => canMoveToPosition(piece, piece.Position + moveMovement))
+                || piece.KillSet.Any(killMovement => canKillAtPosition(piece, piece.Position + killMovement));
+        }
+
+        private bool canMoveEnywhere(FastPiece piece)
+        {
+            return piece.MoveSet.Where(x => x != new Position(0, 0)).Any(moveMovement =>
+            {
+                for (
+                    var checkedPosition = piece.Position + moveMovement; 
+                    board.IsInRange(checkedPosition) && IsPathClear(piece.Position, checkedPosition, moveMovement); 
+                    checkedPosition += moveMovement)
+                {
+                    if (canMoveToPosition(piece, checkedPosition))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }) || piece.KillSet.Where(x => x != new Position(0, 0)).Any(moveMovement =>
+            {
+                for (
+                    var checkedPosition = piece.Position + moveMovement; 
+                    board.IsInRange(checkedPosition) && IsPathClear(piece.Position, checkedPosition, moveMovement); 
+                    checkedPosition += moveMovement)
+                {
+                    if (canKillAtPosition(piece, checkedPosition))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            });
+
+        }
+        #endregion
+
         #region King Rules
 
         #region Castle
@@ -396,22 +449,22 @@ namespace ChessClassLibrary.Games.ClassicGame
 
         private bool IsKingChecked(ClassicGameKing king)
         {
-            return CanAnyKillAtPosition(board.Where(x => x.Color != king.Color), king.Position);
+            return CanAnyKillAtPosition(board.Where(x => x != null && x.Color != king.Color), king.Position);
         }
 
         private bool IsKingCheckmated(ClassicGameKing king)
         {
-            return king.IsChecked && !canProtectFromDeath(king);
+            return king.IsChecked && !AnyPieceCanMoveAnywhere(king.Color);
         }
 
         private bool IsKingStalemated(ClassicGameKing king)
         {
-            return !king.IsChecked && (!canProtectFromDeath(king) || InsufficientMatingMaterial());
+            return !king.IsChecked && (!AnyPieceCanMoveAnywhere(king.Color) || InsufficientMatingMaterial());
         }
 
-        private bool canProtectFromDeath(ClassicGameKing king)
+        private bool AnyPieceCanMoveAnywhere(PieceColor color)
         {
-            throw new NotImplementedException();
+            return board.Where(p => p.Color == color).Any(canMoveAnywhere);
         }
 
         private void UpdateKingState(ClassicGameKing king)
@@ -430,7 +483,7 @@ namespace ChessClassLibrary.Games.ClassicGame
 
         private bool InsufficientMatingMaterial(PieceColor color)
         {
-            var colorPieces = board.Where(x => x.Color == color);
+            var colorPieces = board.Where(x => x != null && x.Color == color);
             var kingCount = colorPieces.Count(x => x.Type == PieceType.King);
             var knightCount = colorPieces.Count(x => x.Type == PieceType.Knight);
             var bishopCount = colorPieces.Count(x => x.Type == PieceType.Bishop);
