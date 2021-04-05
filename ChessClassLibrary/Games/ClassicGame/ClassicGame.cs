@@ -383,15 +383,10 @@ namespace ChessClassLibrary.Games.ClassicGame
 
         private bool IsKingStalemated(ClassicGameKing king)
         {
-            return !king.IsChecked && (!canProtectFromDeath(king) || NotEnoughtPieces());
+            return !king.IsChecked && (!canProtectFromDeath(king) || InsufficientMatingMaterial());
         }
 
         private bool canProtectFromDeath(ClassicGameKing king)
-        {
-            throw new NotImplementedException();
-        }
-
-        private bool NotEnoughtPieces()
         {
             throw new NotImplementedException();
         }
@@ -403,6 +398,23 @@ namespace ChessClassLibrary.Games.ClassicGame
             if (IsKingStalemated(king)) king.State = KingState.Stalemated;
         }
         #endregion King Rules
+
+        #region Insufficient mating material
+        private bool InsufficientMatingMaterial()
+        {
+            return InsufficientMatingMaterial(PieceColor.White) && InsufficientMatingMaterial(PieceColor.Black);
+        }
+
+        private bool InsufficientMatingMaterial(PieceColor color)
+        {
+            var colorPieces = board.Where(x => x.Color == color);
+            var kingCount = colorPieces.Count(x => x.Type == PieceType.King);
+            var knightCount = colorPieces.Count(x => x.Type == PieceType.Knight);
+            var bishopCount = colorPieces.Count(x => x.Type == PieceType.Bishop);
+            var otherCount = colorPieces.Count() - kingCount - knightCount - bishopCount;
+            return (knightCount <= 1 && bishopCount == 0) || (knightCount == 1 && bishopCount <= 1) && otherCount == 0;
+        }
+        #endregion Insufficient mating material
 
     }
 }
