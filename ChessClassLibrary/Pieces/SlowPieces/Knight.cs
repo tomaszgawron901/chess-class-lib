@@ -1,30 +1,26 @@
 ﻿using ChessClassLibrary.enums;
+using System.Collections.Generic;
 
 namespace ChessClassLibrary.Pieces.SlowPieces
 {
-    public class Knight : SlowPiece
+    public class Knight : Piece
     {
-        public static Position[] moveSet = new Position[] {
-                    new Position(-1, 2), new Position(1, 2),
-                    new Position(-1, -2), new Position(1, -2),
-                    new Position(-2, -1), new Position(-2, 1),
-                    new Position(2, -1), new Position(2, 1),
-            };
-
-        public static Position[] killSet = new Position[] {
-                    new Position(-1, 2), new Position(1, 2),
-                    new Position(-1, -2), new Position(1, -2),
-                    new Position(-2, -1), new Position(-2, 1),
-                    new Position(2, -1), new Position(2, 1),
-            };
+        protected readonly static PieceMove[] moveSet = new PieceMove[]
+        {
+            new PieceMove(new Position(-1, 2), MoveType.Move, MoveType.Kill ),
+            new PieceMove(new Position(1, 2), MoveType.Move, MoveType.Kill ),
+            new PieceMove(new Position(-1, -2), MoveType.Move, MoveType.Kill ),
+            new PieceMove(new Position(1, -2), MoveType.Move, MoveType.Kill ),
+            new PieceMove(new Position(-2, -1), MoveType.Move, MoveType.Kill ),
+            new PieceMove(new Position(-2, 1), MoveType.Move, MoveType.Kill ),
+            new PieceMove(new Position(2, -1), MoveType.Move, MoveType.Kill ),
+            new PieceMove(new Position(2, 1), MoveType.Move, MoveType.Kill ),
+        };
 
         public Knight(PieceColor color, Position position) :
             base(color, PieceType.Knight, position)
         { }
 
-        public override Position[] MoveSet => moveSet;
-
-        public override Position[] KillSet => killSet;
-
+        public override IEnumerable<PieceMove> MoveSet => moveSet;
     }
 }

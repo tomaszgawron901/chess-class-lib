@@ -15,10 +15,10 @@ namespace ChessClassLibrary.Pieces.FasePieces
         /// <param name="position">Destination position.</param>
         /// <param name="Movementset">Available movements</param>
         /// <returns></returns>
-        public override Position? CanMoveAchieve(Position position)
+        public override bool CanMoveAchieve(Position position)
         {
             if (this.Position == position)
-                return null;
+                return false;
             foreach (Position move in MoveSet)
             {
                 if (move == new Position(0, 0))
@@ -27,16 +27,16 @@ namespace ChessClassLibrary.Pieces.FasePieces
                 }
                 if (isInLine(position, move))
                 {
-                    return move;
+                    return true;
                 }
             }
-            return null;
+            return false;
         }
 
-        public override Position? CanKillAchieve(Position position)
+        public override bool CanKillAchieve(Position position)
         {
             if (this.Position == position)
-                return null;
+                return false;
             foreach (Position move in KillSet)
             {
                 if (move == new Position(0, 0))
@@ -45,16 +45,16 @@ namespace ChessClassLibrary.Pieces.FasePieces
                 }
                 if (isInLine(position, move))
                 {
-                    return move;
+                    return true;
                 }
             }
-            return null;
+            return false;
         }
 
 
-        private bool isInLine(Position destination, Position move)
+        public bool isInLine(Position destination, Position move)
         {
-            Position destinationMove = destination - this.position;
+            Position destinationMove = destination - this.Position;
             if (Math.Sign(destinationMove.x) != Math.Sign(move.x))
                 return false;
             if (Math.Sign(destinationMove.y) != Math.Sign(move.y))

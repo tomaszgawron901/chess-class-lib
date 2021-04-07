@@ -45,11 +45,20 @@
     <Compile Include="Boards\ClassicBoard.cs" />
     <Compile Include="enums\GameState.cs" />
     <Compile Include="enums\KingState.cs" />
+    <Compile Include="enums\MoveType.cs" />
     <Compile Include="enums\PieceColor.cs" />
     <Compile Include="enums\PieceType.cs" />
     <Compile Include="Games\ClassicGame\ClassicGame.cs" />
     <Compile Include="Games\ClassicGame\ClassicBoard_8x8.cs" />
-    <Compile Include="Games\ClassicGame\ClassisGameKing.cs" />
+    <Compile Include="PieceMove.cs" />
+    <Compile Include="PieceRules\BasePieceDecorator.cs" />
+    <Compile Include="PieceRules\Classic\ClassicGameBlackPiece.cs" />
+    <Compile Include="PieceRules\Classic\ClassicGameFastPiece.cs" />
+    <Compile Include="PieceRules\Classic\ProtectingPiece.cs" />
+    <Compile Include="PieceRules\Classic\SlowPieceOnBoard.cs" />
+    <Compile Include="PieceRules\Classic\ClassicGameSlowPiece.cs" />
+    <Compile Include="PieceRules\Classic\ClassicGameWhitePawn.cs" />
+    <Compile Include="PieceRules\Classic\ClassisGameKing.cs" />
     <Compile Include="Games\IGame.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="PieceBackup.cs" />
@@ -61,7 +70,6 @@
     <Compile Include="Pieces\SlowPieces\King.cs" />
     <Compile Include="Pieces\SlowPieces\Knight.cs" />
     <Compile Include="Pieces\SlowPieces\Pawn.cs" />
-    <Compile Include="Pieces\SlowPieces\SlowPiece.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

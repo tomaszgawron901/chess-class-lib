@@ -9,9 +9,9 @@ using System.Linq;
 
 namespace ChessClassLibrary.Boards
 {
-    public abstract class ClassicBoard : Board, IEnumerable<Piece>
+    public abstract class ClassicBoard : Board, IEnumerable<IPiece>
     {
-        private sealed class ClassicBoardIterator : IEnumerator<Piece>
+        private sealed class ClassicBoardIterator : IEnumerator<IPiece>
         {
             private ClassicBoard board;
             private int X;
@@ -23,7 +23,7 @@ namespace ChessClassLibrary.Boards
                 Y = 0;
             }
 
-            public Piece Current => board.Pieces[Y][X];
+            public IPiece Current => board.Pieces[Y][X];
 
             object IEnumerator.Current => Current;
 
@@ -51,7 +51,7 @@ namespace ChessClassLibrary.Boards
 
         public int Width { get; protected set; }
         public int Height { get; protected set; }
-        protected Piece[][] Pieces { get; set; }
+        protected IPiece[][] Pieces { get; set; }
 
         public ClassicBoard(int width, int height)
         {
@@ -60,7 +60,7 @@ namespace ChessClassLibrary.Boards
             CreateBoard();
         }
 
-        public override IEnumerator<Piece> GetEnumerator()
+        public override IEnumerator<IPiece> GetEnumerator()
         {
             return new ClassicBoardIterator(this);
         }
@@ -70,7 +70,7 @@ namespace ChessClassLibrary.Boards
             return position.x >= 0 && position.x < Width && position.y >= 0 && position.y < Height;
         }
 
-        public override Piece GetPiece(Position position)
+        public override IPiece GetPiece(Position position)
         {
             return this.Pieces[position.y][position.x];
         }
@@ -78,7 +78,7 @@ namespace ChessClassLibrary.Boards
         /// <summary>
         /// Add piece to the board at given position.
         /// </summary>
-        public override void SetPiece(Piece piece, Position position)
+        public override void SetPiece(IPiece piece, Position position)
         {
             if (IsInRange(position))
             {

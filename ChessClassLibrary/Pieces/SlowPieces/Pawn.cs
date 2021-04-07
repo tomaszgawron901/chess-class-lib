@@ -1,30 +1,41 @@
 ﻿using ChessClassLibrary.enums;
+using System.Collections.Generic;
 
 namespace ChessClassLibrary.Pieces.SlowPieces
 {
-    public abstract class Pawn : SlowPiece
+    public abstract class Pawn : Piece
     {
         public Pawn(PieceColor color, Position position) :
             base(color, PieceType.Pawn, position)
         { }
 
-        public abstract Position[] FirstMoveSet { get; }
+        public abstract IEnumerable<PieceMove> FirstMoveSet { get; }
     }
 
     public class WhitePawn : Pawn
     {
-        protected readonly static Position[] firstMoveSet = new Position[] { new Position(0, 1), new Position(0, 2) };
-        protected readonly static Position[] moveSet = new Position[] { new Position(0, 1) };
-        protected readonly static Position[] killSet = new Position[] { new Position(-1, 1), new Position(1, 1) };
+        protected readonly static PieceMove[] firstMoveSet = new PieceMove[]
+        {
+            new PieceMove(new Position(0, 2), MoveType.Move ),
+            new PieceMove(new Position(0, 1), MoveType.Move ),
+            new PieceMove(new Position(-1, 1), MoveType.Kill ),
+            new PieceMove(new Position(1, 1), MoveType.Kill ),
+        };
+
+        protected readonly static PieceMove[] moveSet = new PieceMove[] 
+        { 
+            new PieceMove(new Position(0, 1), MoveType.Move ),
+            new PieceMove(new Position(-1, 1), MoveType.Kill ),
+            new PieceMove(new Position(1, 1), MoveType.Kill ),
+        };
 
 
         public WhitePawn(Position position) :
             base(PieceColor.White, position)
         { }
 
-        public override Position[] FirstMoveSet => firstMoveSet;
-        public override Position[] KillSet => killSet;
-        public override Position[] MoveSet
+        public override IEnumerable<PieceMove> FirstMoveSet => firstMoveSet;
+        public override IEnumerable<PieceMove> MoveSet
         {
             get
             {
@@ -42,17 +53,28 @@ namespace ChessClassLibrary.Pieces.SlowPieces
 
     public class BlackPawn : Pawn
     {
-        protected readonly static Position[] firstMoveSet = new Position[] { new Position(0, -1), new Position(0, -2) };
-        protected readonly static Position[] moveSet = new Position[] { new Position(0, -1) };
-        protected readonly static Position[] killSet = new Position[] { new Position(-1, -1), new Position(1, -1) };
+        protected readonly static PieceMove[] firstMoveSet = new PieceMove[]
+{
+            new PieceMove(new Position(0, -2), MoveType.Move ),
+            new PieceMove(new Position(0, -1), MoveType.Move ),
+            new PieceMove(new Position(-1, -1), MoveType.Kill ),
+            new PieceMove(new Position(1, -1), MoveType.Kill ),
+};
+
+        protected readonly static PieceMove[] moveSet = new PieceMove[]
+        {
+            new PieceMove(new Position(0, -1), MoveType.Move ),
+            new PieceMove(new Position(-1, -1), MoveType.Kill ),
+            new PieceMove(new Position(1, -1), MoveType.Kill ),
+        };
+
 
         public BlackPawn(Position position) :
             base(PieceColor.Black, position)
         { }
 
-        public override Position[] FirstMoveSet => firstMoveSet;
-        public override Position[] KillSet => killSet;
-        public override Position[] MoveSet
+        public override IEnumerable<PieceMove> FirstMoveSet => firstMoveSet;
+        public override IEnumerable<PieceMove> MoveSet
         {
             get
             {

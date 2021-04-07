@@ -1,62 +1,34 @@
 ﻿using ChessClassLibrary.enums;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessClassLibrary.Pieces
 {
     public interface IPiece
     {
-        Position Position { get; set; }
+        Position Position { get;}
         PieceColor Color { get; }
         PieceType Type { get; }
-        Position[] MoveSet { get; }
-        Position[] KillSet { get; }
-        Position? CanKillAchieve(Position position);
-        Position? CanMoveAchieve(Position position);
+        bool WasMoved { get; }
+        IEnumerable<PieceMove> MoveSet { get; }
+        void MoveToPosition(Position position);
+        bool CanMoveAnywhere();
+        bool IsMoveValid(PieceMove move);
     }
 
     public abstract class Piece : IPiece
     {
-        protected PieceColor color;
-        protected PieceType type;
-        protected Position position;
-
+        public PieceColor Color { get; protected set; }
+        public PieceType Type { get; protected set; }
+        public Position Position { get; protected set; }
         public bool WasMoved { get; protected set; }
 
-        /// <summary>
-        /// Returns piece color.
-        /// </summary>
-        public PieceColor Color
-        {
-            get { return color; }
-        }
-
-        /// <summary>
-        /// Returns piece Name.
-        /// </summary>
-        public PieceType Type
-        {
-            get { return type; }
-        }
-
-        /// <summary>
-        /// The Position of Piece.
-        /// </summary>
-        public Position Position
-        {
-            get { return position; }
-            set
-            {
-                position = value;
-            }
-        }
-
-        public abstract Position[] MoveSet { get; }
-
-        public abstract Position[] KillSet { get; }
+        public abstract IEnumerable<PieceMove> MoveSet { get; }
 
         protected Piece(PieceColor color, PieceType type, Position position)
         {
-            this.color = color;
-            this.type = type;
+            this.Color = color;
+            this.Type = type;
             this.WasMoved = false;
             this.Position = position;
         }
@@ -69,13 +41,15 @@ namespace ChessClassLibrary.Pieces
             WasMoved = true;
         }
 
-        /// <summary>
-        /// Checks whether given position can by achieved by one of the given movements.
-        /// </summary>
-        /// <param name="position">Destination position.</param>
-        /// <param name="Movementset">Available movements</param>
-        /// <returns></returns>
-        public abstract Position? CanMoveAchieve(Position position);
-        public abstract Position? CanKillAchieve(Position position);
+        public virtual void MoveToPosition(Position position)
+        {
+            this.Position = position;
+        }
+        public bool CanMoveAnywhere()
+        {
+            return this.MoveSet.Any();
+        }
+
+        public virtual bool IsMoveValid(PieceMove move) => true;
     }
 }
