@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessClassLibrary.Games.ClassicGame
+namespace ChessClassLibrary.PieceRules.Classic
 {
-    public class ClassicGameSlowPiece : SlowPieceOnClassicBoard
+    public class ClassicGameSlowPiece : PieceOnBoard
     {
         protected SlowPiece piece;
         public override Piece Piece { get => piece; }

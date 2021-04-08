@@ -54,8 +54,11 @@
     <Compile Include="PieceRules\BasePieceDecorator.cs" />
     <Compile Include="PieceRules\Classic\ClassicGameBlackPiece.cs" />
     <Compile Include="PieceRules\Classic\ClassicGameFastPiece.cs" />
-    <Compile Include="PieceRules\Classic\ProtectingPiece.cs" />
-    <Compile Include="PieceRules\Classic\SlowPieceOnBoard.cs" />
+    <Compile Include="PieceRules\BoardRules\FastPieceOnBoard.cs" />
+    <Compile Include="PieceRules\Classic\KillingPieceOnBoard.cs" />
+    <Compile Include="PieceRules\Classic\MovablePieceOnBoard.cs" />
+    <Compile Include="PieceRules\Classic\ProtectorAtackerPiece.cs" />
+    <Compile Include="PieceRules\BoardRules\PieceOnBoard.cs" />
     <Compile Include="PieceRules\Classic\ClassicGameSlowPiece.cs" />
     <Compile Include="PieceRules\Classic\ClassicGameWhitePawn.cs" />
     <Compile Include="PieceRules\Classic\ClassisGameKing.cs" />

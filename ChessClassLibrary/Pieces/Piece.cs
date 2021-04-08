@@ -14,6 +14,7 @@ namespace ChessClassLibrary.Pieces
         void MoveToPosition(Position position);
         bool CanMoveAnywhere();
         bool IsMoveValid(PieceMove move);
+        PieceMove GetMoveTo(Position position);
     }
 
     public abstract class Piece : IPiece
@@ -50,6 +51,8 @@ namespace ChessClassLibrary.Pieces
             return this.MoveSet.Any();
         }
 
-        public virtual bool IsMoveValid(PieceMove move) => true;
+        public virtual bool IsMoveValid(PieceMove move) => move != null;
+
+        public virtual PieceMove GetMoveTo(Position position) => MoveSet.FirstOrDefault(x => Position + x.Shift == position);
     }
 }

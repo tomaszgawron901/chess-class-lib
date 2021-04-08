@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessClassLibrary.Games.ClassicGame
+namespace ChessClassLibrary.PieceRules.Classic
 {
-    public class ClassicGameFastPiece : SlowPieceOnClassicBoard
+    public class ClassicGameFastPiece : PieceOnBoard
     {
         protected FastPiece piece;
         public ClassicGameFastPiece(FastPiece piece, ClassicBoard_8x8 board)

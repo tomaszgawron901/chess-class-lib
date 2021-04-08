@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessClassLibrary.Games.ClassicGame
+namespace ChessClassLibrary.PieceRules.Classic
 {
     public class ClassicGameBlackPiece: ClassicGameSlowPiece
     {

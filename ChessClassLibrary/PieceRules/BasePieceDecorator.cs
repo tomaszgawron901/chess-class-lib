@@ -18,7 +18,7 @@ namespace ChessClassLibrary.PieceRules
 
         public  IPiece Piece { get => this.piece; }
 
-        public virtual IEnumerable<PieceMove> MoveSet => Piece.MoveSet;
+        public virtual IEnumerable<PieceMove> MoveSet => Piece.MoveSet.Where(IsMoveValid);
         public Position Position { get => Piece.Position; }
 
         public PieceColor Color => Piece.Color;
@@ -28,6 +28,16 @@ namespace ChessClassLibrary.PieceRules
         public bool WasMoved => Piece.WasMoved;
 
         public bool CanMoveAnywhere() => Piece.CanMoveAnywhere();
+
+        public virtual PieceMove GetMoveTo(Position position)
+        {
+            var baseMove = Piece.GetMoveTo(position);
+            if (this.IsMoveValid(baseMove))
+            {
+                return baseMove;
+            }
+            return null;
+        }
 
         public virtual bool IsMoveValid(PieceMove move) => piece.IsMoveValid(move);
 
