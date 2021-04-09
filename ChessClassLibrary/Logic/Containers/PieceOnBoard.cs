@@ -1,6 +1,5 @@
 ﻿using ChessClassLibrary.Boards;
 using ChessClassLibrary.enums;
-using ChessClassLibrary.PieceRules;
 using ChessClassLibrary.Pieces;
 using ChessClassLibrary.Pieces.SlowPieces;
 using System;
@@ -9,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessClassLibrary.PieceRules.BoardRules
+namespace ChessClassLibrary.Logic.Containers
 {
-    public class PieceOnBoard : BasePieceDecorator
+    public class PieceOnBoard : BasePieceContainer
     {
         public Board Board { get; private set; }
         public PieceOnBoard(Piece piece, Board board)
@@ -27,9 +26,13 @@ namespace ChessClassLibrary.PieceRules.BoardRules
             this.Piece.MoveToPosition(position);
         }
 
-        public new bool IsMoveValid(PieceMove move)
+        protected override PieceMove MoveModifier(PieceMove move)
         {
-            return Board.IsInRange(Position + move.Shift);
+            if (Board.IsInRange(Position + move.Shift))
+            {
+                return move;
+            }
+            return null;
         }
     }
 }

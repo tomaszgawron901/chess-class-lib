@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessClassLibrary.PieceRules.BoardRules
+namespace ChessClassLibrary.Logic.Containers
 {
     public class FastPieceOnBoard: PieceOnBoard
     {

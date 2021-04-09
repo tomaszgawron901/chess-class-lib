@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessClassLibrary.PieceRules.Classic
+namespace ChessClassLibrary.Logic.Rules
 {
-    public class ProtectorAtackerPiece : BasePieceDecorator
+    public class ProtectorAtackerPiece : BasePieceRule
     {
         public IPiece ProtectedPiece { get; protected set; }
         public IPiece AtackedPiece { get; protected set; }
         public Board Board { get; set; }
-        public ProtectorAtackerPiece(IPiece piece, IPiece protectedPiece, IPiece atackedPiece, Board board)
+        public ProtectorAtackerPiece(BasePieceDecorator piece, IPiece protectedPiece, IPiece atackedPiece, Board board)
             : base(piece)
         {
             this.ProtectedPiece = protectedPiece;
@@ -22,9 +22,9 @@ namespace ChessClassLibrary.PieceRules.Classic
             this.Board = board;
         }
 
-        public new IEnumerable<PieceMove> MoveSet => Piece.MoveSet.Where(IsMoveValid);
+        public new IEnumerable<PieceMove> MoveSet => Piece.MoveSet.Where(isProtectedPieceSafeAfterMove);
 
-        public new bool IsMoveValid(PieceMove move)
+        private bool isProtectedPieceSafeAfterMove(PieceMove move)
         {
             var destinationPostion = Position + move.Shift;
             IPiece pieceAtDestinationPosition = Board.GetPiece(destinationPostion);
@@ -52,6 +52,20 @@ namespace ChessClassLibrary.PieceRules.Classic
                 }
                 return !KingIsChecked;
             }
+        }
+
+        protected override PieceMove MoveModifier(PieceMove move)
+        {
+            if (isProtectedPieceSafeAfterMove(move))
+            {
+                return move;
+            }
+            return null;
+        }
+
+        public override bool ValidateNewMove(PieceMove move)
+        {
+            return InnerPieceDecorator.ValidateNewMove(move) && isProtectedPieceSafeAfterMove(move);
         }
     }
 }

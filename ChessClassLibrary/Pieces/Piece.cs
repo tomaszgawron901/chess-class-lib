@@ -12,8 +12,6 @@ namespace ChessClassLibrary.Pieces
         bool WasMoved { get; }
         IEnumerable<PieceMove> MoveSet { get; }
         void MoveToPosition(Position position);
-        bool CanMoveAnywhere();
-        bool IsMoveValid(PieceMove move);
         PieceMove GetMoveTo(Position position);
     }
 
@@ -46,13 +44,6 @@ namespace ChessClassLibrary.Pieces
         {
             this.Position = position;
         }
-        public bool CanMoveAnywhere()
-        {
-            return this.MoveSet.Any();
-        }
-
-        public virtual bool IsMoveValid(PieceMove move) => move != null;
-
         public virtual PieceMove GetMoveTo(Position position) => MoveSet.FirstOrDefault(x => Position + x.Shift == position);
     }
 }
