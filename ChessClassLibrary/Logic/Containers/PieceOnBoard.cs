@@ -12,12 +12,9 @@ namespace ChessClassLibrary.Logic.Containers
 {
     public class PieceOnBoard : BasePieceContainer
     {
-        public Board Board { get; private set; }
         public PieceOnBoard(Piece piece, Board board)
-            : base(piece)
-        {
-            this.Board = board;
-        }
+            : base(piece, board)
+        {}
 
         public new void MoveToPosition(Position position)
         {

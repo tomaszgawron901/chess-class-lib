@@ -1,4 +1,5 @@
-﻿using ChessClassLibrary.enums;
+﻿using ChessClassLibrary.Boards;
+using ChessClassLibrary.enums;
 using ChessClassLibrary.Pieces;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,10 @@ namespace ChessClassLibrary.Logic
 {
     public abstract class BasePieceDecorator : IPiece
     {
-        public BasePieceDecorator() {}
+        public BasePieceDecorator(){}
 
         public abstract IPiece Piece { get; }
+        public abstract Board Board { get; }
 
         public abstract IEnumerable<PieceMove> MoveSet { get; }
 

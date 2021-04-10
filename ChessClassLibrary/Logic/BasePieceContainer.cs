@@ -1,4 +1,5 @@
-﻿using ChessClassLibrary.Pieces;
+﻿using ChessClassLibrary.Boards;
+using ChessClassLibrary.Pieces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,13 @@ namespace ChessClassLibrary.Logic
     public abstract class BasePieceContainer : BasePieceDecorator
     {
         protected IPiece piece;
+        protected Board board;
+        public override Board Board => board;
 
-        public BasePieceContainer(IPiece piece)
+        public BasePieceContainer(IPiece piece, Board board)
         {
             this.piece = piece;
+            this.board = board;
         }
 
         public override IPiece Piece => this.piece;

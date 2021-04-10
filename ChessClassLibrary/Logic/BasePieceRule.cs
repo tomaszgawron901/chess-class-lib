@@ -1,4 +1,5 @@
-﻿using ChessClassLibrary.Pieces;
+﻿using ChessClassLibrary.Boards;
+using ChessClassLibrary.Pieces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace ChessClassLibrary.Logic
         {
             this.pieceDecorator = pieceDecorator;
         }
+
+        public override Board Board => this.pieceDecorator.Board;
 
         public override IPiece Piece => pieceDecorator;
         public BasePieceDecorator InnerPieceDecorator => pieceDecorator;

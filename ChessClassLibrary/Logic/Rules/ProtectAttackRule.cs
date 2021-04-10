@@ -9,22 +9,20 @@ using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic.Rules
 {
-    public class ProtectorAtackerPiece : BasePieceRule
+    public class ProtectAttackRule : BasePieceRule
     {
         public IPiece ProtectedPiece { get; protected set; }
         public IPiece AtackedPiece { get; protected set; }
-        public Board Board { get; set; }
-        public ProtectorAtackerPiece(BasePieceDecorator piece, IPiece protectedPiece, IPiece atackedPiece, Board board)
+        public ProtectAttackRule(BasePieceDecorator piece, IPiece protectedPiece, IPiece atackedPiece=null)
             : base(piece)
         {
             this.ProtectedPiece = protectedPiece;
             this.AtackedPiece = atackedPiece;
-            this.Board = board;
         }
 
         public new IEnumerable<PieceMove> MoveSet => Piece.MoveSet.Where(isProtectedPieceSafeAfterMove);
 
-        private bool isProtectedPieceSafeAfterMove(PieceMove move)
+        protected bool isProtectedPieceSafeAfterMove(PieceMove move)
         {
             var destinationPostion = Position + move.Shift;
             IPiece pieceAtDestinationPosition = Board.GetPiece(destinationPostion);
