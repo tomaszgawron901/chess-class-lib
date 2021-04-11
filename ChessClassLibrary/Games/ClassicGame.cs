@@ -32,18 +32,33 @@ namespace ChessClassLibrary.Games.ClassicGame
         #region Game status
         public void UpdateGameStatus()
         {
-            UpdateKingState(board.WhiteKing);
-            UpdateKingState(board.BlackKing);
-            if (board.WhiteKing.IsChecked 
-                || board.WhiteKing.IsCheckmated 
-                || board.WhiteKing.IsStalemated 
-                || board.BlackKing.IsChecked 
-                || board.BlackKing.IsCheckmated 
-                || board.BlackKing.IsStalemated
+            WhiteKing.UpdateState();
+            BlackKing.UpdateState();
+            if (WhiteKing.IsChecked 
+                || WhiteKing.IsCheckmated 
+                || WhiteKing.IsStalemated 
+                || BlackKing.IsChecked 
+                || BlackKing.IsCheckmated
+                || BlackKing.IsStalemated
                 || InsufficientMatingMaterial())
             {
                 GameState = GameState.Ended;
             }
+        }
+
+        public bool InsufficientMatingMaterial()
+        {
+            return InsufficientMatingMaterial(PieceColor.White) && InsufficientMatingMaterial(PieceColor.Black);
+        }
+
+        private bool InsufficientMatingMaterial(PieceColor color)
+        {
+            var colorPieces = board.Where(x => x != null && x.Color == color);
+            var kingCount = colorPieces.Count(x => x.Type == PieceType.King);
+            var knightCount = colorPieces.Count(x => x.Type == PieceType.Knight);
+            var bishopCount = colorPieces.Count(x => x.Type == PieceType.Bishop);
+            var otherCount = colorPieces.Count() - kingCount - knightCount - bishopCount;
+            return (knightCount <= 1 && bishopCount == 0) || (knightCount == 1 && bishopCount <= 1) && otherCount == 0;
         }
 
         public void SwapPlayers()
@@ -58,7 +73,7 @@ namespace ChessClassLibrary.Games.ClassicGame
         }
         #endregion
 
-        #region Board
+        #region Create Board
         private void CreateBoard()
         {
             WhiteKing = CreateKing(new King(PieceColor.White, new Position(0, 4)));
@@ -151,8 +166,7 @@ namespace ChessClassLibrary.Games.ClassicGame
 
         public void PerformMove(BoardMove move)
         {
-
-
+            board.GetPiece(move.current).MoveToPosition(move.destination);
             AfterMovePerformed();
         }
 
@@ -163,7 +177,7 @@ namespace ChessClassLibrary.Games.ClassicGame
         }
         #endregion Move manager
 
-
+        #region Create Piece
 
         #region Protector
         private BasePieceDecorator CreateWhiteProtector(BasePieceDecorator piece)
@@ -188,7 +202,7 @@ namespace ChessClassLibrary.Games.ClassicGame
             }
             return piece;
         }
-        #endregion
+        #endregion Protector
 
         private ProtectedPieceRule CreateKing(IPiece piece)
         {
@@ -204,5 +218,7 @@ namespace ChessClassLibrary.Games.ClassicGame
         {
             return this.CreateProtector(new KillRule(new MoveRule(new FastPieceOnBoard(piece, board))));
         }
+        #endregion Create Piece
+
     }
 }

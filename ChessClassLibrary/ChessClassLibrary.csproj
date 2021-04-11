@@ -48,8 +48,7 @@
     <Compile Include="enums\MoveType.cs" />
     <Compile Include="enums\PieceColor.cs" />
     <Compile Include="enums\PieceType.cs" />
-    <Compile Include="Games\ClassicGame\ClassicGame.cs" />
-    <Compile Include="Games\ClassicGame\ClassicBoard_8x8.cs" />
+    <Compile Include="Games\ClassicGame.cs" />
     <Compile Include="Logic\Rules\ProtectedPieceRule.cs" />
     <Compile Include="PieceMove.cs" />
     <Compile Include="Logic\BasePieceContainer.cs" />
