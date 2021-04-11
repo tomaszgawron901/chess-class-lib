@@ -62,7 +62,7 @@
     <Compile Include="Logic\Containers\PieceOnBoard.cs" />
     <Compile Include="Logic\Rules\CastleRule.cs" />
     <Compile Include="Games\IGame.cs" />
-    <Compile Include="Move.cs" />
+    <Compile Include="BoardMove.cs" />
     <Compile Include="PieceBackup.cs" />
     <Compile Include="Pieces\FasePieces\Bishop.cs" />
     <Compile Include="Pieces\FasePieces\Queen.cs" />

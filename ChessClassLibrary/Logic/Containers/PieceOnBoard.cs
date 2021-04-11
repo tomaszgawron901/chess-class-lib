@@ -12,7 +12,7 @@ namespace ChessClassLibrary.Logic.Containers
 {
     public class PieceOnBoard : BasePieceContainer
     {
-        public PieceOnBoard(Piece piece, Board board)
+        public PieceOnBoard(IPiece piece, Board board)
             : base(piece, board)
         {}
 

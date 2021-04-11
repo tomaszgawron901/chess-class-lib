@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace ChessClassLibrary.Boards
 {
-    public abstract class ClassicBoard : Board, IEnumerable<IPiece>
+    public class ClassicBoard : Board, IEnumerable<IPiece>
     {
         private sealed class ClassicBoardIterator : IEnumerator<IPiece>
         {
@@ -23,7 +23,7 @@ namespace ChessClassLibrary.Boards
                 Y = 0;
             }
 
-            public IPiece Current => board.Pieces[Y][X];
+            public IPiece Current => board.Pieces[Y, X];
 
             object IEnumerator.Current => Current;
 
@@ -51,13 +51,13 @@ namespace ChessClassLibrary.Boards
 
         public int Width { get; protected set; }
         public int Height { get; protected set; }
-        protected IPiece[][] Pieces { get; set; }
+        protected IPiece[,] Pieces { get; set; }
 
-        public ClassicBoard(int width, int height)
+        public ClassicBoard(IPiece[,] pieces)
         {
-            this.Width = width;
-            this.Height = height;
-            CreateBoard();
+            this.Pieces = pieces;
+            this.Height = pieces.GetLength(0);
+            this.Width = pieces.GetLength(1);
         }
 
         public override IEnumerator<IPiece> GetEnumerator()
@@ -72,7 +72,7 @@ namespace ChessClassLibrary.Boards
 
         public override IPiece GetPiece(Position position)
         {
-            return this.Pieces[position.y][position.x];
+            return this.Pieces[position.y,position.x];
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace ChessClassLibrary.Boards
         {
             if (IsInRange(position))
             {
-                Pieces[position.y][position.x] = piece;
+                Pieces[position.y, position.x] = piece;
             }
             else
             {
@@ -96,12 +96,9 @@ namespace ChessClassLibrary.Boards
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    Pieces[y][x] = null;
+                    Pieces[y, x] = null;
                 }
             }
         }
-
-        protected abstract void CreateBoard();
-
     }
 }

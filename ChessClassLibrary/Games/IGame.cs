@@ -2,8 +2,8 @@
 {
     public interface IGame
     {
-        bool CanPerformMove(Move move);
-        void TryPerformMove(Move move);
-        void PerformMove(Move move);
+        bool CanPerformMove(BoardMove move);
+        void TryPerformMove(BoardMove move);
+        void PerformMove(BoardMove move);
     }
 }

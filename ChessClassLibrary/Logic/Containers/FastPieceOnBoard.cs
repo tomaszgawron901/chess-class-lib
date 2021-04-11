@@ -12,7 +12,7 @@ namespace ChessClassLibrary.Logic.Containers
 {
     public class FastPieceOnBoard: PieceOnBoard
     {
-        public FastPieceOnBoard(Piece piece, Board board)
+        public FastPieceOnBoard(IPiece piece, Board board)
             : base(piece, board)
         {}
 

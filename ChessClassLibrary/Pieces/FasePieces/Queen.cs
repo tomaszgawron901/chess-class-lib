@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ChessClassLibrary.Pieces.FasePieces
 {
-    public class Queen : FastPiece
+    public class Queen : Piece
     {
         protected readonly static PieceMove[] moveSet = new PieceMove[]
         {
