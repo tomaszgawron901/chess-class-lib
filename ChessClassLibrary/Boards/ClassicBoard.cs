@@ -90,6 +90,11 @@ namespace ChessClassLibrary.Boards
             }
         }
 
+        public void SetPiece(IPiece piece)
+        {
+            SetPiece(piece, piece.Position);
+        }
+
         public override void Clear()
         {
             for (int y = 0; y < Height; y++)

@@ -78,66 +78,63 @@ namespace ChessClassLibrary.Games.ClassicGame
         {
             WhiteKing = CreateKing(new King(PieceColor.White, new Position(0, 4)));
             BlackKing = CreateKing(new King(PieceColor.Black, new Position(7, 4)));
-            var pieces = new IPiece[8, 8];
+            board = new ClassicBoard(new IPiece[8, 8]);
 
-            InsertRichRow(PieceColor.White, 0, pieces);
-            InsertPawnRow(PieceColor.White, 1, pieces);
-            InsertEmptyRow(2, pieces);
-            InsertEmptyRow(3, pieces);
-            InsertEmptyRow(4, pieces);
-            InsertEmptyRow(5, pieces);
-            InsertPawnRow(PieceColor.Black, 6, pieces);
-            InsertRichRow(PieceColor.Black, 7, pieces);
+            InsertRichRow(PieceColor.White, 0);
+            InsertPawnRow(PieceColor.White, 1);
+            InsertEmptyRow(2);
+            InsertEmptyRow(3);
+            InsertEmptyRow(4);
+            InsertEmptyRow(5);
+            InsertPawnRow(PieceColor.Black, 6);
+            InsertRichRow(PieceColor.Black, 7);
 
-            board = new ClassicBoard(pieces);
+            
         }
 
-        private void InsertEmptyRow(int row, IPiece[,] pieces)
+        private void InsertEmptyRow(int row)
         {
-            int col = pieces.GetLength(1);
-            for (int i = 0; i < col; i++)
+            for (int i = 0; i < board.Width; i++)
             {
-                pieces[row, col] = null;
+                board.SetPiece(null, new Position(row, 1));
             }
         }
 
-        private void InsertPawnRow(PieceColor color, int row, IPiece[,] pieces)
+        private void InsertPawnRow(PieceColor color, int row)
         {
-            int col = pieces.GetLength(1);
             if (color == PieceColor.White)
             {
-                for (int i = 0; i < col; i++)
+                for (int i = 0; i < board.Width; i++)
                 {
-                    pieces[row, col] = CreateProtector(CreateSlowPiece(new WhitePawn(new Position(row, col))));
+                    board.SetPiece(CreateProtector(CreateSlowPiece(new WhitePawn(new Position(row, i)))));
                 }
             }
             else if (color == PieceColor.Black)
             {
-                for (int i = 0; i < col; i++)
+                for (int i = 0; i < board.Width; i++)
                 {
-                    pieces[row, col] = CreateProtector(CreateSlowPiece(new WhitePawn(new Position(row, col))));
+                    board.SetPiece(CreateProtector(CreateSlowPiece(new BlackPawn(new Position(row, i)))));
                 }
             }
         }
 
-        private void InsertRichRow(PieceColor color, int row, IPiece[,] pieces)
+        private void InsertRichRow(PieceColor color, int row)
         {
-            pieces[row, 0] = CreateProtector(CreateFastPiece(new Rook(color, new Position(row, 0))));
-
-            pieces[row, 1] = CreateProtector(CreateFastPiece(new Knight(color, new Position(row, 1))));
-            pieces[row, 2] = CreateProtector(CreateFastPiece(new Bishop(color, new Position(row, 2))));
-            pieces[row, 3] = CreateProtector(CreateFastPiece(new Queen(color, new Position(row, 3))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Rook(color, new Position(row, 0)))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Knight(color, new Position(row, 1)))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Bishop(color, new Position(row, 2)))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Queen(color, new Position(row, 3)))));
             if (color == PieceColor.White)
             {
-                pieces[row, 4] = WhiteKing;
+                board.SetPiece(WhiteKing);
             }
             else if (color == PieceColor.Black)
             {
-                pieces[row, 4] = BlackKing;
+                board.SetPiece(BlackKing);
             }
-            pieces[row, 5] = CreateProtector(CreateFastPiece(new Bishop(color, new Position(row, 5))));
-            pieces[row, 6] = CreateProtector(CreateFastPiece(new Knight(color, new Position(row, 6))));
-            pieces[row, 7] = CreateProtector(CreateFastPiece(new Rook(color, new Position(row, 7))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Bishop(color, new Position(row, 5)))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Knight(color, new Position(row, 6)))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Rook(color, new Position(row, 7)))));
         }
         #endregion
 
