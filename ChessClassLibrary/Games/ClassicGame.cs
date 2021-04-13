@@ -208,12 +208,12 @@ namespace ChessClassLibrary.Games.ClassicGame
 
         private BasePieceDecorator CreateSlowPiece(IPiece piece)
         {
-            return this.CreateProtector(new KillRule(new MoveRule(new PieceOnBoard(piece, board))));
+            return new KillRule(new MoveRule(new PieceOnBoard(piece, board)));
         }
 
         private BasePieceDecorator CreateFastPiece(IPiece piece)
         {
-            return this.CreateProtector(new KillRule(new MoveRule(new FastPieceOnBoard(piece, board))));
+            return new KillRule(new MoveRule(new FastPieceOnBoard(piece, board)));
         }
         #endregion Create Piece
 

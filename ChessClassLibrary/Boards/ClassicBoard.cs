@@ -90,7 +90,7 @@ namespace ChessClassLibrary.Boards
             }
         }
 
-        public void SetPiece(IPiece piece)
+        public override void SetPiece(IPiece piece)
         {
             SetPiece(piece, piece.Position);
         }

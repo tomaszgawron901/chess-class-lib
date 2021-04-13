@@ -26,17 +26,21 @@ namespace ChessClassLibrary.Logic.Rules
         {
             var destinationPostion = Position + move.Shift;
             IPiece pieceAtDestinationPosition = Board.GetPiece(destinationPostion);
-            if (pieceAtDestinationPosition == AtackedPiece)
+            IPiece currentPiece = Board.GetPiece(Position);
+            if (pieceAtDestinationPosition != null && pieceAtDestinationPosition == AtackedPiece)
             {
                 return true;
             }
             else
             {
                 var backup = new Stack<PieceBackup>();
-                backup.Push(new PieceBackup(Piece, Position));
+                backup.Push(new PieceBackup(currentPiece, Position));
                 backup.Push(new PieceBackup(pieceAtDestinationPosition, destinationPostion));
 
-                this.MoveToPosition(destinationPostion);
+
+                Board.SetPiece(null, Position);
+                currentPiece.Position = destinationPostion;
+                Board.SetPiece(currentPiece);
 
                 bool KingIsChecked = Board
                     .Where(piece => piece != null && piece.Color != this.Color)
@@ -46,7 +50,11 @@ namespace ChessClassLibrary.Logic.Rules
                 while (backup.Count > 0)
                 {
                     var pieceBackup = backup.Pop();
-                    pieceBackup.piece.MoveToPosition(pieceBackup.position);
+                    if (pieceBackup.piece != null)
+                    {
+                        pieceBackup.piece.Position = pieceBackup.position;
+                    }
+                    Board.SetPiece(pieceBackup.piece, pieceBackup.position);
                 }
                 return !KingIsChecked;
             }

@@ -18,13 +18,12 @@ namespace ChessClassLibrary.Logic
 
         public abstract IEnumerable<PieceMove> MoveSet { get; }
 
-        public Position Position { get => Piece.Position; }
-
-        public PieceColor Color => Piece.Color;
-
-        public PieceType Type => Piece.Type;
-
         public bool WasMoved => Piece.WasMoved;
+
+        public Position Position { get => Piece.Position; set => Piece.Position = value; }
+        public PieceColor Color { get => Piece.Color; set => Piece.Color = value; }
+        public PieceType Type { get => Piece.Type; set => Piece.Type = value; }
+
         protected abstract PieceMove MoveModifier(PieceMove move);
 
         public abstract bool ValidateNewMove(PieceMove move);

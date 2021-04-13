@@ -6,9 +6,9 @@ namespace ChessClassLibrary.Pieces
 {
     public interface IPiece
     {
-        Position Position { get;}
-        PieceColor Color { get; }
-        PieceType Type { get; }
+        Position Position { get; set; }
+        PieceColor Color { get; set; }
+        PieceType Type { get; set; }
         bool WasMoved { get; }
         IEnumerable<PieceMove> MoveSet { get; }
         void MoveToPosition(Position position);
@@ -17,9 +17,9 @@ namespace ChessClassLibrary.Pieces
 
     public abstract class Piece : IPiece
     {
-        public PieceColor Color { get; protected set; }
-        public PieceType Type { get; protected set; }
-        public Position Position { get; protected set; }
+        public PieceColor Color { get; set; }
+        public PieceType Type { get; set; }
+        public Position Position { get; set; }
         public bool WasMoved { get; protected set; }
 
         public abstract IEnumerable<PieceMove> MoveSet { get; }
