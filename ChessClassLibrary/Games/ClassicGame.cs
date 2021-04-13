@@ -14,12 +14,12 @@ namespace ChessClassLibrary.Games.ClassicGame
 {
     public class ClassicGame : IGame
     {
-        private ClassicBoard board;
-        private PieceColor currentPlayerColor;
-        public GameState GameState { get; private set; }
+        protected ClassicBoard board;
+        protected PieceColor currentPlayerColor;
+        protected GameState GameState { get; private set; }
 
-        private ProtectedPieceRule WhiteKing { get; set; }
-        private ProtectedPieceRule BlackKing { get; set; }
+        protected ProtectedPieceRule WhiteKing { get; set; }
+        protected ProtectedPieceRule BlackKing { get; set; }
 
 
         public ClassicGame()
@@ -76,8 +76,8 @@ namespace ChessClassLibrary.Games.ClassicGame
         #region Create Board
         private void CreateBoard()
         {
-            WhiteKing = CreateKing(new King(PieceColor.White, new Position(0, 4)));
-            BlackKing = CreateKing(new King(PieceColor.Black, new Position(7, 4)));
+            WhiteKing = CreateKing(new King(PieceColor.White, new Position(4, 0)));
+            BlackKing = CreateKing(new King(PieceColor.Black, new Position(4, 7)));
             board = new ClassicBoard(new IPiece[8, 8]);
 
             InsertRichRow(PieceColor.White, 0);
@@ -96,7 +96,7 @@ namespace ChessClassLibrary.Games.ClassicGame
         {
             for (int i = 0; i < board.Width; i++)
             {
-                board.SetPiece(null, new Position(row, 1));
+                board.SetPiece(null, new Position(1, row));
             }
         }
 
@@ -106,24 +106,24 @@ namespace ChessClassLibrary.Games.ClassicGame
             {
                 for (int i = 0; i < board.Width; i++)
                 {
-                    board.SetPiece(CreateProtector(CreateSlowPiece(new WhitePawn(new Position(row, i)))));
+                    board.SetPiece(CreateProtector(CreateSlowPiece(new WhitePawn(new Position(i, row)))));
                 }
             }
             else if (color == PieceColor.Black)
             {
                 for (int i = 0; i < board.Width; i++)
                 {
-                    board.SetPiece(CreateProtector(CreateSlowPiece(new BlackPawn(new Position(row, i)))));
+                    board.SetPiece(CreateProtector(CreateSlowPiece(new BlackPawn(new Position(i, row)))));
                 }
             }
         }
 
         private void InsertRichRow(PieceColor color, int row)
         {
-            board.SetPiece(CreateProtector(CreateFastPiece(new Rook(color, new Position(row, 0)))));
-            board.SetPiece(CreateProtector(CreateFastPiece(new Knight(color, new Position(row, 1)))));
-            board.SetPiece(CreateProtector(CreateFastPiece(new Bishop(color, new Position(row, 2)))));
-            board.SetPiece(CreateProtector(CreateFastPiece(new Queen(color, new Position(row, 3)))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Rook(color, new Position(0, row)))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Knight(color, new Position(1, row)))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Bishop(color, new Position(2, row)))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Queen(color, new Position(3, row)))));
             if (color == PieceColor.White)
             {
                 board.SetPiece(WhiteKing);
@@ -132,9 +132,9 @@ namespace ChessClassLibrary.Games.ClassicGame
             {
                 board.SetPiece(BlackKing);
             }
-            board.SetPiece(CreateProtector(CreateFastPiece(new Bishop(color, new Position(row, 5)))));
-            board.SetPiece(CreateProtector(CreateFastPiece(new Knight(color, new Position(row, 6)))));
-            board.SetPiece(CreateProtector(CreateFastPiece(new Rook(color, new Position(row, 7)))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Bishop(color, new Position(5, row)))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Knight(color, new Position(6 , row)))));
+            board.SetPiece(CreateProtector(CreateFastPiece(new Rook(color, new Position(7, row)))));
         }
         #endregion
 

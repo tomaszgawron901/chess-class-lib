@@ -1,5 +1,6 @@
 ﻿using ChessClassLibrary.enums;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessClassLibrary.Pieces.FasePieces
 {
@@ -17,6 +18,6 @@ namespace ChessClassLibrary.Pieces.FasePieces
             base(color, PieceType.Rook, position)
         { }
 
-        public override IEnumerable<PieceMove> MoveSet => moveSet;
+        public override IEnumerable<PieceMove> MoveSet => moveSet.Select(x => new PieceMove(x.Shift, x.MoveTypes.Select(y => y).ToArray()));
     }
 }

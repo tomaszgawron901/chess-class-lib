@@ -27,13 +27,13 @@ namespace ChessClassLibrary.Logic.Rules
         {
             get
             {
-                var newMoveSet = Piece.MoveSet.ToList();
-                if (CanLeftCastle())
+                var newMoveSet = Piece.MoveSet;
+                if (CanLeftCastle() && InnerPieceDecorator.ValidateNewMove(leftCastleMove))
                 {
                     var existingMove = newMoveSet.FirstOrDefault(x => x.Shift == LeftCastleMove.Shift);
                     if (existingMove == null)
                     {
-                        newMoveSet.Append(leftCastleMove);
+                        newMoveSet = newMoveSet.Append(leftCastleMove);
                     }
                     else
                     {
@@ -48,7 +48,7 @@ namespace ChessClassLibrary.Logic.Rules
                     var existingMove = newMoveSet.FirstOrDefault(x => x.Shift == RightCastleMove.Shift);
                     if (existingMove == null)
                     {
-                        newMoveSet.Append(rightCastleMove);
+                        newMoveSet = newMoveSet.Append(rightCastleMove);
                     }
                     else
                     {

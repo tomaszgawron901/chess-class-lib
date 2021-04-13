@@ -23,7 +23,7 @@ namespace ChessClassLibrary.Boards
                 Y = 0;
             }
 
-            public IPiece Current => board.Pieces[Y, X];
+            public IPiece Current => board.Pieces[X, Y];
 
             object IEnumerator.Current => Current;
 
@@ -56,8 +56,8 @@ namespace ChessClassLibrary.Boards
         public ClassicBoard(IPiece[,] pieces)
         {
             this.Pieces = pieces;
-            this.Height = pieces.GetLength(0);
-            this.Width = pieces.GetLength(1);
+            this.Height = pieces.GetLength(1);
+            this.Width = pieces.GetLength(0);
         }
 
         public override IEnumerator<IPiece> GetEnumerator()
@@ -72,7 +72,7 @@ namespace ChessClassLibrary.Boards
 
         public override IPiece GetPiece(Position position)
         {
-            return this.Pieces[position.y,position.x];
+            return this.Pieces[position.x, position.y];
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace ChessClassLibrary.Boards
         {
             if (IsInRange(position))
             {
-                Pieces[position.y, position.x] = piece;
+                Pieces[position.x, position.y] = piece;
             }
             else
             {
@@ -101,7 +101,7 @@ namespace ChessClassLibrary.Boards
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    Pieces[y, x] = null;
+                    Pieces[x, y] = null;
                 }
             }
         }

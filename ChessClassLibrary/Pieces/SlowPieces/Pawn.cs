@@ -1,5 +1,6 @@
 ﻿using ChessClassLibrary.enums;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessClassLibrary.Pieces.SlowPieces
 {
@@ -34,18 +35,18 @@ namespace ChessClassLibrary.Pieces.SlowPieces
             base(PieceColor.White, position)
         { }
 
-        public override IEnumerable<PieceMove> FirstMoveSet => firstMoveSet;
+        public override IEnumerable<PieceMove> FirstMoveSet => firstMoveSet.Select(x => new PieceMove(x.Shift, x.MoveTypes.Select(y => y).ToArray()));
         public override IEnumerable<PieceMove> MoveSet
         {
             get
             {
                 if (this.WasMoved)
                 {
-                    return moveSet;
+                    return moveSet.Select(x => new PieceMove(x.Shift, x.MoveTypes.Select(y => y).ToArray())); ;
                 }
                 else
                 {
-                    return firstMoveSet;
+                    return FirstMoveSet;
                 }
             }
         }

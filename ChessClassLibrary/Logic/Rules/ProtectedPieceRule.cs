@@ -20,7 +20,20 @@ namespace ChessClassLibrary.Logic.Rules
 
         public void UpdateState()
         {
-            throw new NotImplementedException();
+            KingState = KingState.None;
+            if (Board.Any(piece => piece != null && piece.Color != Color && piece.MoveSet.Any(move => move.MoveTypes.Contains(MoveType.Kill))))
+            {
+                KingState = KingState.Checked;
+                if (!Board.Any(piece => piece != null && piece.Color == Color && piece.MoveSet.Any()))
+                {
+                    KingState = KingState.Checkmated;
+                }
+
+            }
+            else if (!Board.Any(piece => piece != null && piece.Color == Color && piece.MoveSet.Any()))
+            {
+                KingState = KingState.Stalemated;
+            }
         }
     }
 }

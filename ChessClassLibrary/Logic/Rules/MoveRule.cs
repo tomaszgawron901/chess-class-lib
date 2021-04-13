@@ -27,6 +27,10 @@ namespace ChessClassLibrary.Logic.Rules
                 else
                 {
                     move.MoveTypes = move.MoveTypes.Where(m => m != MoveType.Move).ToArray();
+                    if (move.MoveTypes.Length == 0)
+                    {
+                        return null;
+                    }
                 }
                 return move;
             }
