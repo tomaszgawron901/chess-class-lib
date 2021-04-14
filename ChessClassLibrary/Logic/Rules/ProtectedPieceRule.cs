@@ -21,7 +21,7 @@ namespace ChessClassLibrary.Logic.Rules
         public void UpdateState()
         {
             KingState = KingState.None;
-            if (Board.Any(piece => piece != null && piece.Color != Color && piece.MoveSet.Any(move => move.MoveTypes.Contains(MoveType.Kill))))
+            if (Board.Any(piece => piece != null && piece.Color != Color && moveContainsKill(piece.GetMoveTo(Position))))
             {
                 KingState = KingState.Checked;
                 if (!Board.Any(piece => piece != null && piece.Color == Color && piece.MoveSet.Any()))
@@ -35,5 +35,7 @@ namespace ChessClassLibrary.Logic.Rules
                 KingState = KingState.Stalemated;
             }
         }
+
+        private bool moveContainsKill(PieceMove move) => move != null && move.MoveTypes.Contains(MoveType.Kill);
     }
 }

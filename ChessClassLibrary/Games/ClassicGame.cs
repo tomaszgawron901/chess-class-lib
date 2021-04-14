@@ -14,18 +14,18 @@ namespace ChessClassLibrary.Games.ClassicGame
 {
     public class ClassicGame : IGame
     {
-        protected ClassicBoard board;
-        protected PieceColor currentPlayerColor;
-        protected GameState GameState { get; private set; }
+        public ClassicBoard Board { get; private set; }
+        public PieceColor CurrentPlayerColor { get; private set; }
+        public GameState GameState { get; private set; }
 
-        protected ProtectedPieceRule WhiteKing { get; set; }
-        protected ProtectedPieceRule BlackKing { get; set; }
+        public ProtectedPieceRule WhiteKing { get; protected set; }
+        public ProtectedPieceRule BlackKing { get; protected set; }
 
 
         public ClassicGame()
         {
             CreateBoard();
-            currentPlayerColor = PieceColor.White;
+            CurrentPlayerColor = PieceColor.White;
             GameState = GameState.NotStarted;
         }
 
@@ -53,7 +53,7 @@ namespace ChessClassLibrary.Games.ClassicGame
 
         private bool InsufficientMatingMaterial(PieceColor color)
         {
-            var colorPieces = board.Where(x => x != null && x.Color == color);
+            var colorPieces = Board.Where(x => x != null && x.Color == color);
             var kingCount = colorPieces.Count(x => x.Type == PieceType.King);
             var knightCount = colorPieces.Count(x => x.Type == PieceType.Knight);
             var bishopCount = colorPieces.Count(x => x.Type == PieceType.Bishop);
@@ -63,12 +63,12 @@ namespace ChessClassLibrary.Games.ClassicGame
 
         public void SwapPlayers()
         {
-            if (currentPlayerColor == PieceColor.White)
+            if (CurrentPlayerColor == PieceColor.White)
             {
-                currentPlayerColor = PieceColor.Black;
+                CurrentPlayerColor = PieceColor.Black;
             } else
             {
-                currentPlayerColor = PieceColor.White;
+                CurrentPlayerColor = PieceColor.White;
             }
         }
         #endregion
@@ -76,9 +76,10 @@ namespace ChessClassLibrary.Games.ClassicGame
         #region Create Board
         private void CreateBoard()
         {
+            Board = new ClassicBoard(new IPiece[8, 8]);
             WhiteKing = CreateKing(new King(PieceColor.White, new Position(4, 0)));
             BlackKing = CreateKing(new King(PieceColor.Black, new Position(4, 7)));
-            board = new ClassicBoard(new IPiece[8, 8]);
+            
 
             InsertRichRow(PieceColor.White, 0);
             InsertPawnRow(PieceColor.White, 1);
@@ -94,9 +95,9 @@ namespace ChessClassLibrary.Games.ClassicGame
 
         private void InsertEmptyRow(int row)
         {
-            for (int i = 0; i < board.Width; i++)
+            for (int i = 0; i < Board.Width; i++)
             {
-                board.SetPiece(null, new Position(1, row));
+                Board.SetPiece(null, new Position(1, row));
             }
         }
 
@@ -104,45 +105,45 @@ namespace ChessClassLibrary.Games.ClassicGame
         {
             if (color == PieceColor.White)
             {
-                for (int i = 0; i < board.Width; i++)
+                for (int i = 0; i < Board.Width; i++)
                 {
-                    board.SetPiece(CreateProtector(CreateSlowPiece(new WhitePawn(new Position(i, row)))));
+                    Board.SetPiece(CreateProtector(CreateSlowPiece(new WhitePawn(new Position(i, row)))));
                 }
             }
             else if (color == PieceColor.Black)
             {
-                for (int i = 0; i < board.Width; i++)
+                for (int i = 0; i < Board.Width; i++)
                 {
-                    board.SetPiece(CreateProtector(CreateSlowPiece(new BlackPawn(new Position(i, row)))));
+                    Board.SetPiece(CreateProtector(CreateSlowPiece(new BlackPawn(new Position(i, row)))));
                 }
             }
         }
 
         private void InsertRichRow(PieceColor color, int row)
         {
-            board.SetPiece(CreateProtector(CreateFastPiece(new Rook(color, new Position(0, row)))));
-            board.SetPiece(CreateProtector(CreateFastPiece(new Knight(color, new Position(1, row)))));
-            board.SetPiece(CreateProtector(CreateFastPiece(new Bishop(color, new Position(2, row)))));
-            board.SetPiece(CreateProtector(CreateFastPiece(new Queen(color, new Position(3, row)))));
+            Board.SetPiece(CreateProtector(CreateFastPiece(new Rook(color, new Position(0, row)))));
+            Board.SetPiece(CreateProtector(CreateFastPiece(new Knight(color, new Position(1, row)))));
+            Board.SetPiece(CreateProtector(CreateFastPiece(new Bishop(color, new Position(2, row)))));
+            Board.SetPiece(CreateProtector(CreateFastPiece(new Queen(color, new Position(3, row)))));
             if (color == PieceColor.White)
             {
-                board.SetPiece(WhiteKing);
+                Board.SetPiece(WhiteKing);
             }
             else if (color == PieceColor.Black)
             {
-                board.SetPiece(BlackKing);
+                Board.SetPiece(BlackKing);
             }
-            board.SetPiece(CreateProtector(CreateFastPiece(new Bishop(color, new Position(5, row)))));
-            board.SetPiece(CreateProtector(CreateFastPiece(new Knight(color, new Position(6 , row)))));
-            board.SetPiece(CreateProtector(CreateFastPiece(new Rook(color, new Position(7, row)))));
+            Board.SetPiece(CreateProtector(CreateFastPiece(new Bishop(color, new Position(5, row)))));
+            Board.SetPiece(CreateProtector(CreateFastPiece(new Knight(color, new Position(6 , row)))));
+            Board.SetPiece(CreateProtector(CreateFastPiece(new Rook(color, new Position(7, row)))));
         }
         #endregion
 
         #region Move manager
         public bool CanPerformMove(BoardMove move)
         {
-            IPiece pickedPiece = board.GetPiece(move.current);
-            if (pickedPiece != null && pickedPiece.Color == currentPlayerColor)
+            IPiece pickedPiece = Board.GetPiece(move.current);
+            if (pickedPiece != null && pickedPiece.Color == CurrentPlayerColor)
             {
                 return pickedPiece.GetMoveTo(move.destination) != null;
             }
@@ -163,7 +164,11 @@ namespace ChessClassLibrary.Games.ClassicGame
 
         public void PerformMove(BoardMove move)
         {
-            board.GetPiece(move.current).MoveToPosition(move.destination);
+            if (GameState == GameState.NotStarted)
+            {
+                GameState = GameState.InProgress;
+            }
+            Board.GetPiece(move.current).MoveToPosition(move.destination);
             AfterMovePerformed();
         }
 
@@ -203,17 +208,17 @@ namespace ChessClassLibrary.Games.ClassicGame
 
         private ProtectedPieceRule CreateKing(IPiece piece)
         {
-            return new CastleRule(new ProtectedPieceRule(new KillRule(new MoveRule(new PieceOnBoard(piece, board)))));
+            return new CastleRule(new ProtectedPieceRule(new KillRule(new MoveRule(new PieceOnBoard(piece, Board)))));
         }
 
         private BasePieceDecorator CreateSlowPiece(IPiece piece)
         {
-            return new KillRule(new MoveRule(new PieceOnBoard(piece, board)));
+            return new KillRule(new MoveRule(new PieceOnBoard(piece, Board)));
         }
 
         private BasePieceDecorator CreateFastPiece(IPiece piece)
         {
-            return new KillRule(new MoveRule(new FastPieceOnBoard(piece, board)));
+            return new KillRule(new MoveRule(new FastPieceOnBoard(piece, Board)));
         }
         #endregion Create Piece
 

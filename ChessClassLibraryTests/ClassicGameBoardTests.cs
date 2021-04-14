@@ -1,14 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ChessClassLibrary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChessClassLibrary.Pieces;
-using ChessClassLibrary.Pieces.SlowPieces;
 using ChessClassLibrary.enums;
 using ChessClassLibrary.Games.ClassicGame;
+using ChessClassLibrary.Logic;
 
 namespace ChessClassLibrary.Tests
 {
@@ -24,9 +17,9 @@ namespace ChessClassLibrary.Tests
         [DataRow(5)]
         public void correct_empy_row_create(int row)
         {
-            for (int x = 0; x < this.board.Width; x++)
+            for (int x = 0; x < this.Board.Width; x++)
             {
-                Assert.IsNull(board.GetPiece(new Position(x, row)));
+                Assert.IsNull(Board.GetPiece(new Position(x, row)));
             }
         }
 
@@ -35,9 +28,9 @@ namespace ChessClassLibrary.Tests
         [DataRow(6, PieceColor.Black)]
         public void correct_pawn_row_create(int row, PieceColor color)
         {
-            for (int x = 0; x < this.board.Width; x++)
+            for (int x = 0; x < this.Board.Width; x++)
             {
-                var piece = board.GetPiece(new Position(x, row));
+                var piece = Board.GetPiece(new Position(x, row));
                 Assert.IsNotNull(piece);
                 Assert.AreEqual(piece.Color, color);
                 Assert.AreEqual(piece.Position, new Position(x, row));
@@ -50,29 +43,42 @@ namespace ChessClassLibrary.Tests
         [DataRow(7, PieceColor.Black)]
         public void correct_rith_row_create(int row, PieceColor color)
         {
-            for (int x = 0; x < this.board.Width; x++)
+            for (int x = 0; x < this.Board.Width; x++)
             {
-                var piece = board.GetPiece(new Position(x, row));
+                var piece = Board.GetPiece(new Position(x, row));
                 Assert.IsNotNull(piece);
                 Assert.AreEqual(piece.Color, color);
                 Assert.AreEqual(piece.Position, new Position(x, row));
             }
 
-            Assert.AreEqual(board.GetPiece(new Position(0, row)).Type, PieceType.Rook);
-            Assert.AreEqual(board.GetPiece(new Position(1, row)).Type, PieceType.Knight);
-            Assert.AreEqual(board.GetPiece(new Position(2, row)).Type, PieceType.Bishop);
-            Assert.AreEqual(board.GetPiece(new Position(3, row)).Type, PieceType.Queen);
-            Assert.AreEqual(board.GetPiece(new Position(4, row)).Type, PieceType.King);
-            Assert.AreEqual(board.GetPiece(new Position(5, row)).Type, PieceType.Bishop);
-            Assert.AreEqual(board.GetPiece(new Position(6, row)).Type, PieceType.Knight);
-            Assert.AreEqual(board.GetPiece(new Position(7, row)).Type, PieceType.Rook);
+            Assert.AreEqual(Board.GetPiece(new Position(0, row)).Type, PieceType.Rook);
+            Assert.AreEqual(Board.GetPiece(new Position(1, row)).Type, PieceType.Knight);
+            Assert.AreEqual(Board.GetPiece(new Position(2, row)).Type, PieceType.Bishop);
+            Assert.AreEqual(Board.GetPiece(new Position(3, row)).Type, PieceType.Queen);
+            Assert.AreEqual(Board.GetPiece(new Position(4, row)).Type, PieceType.King);
+            Assert.AreEqual(Board.GetPiece(new Position(5, row)).Type, PieceType.Bishop);
+            Assert.AreEqual(Board.GetPiece(new Position(6, row)).Type, PieceType.Knight);
+            Assert.AreEqual(Board.GetPiece(new Position(7, row)).Type, PieceType.Rook);
         }
 
         [TestMethod()]
         public void game_kings_Are_equal_board_kings()
         {
-            Assert.AreSame(WhiteKing, board.GetPiece(new Position(4, 0)));
-            Assert.AreSame(BlackKing, board.GetPiece(new Position(4, 7)));
+            Assert.AreSame(WhiteKing, Board.GetPiece(new Position(4, 0)));
+            Assert.AreSame(BlackKing, Board.GetPiece(new Position(4, 7)));
+        }
+
+        [TestMethod]
+        public void all_contains_board()
+        {
+            foreach (var piece in Board)
+            {
+                if (piece !=null && piece is BasePieceDecorator)
+                {
+                    Assert.IsNotNull((piece as BasePieceDecorator).Board);
+                    Assert.AreSame((piece as BasePieceDecorator).Board, Board);
+                }
+            }
         }
 
     }
