@@ -1,4 +1,5 @@
-﻿using ChessClassLibrary.Games.ClassicGame;
+﻿using ChessClassLibrary;
+using ChessClassLibrary.Games.ClassicGame;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,17 @@ namespace ChessClassLibraryTests
                 {
                     Assert.IsNotNull(piece.MoveSet);
                 }
+            }
+        }
+
+        [TestMethod]
+        public void pawns_move_correct()
+        {
+            var game = new ClassicGame();
+            for (int x = 0; x < game.Board.Width; x++)
+            {
+                ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(x, 1), new Position(x, 2)));
+                ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(x, 6), new Position(x, 5)));
             }
         }
 

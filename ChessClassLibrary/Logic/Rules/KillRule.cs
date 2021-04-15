@@ -15,7 +15,7 @@ namespace ChessClassLibrary.Logic.Rules
             : base(piece)
         {}
 
-        protected override PieceMove MoveModifier(PieceMove move)
+        public override PieceMove MoveModifier(PieceMove move)
         {
             var pieceAtDestination = Board.GetPiece(Position + move.Shift);
             if (pieceAtDestination == null || pieceAtDestination.Color == Color || move.MoveTypes.Contains(MoveType.Kill))

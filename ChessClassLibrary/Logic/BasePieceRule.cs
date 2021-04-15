@@ -10,8 +10,8 @@ namespace ChessClassLibrary.Logic
 {
     public abstract class BasePieceRule : BasePieceDecorator
     {
-        protected BasePieceDecorator pieceDecorator;
-        public BasePieceRule(BasePieceDecorator pieceDecorator)
+        protected IBasePieceDecorator pieceDecorator;
+        public BasePieceRule(IBasePieceDecorator pieceDecorator)
         {
             this.pieceDecorator = pieceDecorator;
         }
@@ -19,8 +19,21 @@ namespace ChessClassLibrary.Logic
         public override Board Board => this.pieceDecorator.Board;
 
         public override IPiece Piece => pieceDecorator;
-        public BasePieceDecorator InnerPieceDecorator => pieceDecorator;
+        public IBasePieceDecorator InnerPieceDecorator => pieceDecorator;
 
-        public override IEnumerable<PieceMove> MoveSet => Piece.MoveSet.Select(MoveModifier).Where(move => move != null && move.MoveTypes.Length != 0);
+        public override IEnumerable<PieceMove> MoveSet => Piece.MoveSet.Select(MoveModifier).Where(move => move != null);
+
+        public override void MoveToPosition(Position position)
+        {
+            Piece.MoveToPosition(position);
+        }
+
+        public override PieceMove GetMoveTo(Position position)
+        {
+            var baseMove = Piece.GetMoveTo(position);
+            if (baseMove == null) return null;
+
+            return MoveModifier(baseMove);
+        }
     }
 }

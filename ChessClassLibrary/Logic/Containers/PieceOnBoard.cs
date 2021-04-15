@@ -16,20 +16,14 @@ namespace ChessClassLibrary.Logic.Containers
             : base(piece, board)
         {}
 
-        public new void MoveToPosition(Position position)
-        {
-            Board.SetPiece(null, Position);
-            Board.SetPiece(this, position);
-            this.Piece.MoveToPosition(position);
-        }
+        public override IEnumerable<PieceMove> MoveSet => Piece.MoveSet.Select(MoveModifier).Where(x => x != null);
 
-        protected override PieceMove MoveModifier(PieceMove move)
+        public override PieceMove GetMoveTo(Position position)
         {
-            if (Board.IsInRange(Position + move.Shift))
-            {
-                return move;
-            }
-            return null;
+            var baseMove = Piece.GetMoveTo(position);
+            if (baseMove == null) return null;
+
+            return MoveModifier(baseMove);
         }
     }
 }

@@ -22,11 +22,25 @@ namespace ChessClassLibrary.Logic
 
         public override IPiece Piece => this.piece;
 
-        public override IEnumerable<PieceMove> MoveSet => Piece.MoveSet;
+        public override PieceMove MoveModifier(PieceMove move)
+        {
+            if (Board.IsInRange(Position + move.Shift))
+            {
+                return move;
+            }
+            return null;
+        }
 
         public override bool ValidateNewMove(PieceMove move)
         {
-            return true;
+            return Board.IsInRange(Position + move.Shift);
+        }
+
+        public override void MoveToPosition(Position position)
+        {
+            Board.SetPiece(Board.GetPiece(Position), position);
+            Board.SetPiece(null, Position);
+            this.Piece.MoveToPosition(position);
         }
     }
 }

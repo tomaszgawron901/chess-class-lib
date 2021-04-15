@@ -12,18 +12,18 @@ using System.Threading.Tasks;
 namespace ChessClassLibrary.Logic.Rules
 {
 
-    public class CastleRule: ProtectedPieceRule
+    public class CastleRule: ProtectedPieceRule, IBasePieceDecorator, IPiece
     {
         protected static PieceMove leftCastleMove = new PieceMove(new Position(-2, 0), MoveType.Move);
         protected static PieceMove rightCastleMove = new PieceMove(new Position(2, 0), MoveType.Move);
 
-        public PieceMove LeftCastleMove { get => leftCastleMove; }
-        public PieceMove RightCastleMove { get => rightCastleMove; }
+        public PieceMove LeftCastleMove { get => new PieceMove(leftCastleMove.Shift, leftCastleMove.MoveTypes.Select(x => x).ToArray()); }
+        public PieceMove RightCastleMove { get => new PieceMove(rightCastleMove.Shift, rightCastleMove.MoveTypes.Select(x => x).ToArray()); }
 
         private ProtectedPieceRule protectedPieceRule;
         public override KingState KingState { get => protectedPieceRule.KingState; set => protectedPieceRule.KingState = value; }
 
-        public new IEnumerable<PieceMove> MoveSet
+        IEnumerable<PieceMove> IPiece.MoveSet
         {
             get
             {
@@ -74,7 +74,7 @@ namespace ChessClassLibrary.Logic.Rules
             if (WasMoved) return false;
             var rookPosition = new Position(7, Position.y);
             IPiece rightRook = Board.GetPiece(rookPosition);
-            if (rightRook is Rook && !rightRook.WasMoved && rightRook.Color == this.Color)
+            if (rightRook != null && rightRook.Type == PieceType.Rook && !rightRook.WasMoved && rightRook.Color == this.Color)
             {
                 foreach (var checkedPosition in new Position[] { new Position(5, this.Position.y), new Position(6, this.Position.y) })
                 {
@@ -92,7 +92,7 @@ namespace ChessClassLibrary.Logic.Rules
             if (WasMoved) return false;
             var rookPosition = new Position(0, this.Position.y);
             IPiece leftRook = Board.GetPiece(rookPosition);
-            if (leftRook is Rook && !leftRook.WasMoved && leftRook.Color == this.Color && Board.GetPiece(new Position(1, this.Position.y)) == null)
+            if (leftRook != null && leftRook.Type == PieceType.Rook && !leftRook.WasMoved && leftRook.Color == this.Color && Board.GetPiece(new Position(1, this.Position.y)) == null)
             {
                 foreach (var checkedPosition in new Position[] { new Position(2, this.Position.y), new Position(3, this.Position.y) })
                 {
@@ -107,17 +107,17 @@ namespace ChessClassLibrary.Logic.Rules
 
         private void DoLeftCastle()
         {
-            MoveToPosition(new Position(2, Position.y));
+            Piece.MoveToPosition(new Position(2, Position.y));
             Board.GetPiece(new Position(0, Position.y)).MoveToPosition(new Position(3, Position.y));
         }
 
         private void DoRightCastle()
-        {;
-            MoveToPosition(new Position(6, Position.y));
+        {
+            Piece.MoveToPosition(new Position(6, Position.y));
             Board.GetPiece(new Position(7, Position.y)).MoveToPosition(new Position(5, Position.y));
         }
 
-        protected override PieceMove MoveModifier(PieceMove move)
+        public override PieceMove MoveModifier(PieceMove move)
         {
             return move;
         }
@@ -140,7 +140,7 @@ namespace ChessClassLibrary.Logic.Rules
             return true;
         }
 
-        public new void MoveToPosition(Position position)
+        public override void MoveToPosition(Position position)
         {
             var moveShift = position - Position;
             if (moveShift == this.LeftCastleMove.Shift)
@@ -155,6 +155,50 @@ namespace ChessClassLibrary.Logic.Rules
             {
                 Piece.MoveToPosition(position);
             }
+        }
+
+        public override PieceMove GetMoveTo(Position position)
+        {
+            var moveShift = position - Position;
+            var baseMove = Piece.GetMoveTo(position);
+            if (moveShift == this.LeftCastleMove.Shift)
+            {
+                if (baseMove == null)
+                {
+                    if (InnerPieceDecorator.ValidateNewMove(LeftCastleMove) && CanLeftCastle())
+                    {
+                        return LeftCastleMove;
+                    }
+                }
+                else
+                {
+                    if (!baseMove.MoveTypes.Contains(MoveType.Move) && CanLeftCastle())
+                    {
+                        baseMove.MoveTypes = baseMove.MoveTypes.Append(MoveType.Move).ToArray();
+                    }
+                }
+                return baseMove;
+
+            }
+            else if (moveShift == this.RightCastleMove.Shift)
+            {
+                if (baseMove == null)
+                {
+                    if (InnerPieceDecorator.ValidateNewMove(RightCastleMove) && CanRightCastle())
+                    {
+                        return RightCastleMove;
+                    }
+                }
+                else
+                {
+                    if (!baseMove.MoveTypes.Contains(MoveType.Move) && CanRightCastle())
+                    {
+                        baseMove.MoveTypes = baseMove.MoveTypes.Append(MoveType.Move).ToArray();
+                    }
+                }
+                return baseMove;
+            }
+            return baseMove;
         }
     }
 }

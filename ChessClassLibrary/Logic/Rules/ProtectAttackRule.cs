@@ -60,7 +60,7 @@ namespace ChessClassLibrary.Logic.Rules
             }
         }
 
-        protected override PieceMove MoveModifier(PieceMove move)
+        public override PieceMove MoveModifier(PieceMove move)
         {
             if (isProtectedPieceSafeAfterMove(move))
             {

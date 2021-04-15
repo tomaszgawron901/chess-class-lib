@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic.Containers
 {
-    public class FastPieceOnBoard: PieceOnBoard
+    public class FastPieceOnBoard: BasePieceContainer
     {
         public FastPieceOnBoard(IPiece piece, Board board)
             : base(piece, board)
         {}
 
 
-        public new IEnumerable<PieceMove> MoveSet
+        public override IEnumerable<PieceMove> MoveSet
         {
             get
             {
                 var newMoveSet = new List<PieceMove>();
-                foreach (PieceMove move in base.MoveSet)
+                foreach (PieceMove move in Piece.MoveSet)
                 {
                     for (Position nextShift = move.Shift; true; nextShift += move.Shift)
                     {
@@ -38,11 +38,11 @@ namespace ChessClassLibrary.Logic.Containers
             }
         }
 
-        public new PieceMove GetMoveTo(Position position)
+        public override PieceMove GetMoveTo(Position position)
         {
             if (!Board.IsInRange(position)) return null;
 
-            var slowMove = base.MoveSet.FirstOrDefault(move => isInLine(position, move));
+            var slowMove = Piece.MoveSet.FirstOrDefault(move => isInLine(position, move));
             if (slowMove == null || !IsPathClear(position, slowMove)) return null;
 
             return new PieceMove(position - Position, slowMove.MoveTypes);
@@ -104,6 +104,5 @@ namespace ChessClassLibrary.Logic.Containers
             }
             return true;
         }
-
     }
 }

@@ -9,7 +9,14 @@ using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic
 {
-    public abstract class BasePieceDecorator : IPiece
+    public interface IBasePieceDecorator: IPiece
+    {
+        PieceMove MoveModifier(PieceMove move);
+        bool ValidateNewMove(PieceMove move);
+        Board Board { get; }
+    }
+
+    public abstract class BasePieceDecorator : IBasePieceDecorator
     {
         public BasePieceDecorator(){}
 
@@ -24,21 +31,10 @@ namespace ChessClassLibrary.Logic
         public PieceColor Color { get => Piece.Color; set => Piece.Color = value; }
         public PieceType Type { get => Piece.Type; set => Piece.Type = value; }
 
-        protected abstract PieceMove MoveModifier(PieceMove move);
+        public abstract PieceMove MoveModifier(PieceMove move);
 
         public abstract bool ValidateNewMove(PieceMove move);
-
-        public virtual PieceMove GetMoveTo(Position position)
-        {
-            var baseMove = Piece.GetMoveTo(position);
-            if (baseMove == null) return null;
-
-            return MoveModifier(baseMove);
-        }
-
-        public virtual void MoveToPosition(Position position)
-        {
-            Piece.MoveToPosition(position);
-        }
+        public abstract PieceMove GetMoveTo(Position position);
+        public abstract void MoveToPosition(Position position);
     }
 }
