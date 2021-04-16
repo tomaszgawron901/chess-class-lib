@@ -42,6 +42,7 @@ namespace ChessClassLibrary.Pieces
 
         public virtual void MoveToPosition(Position position)
         {
+            this.WasMoved = true;
             this.Position = position;
         }
         public virtual PieceMove GetMoveTo(Position position) => MoveSet.FirstOrDefault(x => Position + x.Shift == position);

@@ -49,7 +49,9 @@
     <Compile Include="enums\PieceColor.cs" />
     <Compile Include="enums\PieceType.cs" />
     <Compile Include="Games\ClassicGame.cs" />
+    <Compile Include="Logic\Rules\BlackPawnFirstMoveRule.cs" />
     <Compile Include="Logic\Rules\ProtectedPieceRule.cs" />
+    <Compile Include="Logic\Rules\WhitePawnFirstMoveRule.cs" />
     <Compile Include="PieceMove.cs" />
     <Compile Include="Logic\BasePieceContainer.cs" />
     <Compile Include="Logic\BasePieceDecorator.cs" />

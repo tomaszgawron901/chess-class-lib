@@ -9,7 +9,7 @@ using System.Text;
 namespace ChessClassLibraryTests
 {
     [TestClass]
-    public class FullGameTests
+    public class CheckmateTests
     {
         [TestMethod()]
         public void checkmate_black_win_game()

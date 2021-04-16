@@ -34,10 +34,9 @@ namespace ChessClassLibrary.Games.ClassicGame
         {
             WhiteKing.UpdateState();
             BlackKing.UpdateState();
-            if (WhiteKing.IsChecked 
-                || WhiteKing.IsCheckmated 
+            if (
+                WhiteKing.IsCheckmated 
                 || WhiteKing.IsStalemated 
-                || BlackKing.IsChecked 
                 || BlackKing.IsCheckmated
                 || BlackKing.IsStalemated
                 || InsufficientMatingMaterial())
