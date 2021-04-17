@@ -106,14 +106,14 @@ namespace ChessClassLibrary.Games.ClassicGame
             {
                 for (int i = 0; i < Board.Width; i++)
                 {
-                    Board.SetPiece(CreateProtector(CreateSlowPiece(new WhitePawn(new Position(i, row)))));
+                    Board.SetPiece(CreateProtector(CreatePawn(new WhitePawn(new Position(i, row)))));
                 }
             }
             else if (color == PieceColor.Black)
             {
                 for (int i = 0; i < Board.Width; i++)
                 {
-                    Board.SetPiece(CreateProtector(CreateSlowPiece(new BlackPawn(new Position(i, row)))));
+                    Board.SetPiece(CreateProtector(CreatePawn(new BlackPawn(new Position(i, row)))));
                 }
             }
         }
@@ -204,6 +204,19 @@ namespace ChessClassLibrary.Games.ClassicGame
             return piece;
         }
         #endregion Protector
+
+        private BasePieceDecorator CreatePawn(IPiece piece)
+        {
+            if (piece.Color == PieceColor.White)
+            {
+                return new WhitePawnFirstMoveRule(CreateSlowPiece(piece));
+            }
+            else if(piece.Color == PieceColor.Black)
+            {
+                return new BlackPawnFirstMoveRule(CreateSlowPiece(piece));
+            }
+            return null;
+        }
 
         private ProtectedPieceRule CreateKing(IPiece piece)
         {

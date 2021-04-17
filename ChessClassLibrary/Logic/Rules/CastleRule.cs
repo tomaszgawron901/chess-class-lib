@@ -28,34 +28,28 @@ namespace ChessClassLibrary.Logic.Rules
             get
             {
                 var newMoveSet = Piece.MoveSet;
-                if (CanLeftCastle() && InnerPieceDecorator.ValidateNewMove(leftCastleMove))
+                if (InnerPieceDecorator.ValidateNewMove(LeftCastleMove) && CanLeftCastle())
                 {
                     var existingMove = newMoveSet.FirstOrDefault(x => x.Shift == LeftCastleMove.Shift);
                     if (existingMove == null)
                     {
-                        newMoveSet = newMoveSet.Append(leftCastleMove);
+                        newMoveSet = newMoveSet.Append(LeftCastleMove);
                     }
                     else
                     {
-                        if (!existingMove.MoveTypes.Contains(MoveType.Move))
-                        {
-                            existingMove.MoveTypes = existingMove.MoveTypes.Append(MoveType.Move).ToArray();
-                        }
+                        existingMove.MoveTypes = new MoveType[] { MoveType.Move };
                     }
                 }
-                if (CanRightCastle())
+                if (InnerPieceDecorator.ValidateNewMove(RightCastleMove) && CanRightCastle())
                 {
                     var existingMove = newMoveSet.FirstOrDefault(x => x.Shift == RightCastleMove.Shift);
                     if (existingMove == null)
                     {
-                        newMoveSet = newMoveSet.Append(rightCastleMove);
+                        newMoveSet = newMoveSet.Append(RightCastleMove);
                     }
                     else
                     {
-                        if (!existingMove.MoveTypes.Contains(MoveType.Move))
-                        {
-                            existingMove.MoveTypes = existingMove.MoveTypes.Append(MoveType.Move).ToArray();
-                        }
+                        existingMove.MoveTypes = new MoveType[] { MoveType.Move };
                     }
                 }
                 return newMoveSet;
@@ -160,45 +154,26 @@ namespace ChessClassLibrary.Logic.Rules
         public override PieceMove GetMoveTo(Position position)
         {
             var moveShift = position - Position;
-            var baseMove = Piece.GetMoveTo(position);
+
             if (moveShift == this.LeftCastleMove.Shift)
             {
-                if (baseMove == null)
+                if (InnerPieceDecorator.ValidateNewMove(LeftCastleMove) && CanLeftCastle())
                 {
-                    if (InnerPieceDecorator.ValidateNewMove(LeftCastleMove) && CanLeftCastle())
-                    {
-                        return LeftCastleMove;
-                    }
+                    return LeftCastleMove;
                 }
-                else
-                {
-                    if (!baseMove.MoveTypes.Contains(MoveType.Move) && CanLeftCastle())
-                    {
-                        baseMove.MoveTypes = baseMove.MoveTypes.Append(MoveType.Move).ToArray();
-                    }
-                }
-                return baseMove;
+                return null;
+            }
 
-            }
-            else if (moveShift == this.RightCastleMove.Shift)
+            if (moveShift == this.RightCastleMove.Shift)
             {
-                if (baseMove == null)
+                if (InnerPieceDecorator.ValidateNewMove(RightCastleMove) && CanRightCastle())
                 {
-                    if (InnerPieceDecorator.ValidateNewMove(RightCastleMove) && CanRightCastle())
-                    {
-                        return RightCastleMove;
-                    }
+                    return RightCastleMove;
                 }
-                else
-                {
-                    if (!baseMove.MoveTypes.Contains(MoveType.Move) && CanRightCastle())
-                    {
-                        baseMove.MoveTypes = baseMove.MoveTypes.Append(MoveType.Move).ToArray();
-                    }
-                }
-                return baseMove;
+                return null;
             }
-            return baseMove;
+
+            return Piece.GetMoveTo(position);
         }
     }
 }
