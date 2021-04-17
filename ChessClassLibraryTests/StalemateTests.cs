@@ -12,7 +12,7 @@ namespace ChessClassLibraryTests
     public class StalemateTests
     {
         [TestMethod]
-        public void black_stale_mate_full_game()
+        public void black_stalemate_full_game()
         {
             var game = new ClassicGame();
             Assert.AreEqual(game.GameState, GameState.NotStarted);
@@ -115,5 +115,136 @@ namespace ChessClassLibraryTests
             Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
             Assert.AreEqual(game.BlackKing.KingState, KingState.Stalemated);
         }
+
+        [TestMethod]
+        public void white_stalemate_all_pieces_on_board_full_game()
+        {
+            var game = new ClassicGame();
+            Assert.AreEqual(game.GameState, GameState.NotStarted);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(3, 1), new Position(3, 3)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(3, 6), new Position(3, 5)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(3, 0), new Position(3, 1)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(4, 6), new Position(4, 4)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(0, 1), new Position(0, 3)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(4, 4), new Position(4, 3)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(3, 1), new Position(5, 3)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(5, 6), new Position(5, 4)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(7, 1), new Position(7, 2)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(5, 7), new Position(4, 6)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(5, 3), new Position(7, 1)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(2, 7), new Position(4, 5)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(0, 0), new Position(0, 2)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(2, 6), new Position(2, 4)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(0, 2), new Position(6, 2)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(3, 7), new Position(0, 4)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.Checked);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(1, 0), new Position(3, 1)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(4, 6), new Position(7, 3)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(5, 1), new Position(5, 2)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(4, 5), new Position(1, 2)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(3, 3), new Position(3, 4)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(4, 3), new Position(4, 2)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(2, 1), new Position(2, 3)));
+            Assert.AreEqual(game.GameState, GameState.InProgress);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.None);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+
+            /*----------------------------------------------------------------------------------*/
+            ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(5, 4), new Position(5, 3)));
+            Assert.AreEqual(game.GameState, GameState.Ended);
+            Assert.AreEqual(game.WhiteKing.KingState, KingState.Stalemated);
+            Assert.AreEqual(game.BlackKing.KingState, KingState.None);
+        }
+
     }
 }
