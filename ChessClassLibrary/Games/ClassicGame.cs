@@ -121,7 +121,7 @@ namespace ChessClassLibrary.Games.ClassicGame
         private void InsertRichRow(PieceColor color, int row)
         {
             Board.SetPiece(CreateProtector(CreateFastPiece(new Rook(color, new Position(0, row)))));
-            Board.SetPiece(CreateProtector(CreateFastPiece(new Knight(color, new Position(1, row)))));
+            Board.SetPiece(CreateProtector(CreateSlowPiece(new Knight(color, new Position(1, row)))));
             Board.SetPiece(CreateProtector(CreateFastPiece(new Bishop(color, new Position(2, row)))));
             Board.SetPiece(CreateProtector(CreateFastPiece(new Queen(color, new Position(3, row)))));
             if (color == PieceColor.White)
@@ -133,7 +133,7 @@ namespace ChessClassLibrary.Games.ClassicGame
                 Board.SetPiece(BlackKing);
             }
             Board.SetPiece(CreateProtector(CreateFastPiece(new Bishop(color, new Position(5, row)))));
-            Board.SetPiece(CreateProtector(CreateFastPiece(new Knight(color, new Position(6 , row)))));
+            Board.SetPiece(CreateProtector(CreateSlowPiece(new Knight(color, new Position(6 , row)))));
             Board.SetPiece(CreateProtector(CreateFastPiece(new Rook(color, new Position(7, row)))));
         }
         #endregion
