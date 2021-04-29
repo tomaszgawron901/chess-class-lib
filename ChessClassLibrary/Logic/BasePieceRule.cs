@@ -1,4 +1,5 @@
 ﻿using ChessClassLibrary.Boards;
+using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using System;
 using System.Collections.Generic;

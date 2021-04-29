@@ -1,4 +1,5 @@
 ﻿using ChessClassLibrary.enums;
+using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using ChessClassLibrary.Pieces.FasePieces;
 using ChessClassLibrary.Pieces.SlowPieces;

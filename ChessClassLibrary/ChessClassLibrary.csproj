@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,6 +45,7 @@
     <Compile Include="Boards\Board.cs" />
     <Compile Include="Boards\ClassicBoard.cs" />
     <Compile Include="enums\GameState.cs" />
+    <Compile Include="enums\GameVarient.cs" />
     <Compile Include="enums\KingState.cs" />
     <Compile Include="enums\MoveType.cs" />
     <Compile Include="enums\PieceColor.cs" />
@@ -52,7 +54,8 @@
     <Compile Include="Logic\Rules\BlackPawnFirstMoveRule.cs" />
     <Compile Include="Logic\Rules\ProtectedPieceRule.cs" />
     <Compile Include="Logic\Rules\WhitePawnFirstMoveRule.cs" />
-    <Compile Include="PieceMove.cs" />
+    <Compile Include="Models\GameOptions.cs" />
+    <Compile Include="Models\PieceMove.cs" />
     <Compile Include="Logic\BasePieceContainer.cs" />
     <Compile Include="Logic\BasePieceDecorator.cs" />
     <Compile Include="Logic\BasePieceRule.cs" />
@@ -63,8 +66,8 @@
     <Compile Include="Logic\Containers\PieceOnBoard.cs" />
     <Compile Include="Logic\Rules\CastleRule.cs" />
     <Compile Include="Games\IGame.cs" />
-    <Compile Include="BoardMove.cs" />
-    <Compile Include="PieceBackup.cs" />
+    <Compile Include="Models\BoardMove.cs" />
+    <Compile Include="Models\PieceBackup.cs" />
     <Compile Include="Pieces\FasePieces\Bishop.cs" />
     <Compile Include="Pieces\FasePieces\Queen.cs" />
     <Compile Include="Pieces\FasePieces\Rook.cs" />
@@ -72,9 +75,8 @@
     <Compile Include="Pieces\SlowPieces\King.cs" />
     <Compile Include="Pieces\SlowPieces\Knight.cs" />
     <Compile Include="Pieces\SlowPieces\Pawn.cs" />
-    <Compile Include="Position.cs" />
+    <Compile Include="Models\Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

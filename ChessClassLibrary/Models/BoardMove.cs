@@ -1,4 +1,4 @@
-﻿namespace ChessClassLibrary
+﻿namespace ChessClassLibrary.Models
 {
     public struct BoardMove
     {

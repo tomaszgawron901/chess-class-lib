@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChessClassLibrary
+namespace ChessClassLibrary.Models
 {
     public struct Position : IEquatable<Position>
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessClassLibrary
+namespace ChessClassLibrary.Models
 {
     public class PieceMove
     {

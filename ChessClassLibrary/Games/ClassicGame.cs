@@ -3,6 +3,7 @@ using ChessClassLibrary.enums;
 using ChessClassLibrary.Logic;
 using ChessClassLibrary.Logic.Containers;
 using ChessClassLibrary.Logic.Rules;
+using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using ChessClassLibrary.Pieces.FasePieces;
 using ChessClassLibrary.Pieces.SlowPieces;
@@ -233,6 +234,14 @@ namespace ChessClassLibrary.Games.ClassicGame
             return new KillRule(new MoveRule(new FastPieceOnBoard(piece, Board)));
         }
         #endregion Create Piece
+
+        public IEnumerable<PieceMove> GetPieceMoveSetAtPosition(Position position)
+        {
+            var piece = Board.GetPiece(position);
+            if (piece == null || piece.Color != CurrentPlayerColor) { return new PieceMove[0]; }
+
+            return piece.MoveSet;
+        }
 
     }
 }

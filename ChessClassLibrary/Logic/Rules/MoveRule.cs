@@ -1,5 +1,6 @@
 ﻿using ChessClassLibrary.Boards;
 using ChessClassLibrary.enums;
+using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using System;
 using System.Collections.Generic;
