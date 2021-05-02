@@ -10,6 +10,9 @@ namespace ChessClassLibrary.Models
 {
     public class GameOptions
     {
+        public string Player1 { get; set; }
+        public string Player2 { get; set; }
+
         [Required]
         public GameVarient GameVarient { get; set; }
 
