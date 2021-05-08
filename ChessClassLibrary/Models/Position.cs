@@ -6,15 +6,14 @@ namespace ChessClassLibrary.Models
 {
     public struct Position : IEquatable<Position>
     {
-        public int X { get; }
+        public int X { get; set; }
 
-        public int Y { get; }
+        public int Y { get; set; }
 
-        [JsonConstructor]
-        public Position(int X, int Y)
+        public Position(int x, int y)
         {
-            this.X = X;
-            this.Y = Y;
+            this.X = x;
+            this.Y = y;
         }
 
         /// <summary>

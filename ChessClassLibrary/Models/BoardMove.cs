@@ -1,4 +1,6 @@
-﻿namespace ChessClassLibrary.Models
+﻿using System.Text.Json.Serialization;
+
+namespace ChessClassLibrary.Models
 {
     public struct BoardMove
     {
