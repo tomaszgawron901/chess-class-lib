@@ -1,6 +1,7 @@
 ﻿using ChessClassLibrary;
 using ChessClassLibrary.enums;
 using ChessClassLibrary.Games.ClassicGame;
+using ChessClassLibrary.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
