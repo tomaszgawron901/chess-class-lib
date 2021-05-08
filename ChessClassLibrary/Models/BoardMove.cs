@@ -2,8 +2,8 @@
 {
     public struct BoardMove
     {
-        public readonly Position current;
-        public readonly Position destination;
+        public Position current;
+        public Position destination;
 
         public BoardMove(Position current, Position destination)
         {
