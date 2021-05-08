@@ -6,11 +6,19 @@ namespace ChessClassLibrary.Models
 {
     public struct Position : IEquatable<Position>
     {
+        [JsonPropertyName("x")]
         public readonly int x;
+
+
+        [JsonPropertyName("y")]
         public readonly int y;
 
         [JsonConstructor]
-        public Position(int x, int y) => (this.x, this.y) = (x, y);
+        public Position(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
 
         /// <summary>
         /// Check whether other Point equals this Point.
