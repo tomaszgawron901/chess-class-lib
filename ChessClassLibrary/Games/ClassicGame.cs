@@ -13,7 +13,12 @@ using System.Linq;
 
 namespace ChessClassLibrary.Games.ClassicGame
 {
-    public class ClassicGame : IGame
+    public interface IClassicGame: IGame
+    {
+        ClassicBoard Board { get; }
+    }
+
+    public class ClassicGame : IGame, IClassicGame
     {
         public ClassicBoard Board { get; private set; }
         public PieceColor CurrentPlayerColor { get; private set; }
