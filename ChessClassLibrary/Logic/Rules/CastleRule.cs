@@ -67,11 +67,11 @@ namespace ChessClassLibrary.Logic.Rules
         {
             if (IsChecked) return false;
             if (WasMoved) return false;
-            var rookPosition = new Position(7, Position.y);
+            var rookPosition = new Position(7, Position.Y);
             IPiece rightRook = Board.GetPiece(rookPosition);
             if (rightRook != null && rightRook.Type == PieceType.Rook && !rightRook.WasMoved && rightRook.Color == this.Color)
             {
-                foreach (var checkedPosition in new Position[] { new Position(5, this.Position.y), new Position(6, this.Position.y) })
+                foreach (var checkedPosition in new Position[] { new Position(5, this.Position.Y), new Position(6, this.Position.Y) })
                 {
                     if (Board.GetPiece(checkedPosition) != null) return false;
 
@@ -85,11 +85,11 @@ namespace ChessClassLibrary.Logic.Rules
         {
             if (IsChecked) return false;
             if (WasMoved) return false;
-            var rookPosition = new Position(0, this.Position.y);
+            var rookPosition = new Position(0, this.Position.Y);
             IPiece leftRook = Board.GetPiece(rookPosition);
-            if (leftRook != null && leftRook.Type == PieceType.Rook && !leftRook.WasMoved && leftRook.Color == this.Color && Board.GetPiece(new Position(1, this.Position.y)) == null)
+            if (leftRook != null && leftRook.Type == PieceType.Rook && !leftRook.WasMoved && leftRook.Color == this.Color && Board.GetPiece(new Position(1, this.Position.Y)) == null)
             {
-                foreach (var checkedPosition in new Position[] { new Position(2, this.Position.y), new Position(3, this.Position.y) })
+                foreach (var checkedPosition in new Position[] { new Position(2, this.Position.Y), new Position(3, this.Position.Y) })
                 {
                     if (Board.GetPiece(checkedPosition) != null) return false;
 
@@ -102,14 +102,14 @@ namespace ChessClassLibrary.Logic.Rules
 
         private void DoLeftCastle()
         {
-            Piece.MoveToPosition(new Position(2, Position.y));
-            Board.GetPiece(new Position(0, Position.y)).MoveToPosition(new Position(3, Position.y));
+            Piece.MoveToPosition(new Position(2, Position.Y));
+            Board.GetPiece(new Position(0, Position.Y)).MoveToPosition(new Position(3, Position.Y));
         }
 
         private void DoRightCastle()
         {
-            Piece.MoveToPosition(new Position(6, Position.y));
-            Board.GetPiece(new Position(7, Position.y)).MoveToPosition(new Position(5, Position.y));
+            Piece.MoveToPosition(new Position(6, Position.Y));
+            Board.GetPiece(new Position(7, Position.Y)).MoveToPosition(new Position(5, Position.Y));
         }
 
         public override PieceMove MoveModifier(PieceMove move)

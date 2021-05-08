@@ -6,14 +6,15 @@ namespace ChessClassLibrary.Models
 {
     public struct Position : IEquatable<Position>
     {
-        public int x { get; }
+        public int X { get; }
 
-        public int y { get; }
+        public int Y { get; }
 
-        public Position(int x, int y)
+        [JsonConstructor]
+        public Position(int X, int Y)
         {
-            this.x = x;
-            this.y = y;
+            this.X = X;
+            this.Y = Y;
         }
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace ChessClassLibrary.Models
         /// <returns>True when Points are equal, otherwise false.</returns>
         public bool Equals(Position other)
         {
-            if (x == other.x && y == other.y)
+            if (X == other.X && Y == other.Y)
                 return true;
             return false;
         }
@@ -49,8 +50,8 @@ namespace ChessClassLibrary.Models
         public override int GetHashCode()
         {
             var hashCode = 1502939027;
-            hashCode = hashCode * -1521134295 + x.GetHashCode();
-            hashCode = hashCode * -1521134295 + y.GetHashCode();
+            hashCode = hashCode * -1521134295 + X.GetHashCode();
+            hashCode = hashCode * -1521134295 + Y.GetHashCode();
             return hashCode;
         }
 
@@ -61,7 +62,7 @@ namespace ChessClassLibrary.Models
         /// <returns>New Point which is the sum of two Points.</returns>
         public Position Plus(Position other)
         {
-            return new Position(x + other.x, y + other.y);
+            return new Position(X + other.X, Y + other.Y);
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace ChessClassLibrary.Models
         /// <returns>New Point which is the subtraction of this Point and given other Point..</returns>
         public Position Minus(Position other)
         {
-            return new Position(x - other.x, y - other.y);
+            return new Position(X - other.X, Y - other.Y);
         }
 
         public static bool operator ==(Position p1, Position p2)

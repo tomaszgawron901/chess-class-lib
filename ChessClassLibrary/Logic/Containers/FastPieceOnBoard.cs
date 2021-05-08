@@ -68,9 +68,9 @@ namespace ChessClassLibrary.Logic.Containers
         public bool isInLine(Position destination, PieceMove move)
         {
             Position destinationMove = destination - this.Position;
-            if (Math.Sign(destinationMove.x) != Math.Sign(move.Shift.x))
+            if (Math.Sign(destinationMove.X) != Math.Sign(move.Shift.X))
                 return false;
-            if (Math.Sign(destinationMove.y) != Math.Sign(move.Shift.y))
+            if (Math.Sign(destinationMove.Y) != Math.Sign(move.Shift.Y))
                 return false;
             if (move.Shift == new Position(0, 0))
             {
@@ -79,27 +79,27 @@ namespace ChessClassLibrary.Logic.Containers
                 else return false;
             }
 
-            if (move.Shift.x == 0)
+            if (move.Shift.X == 0)
             {
-                if (destinationMove.x != 0)
+                if (destinationMove.X != 0)
                     return false;
-                if (destinationMove.y % move.Shift.y != 0)
+                if (destinationMove.Y % move.Shift.Y != 0)
                     return false;
             }
-            else if (move.Shift.y == 0)
+            else if (move.Shift.Y == 0)
             {
-                if (destinationMove.y != 0)
+                if (destinationMove.Y != 0)
                     return false;
-                if (destinationMove.x % move.Shift.x != 0)
+                if (destinationMove.X % move.Shift.X != 0)
                     return false;
             }
             else
             {
-                if (destinationMove.x == 0 || destinationMove.y == 0)
+                if (destinationMove.X == 0 || destinationMove.Y == 0)
                     return false;
-                if (destinationMove.x % move.Shift.x != 0 || destinationMove.y % move.Shift.y != 0)
+                if (destinationMove.X % move.Shift.X != 0 || destinationMove.Y % move.Shift.Y != 0)
                     return false;
-                if (destinationMove.x / move.Shift.x != destinationMove.y / move.Shift.y)
+                if (destinationMove.X / move.Shift.X != destinationMove.Y / move.Shift.Y)
                     return false;
 
             }

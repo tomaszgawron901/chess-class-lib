@@ -68,12 +68,12 @@ namespace ChessClassLibrary.Boards
 
         public override bool IsInRange(Position position)
         {
-            return position.x >= 0 && position.x < Width && position.y >= 0 && position.y < Height;
+            return position.X >= 0 && position.X < Width && position.Y >= 0 && position.Y < Height;
         }
 
         public override IPiece GetPiece(Position position)
         {
-            return this.Pieces[position.x, position.y];
+            return this.Pieces[position.X, position.Y];
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace ChessClassLibrary.Boards
         {
             if (IsInRange(position))
             {
-                Pieces[position.x, position.y] = piece;
+                Pieces[position.X, position.Y] = piece;
             }
             else
             {
