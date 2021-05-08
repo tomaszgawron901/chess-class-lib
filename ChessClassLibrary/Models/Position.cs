@@ -6,14 +6,10 @@ namespace ChessClassLibrary.Models
 {
     public struct Position : IEquatable<Position>
     {
-        [JsonPropertyName("x")]
-        public readonly int x;
+        public int x { get; }
 
+        public int y { get; }
 
-        [JsonPropertyName("y")]
-        public readonly int y;
-
-        [JsonConstructor]
         public Position(int x, int y)
         {
             this.x = x;
