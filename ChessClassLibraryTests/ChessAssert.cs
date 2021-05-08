@@ -12,14 +12,14 @@ namespace ChessClassLibraryTests
     {
         public static void IsMoveCorrect(ClassicGame game, BoardMove move)
         {
-            var pieceAtCurrectPosition = game.Board.GetPiece(move.current);
+            var pieceAtCurrectPosition = game.Board.GetPiece(move.Current);
             var currentPlayer = game.CurrentPlayerColor;
 
             Assert.IsTrue(game.CanPerformMove(move));
             game.TryPerformMove(move);
-            Assert.IsNull(game.Board.GetPiece(move.current));
-            Assert.AreSame(pieceAtCurrectPosition, game.Board.GetPiece(move.destination));
-            Assert.AreEqual(game.Board.GetPiece(move.destination).Position, move.destination);
+            Assert.IsNull(game.Board.GetPiece(move.Current));
+            Assert.AreSame(pieceAtCurrectPosition, game.Board.GetPiece(move.Destination));
+            Assert.AreEqual(game.Board.GetPiece(move.Destination).Position, move.Destination);
             Assert.AreNotEqual(game.CurrentPlayerColor, currentPlayer);
         }
     }

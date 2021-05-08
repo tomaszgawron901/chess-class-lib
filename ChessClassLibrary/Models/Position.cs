@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ChessClassLibrary.Models
 {
@@ -6,11 +8,9 @@ namespace ChessClassLibrary.Models
     {
         public readonly int x;
         public readonly int y;
-        public Position(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
-        }
+
+        [JsonConstructor]
+        public Position(int x, int y) => (this.x, this.y) = (x, y);
 
         /// <summary>
         /// Check whether other Point equals this Point.

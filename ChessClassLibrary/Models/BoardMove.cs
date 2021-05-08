@@ -2,13 +2,13 @@
 {
     public struct BoardMove
     {
-        public Position current { get; set; }
-        public Position destination { get; set; }
+        public Position Current { get; set; }
+        public Position Destination { get; set; }
 
         public BoardMove(Position current, Position destination)
         {
-            this.current = current;
-            this.destination = destination;
+            this.Current = current;
+            this.Destination = destination;
         }
     }
 }

@@ -147,10 +147,10 @@ namespace ChessClassLibrary.Games.ClassicGame
         #region Move manager
         public bool CanPerformMove(BoardMove move)
         {
-            IPiece pickedPiece = Board.GetPiece(move.current);
+            IPiece pickedPiece = Board.GetPiece(move.Current);
             if (pickedPiece != null && pickedPiece.Color == CurrentPlayerColor)
             {
-                return pickedPiece.GetMoveTo(move.destination) != null;
+                return pickedPiece.GetMoveTo(move.Destination) != null;
             }
             return false;
         }
@@ -173,7 +173,7 @@ namespace ChessClassLibrary.Games.ClassicGame
             {
                 GameState = GameState.InProgress;
             }
-            Board.GetPiece(move.current).MoveToPosition(move.destination);
+            Board.GetPiece(move.Current).MoveToPosition(move.Destination);
             AfterMovePerformed();
         }
 
