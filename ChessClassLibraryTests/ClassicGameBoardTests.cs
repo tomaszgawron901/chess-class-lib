@@ -2,6 +2,7 @@
 using ChessClassLibrary.enums;
 using ChessClassLibrary.Games.ClassicGame;
 using ChessClassLibrary.Logic;
+using ChessClassLibrary.Models;
 
 namespace ChessClassLibrary.Tests
 {

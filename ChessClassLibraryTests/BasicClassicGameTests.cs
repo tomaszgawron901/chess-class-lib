@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ChessClassLibrary.Games.ClassicGame;
 using ChessClassLibrary.enums;
+using ChessClassLibrary.Models;
 
 namespace ChessClassLibrary.Tests
 {
