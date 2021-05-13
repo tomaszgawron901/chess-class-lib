@@ -243,7 +243,7 @@ namespace ChessClassLibrary.Games.ClassicGame
         public IEnumerable<PieceMove> GetPieceMoveSetAtPosition(Position position)
         {
             var piece = Board.GetPiece(position);
-            if (piece == null || piece.Color != CurrentPlayerColor) { return new PieceMove[0]; }
+            if (piece == null) { return Enumerable.Empty<PieceMove>(); }
 
             return piece.MoveSet;
         }
