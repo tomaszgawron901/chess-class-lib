@@ -16,11 +16,11 @@ namespace ChessClassLibrary.Models
         [Required]
         public GameVarient GameVarient { get; set; }
 
-        [Range(0, 600), Required]
-        public int SecondsPerSide { get; set; }
+        [Range(1, 1200), Required]
+        public int SecondsPerSide { get; set; } = 600;
 
-        [Range(1, 600), Required]
-        public int IncrementInSeconds { get; set; }
+        [Range(0, 600), Required]
+        public int IncrementInSeconds { get; set; } = 10;
 
         [Required]
         public PieceColor Side { get; set; }
