@@ -11,5 +11,10 @@ namespace ChessClassLibrary.Models
             this.Current = current;
             this.Destination = destination;
         }
+
+        public override string ToString()
+        {
+            return $"{(char)(Current.X+ 'A')}{Current.Y+1} to {(char)(Destination.X + 'A')}{Destination.Y+1}";
+        }
     }
 }
