@@ -12,5 +12,6 @@ namespace ChessClassLibrary.Games
         void TryPerformMove(BoardMove move);
         void PerformMove(BoardMove move);
         IEnumerable<PieceMove> GetPieceMoveSetAtPosition(Position position);
+        PieceColor? GetWinner();
     }
 }

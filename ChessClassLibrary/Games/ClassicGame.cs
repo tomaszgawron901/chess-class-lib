@@ -248,5 +248,17 @@ namespace ChessClassLibrary.Games.ClassicGame
             return piece.MoveSet;
         }
 
+        public PieceColor? GetWinner()
+        {
+            if (this.WhiteKing.IsCheckmated)
+            {
+                return PieceColor.White;
+            }
+            if (this.BlackKing.IsCheckmated)
+            {
+                return PieceColor.Black;
+            }
+            return null;
+        }
     }
 }
