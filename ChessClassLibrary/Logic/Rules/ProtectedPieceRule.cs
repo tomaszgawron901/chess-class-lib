@@ -31,13 +31,9 @@ namespace ChessClassLibrary.Logic.Rules
                 }
 
             }
-            else //if (!Board.Any(piece => piece != null && piece.Color == Color && piece.MoveSet.Any()))
+            else if (!Board.Any(piece => piece != null && piece.Color == Color && piece.MoveSet.Any()))
             {
-                var aha = Board.Where(piece => piece != null && piece.Color == Color).Select(piece => (piece, piece.MoveSet));
-                if (!Board.Any(piece => piece != null && piece.Color == Color && piece.MoveSet.Any()))
-                {
-                    KingState = KingState.Stalemated;
-                }
+                KingState = KingState.Stalemated;
             }
         }
 
