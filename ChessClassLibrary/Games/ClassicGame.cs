@@ -271,11 +271,11 @@ namespace ChessClassLibrary.Games.ClassicGame
         {
             if (this.WhiteKing.IsCheckmated)
             {
-                return PieceColor.White;
+                return PieceColor.Black;
             }
             if (this.BlackKing.IsCheckmated)
             {
-                return PieceColor.Black;
+                return PieceColor.White;
             }
             return null;
         }
