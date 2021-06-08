@@ -45,8 +45,9 @@ namespace ChessClassLibrary.Logic
         {
             if (!Transformed)
             {
-                this.Current = After;
-                this.Transformed = true;
+                After.Position = Current.Position;
+                Current = After;
+                Transformed = true;
             }
         }
     }
