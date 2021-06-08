@@ -27,6 +27,7 @@ namespace ChessClassLibrary.Logic
         {
             Current = current;
             After = after;
+            Transformed = false;
         }
 
         public override IPiece Piece => Current;
@@ -44,11 +45,8 @@ namespace ChessClassLibrary.Logic
         {
             if (!Transformed)
             {
-                if (Current.WasMoved)
-                {
-                    After.MoveToPosition(Current.Position);
-                }
                 this.Current = After;
+                this.Transformed = true;
             }
         }
     }

@@ -19,11 +19,11 @@ namespace ChessClassLibrary.Logic.PieceTransformation
 
         public new void MoveToPosition(Position position)
         {
-            base.MoveToPosition(position);
             if (!Transformed && Positions.Any(x => x.Equals(position)))
             {
                 Transform();
             }
+            base.MoveToPosition(position);
         }
     }
 }
