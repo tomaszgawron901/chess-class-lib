@@ -51,6 +51,8 @@
     <Compile Include="enums\PieceColor.cs" />
     <Compile Include="enums\PieceType.cs" />
     <Compile Include="Games\ClassicGame.cs" />
+    <Compile Include="Logic\PieceTransformation\AfterMoveToPositionTransformation.cs" />
+    <Compile Include="Logic\BasePieceTransformation.cs" />
     <Compile Include="Logic\Rules\BlackPawnFirstMoveRule.cs" />
     <Compile Include="Logic\Rules\ProtectedPieceRule.cs" />
     <Compile Include="Logic\Rules\WhitePawnFirstMoveRule.cs" />
