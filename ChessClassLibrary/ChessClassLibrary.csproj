@@ -50,7 +50,9 @@
     <Compile Include="enums\MoveType.cs" />
     <Compile Include="enums\PieceColor.cs" />
     <Compile Include="enums\PieceType.cs" />
+    <Compile Include="Games\BaseClassicGame.cs" />
     <Compile Include="Games\ClassicGame.cs" />
+    <Compile Include="Games\KnightmateGame.cs" />
     <Compile Include="Logic\PieceTransformation\AfterMoveToPositionTransformation.cs" />
     <Compile Include="Logic\BasePieceTransformation.cs" />
     <Compile Include="Logic\Rules\BlackPawnFirstMoveRule.cs" />
@@ -74,6 +76,8 @@
     <Compile Include="Pieces\FasePieces\Queen.cs" />
     <Compile Include="Pieces\FasePieces\Rook.cs" />
     <Compile Include="Pieces\Piece.cs" />
+    <Compile Include="Pieces\SlowPieces\Centaur.cs" />
+    <Compile Include="Pieces\SlowPieces\Commoner.cs" />
     <Compile Include="Pieces\SlowPieces\King.cs" />
     <Compile Include="Pieces\SlowPieces\Knight.cs" />
     <Compile Include="Pieces\SlowPieces\Pawn.cs" />
