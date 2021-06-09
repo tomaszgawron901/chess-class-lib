@@ -23,7 +23,7 @@ namespace ChessClassLibrary.Pieces.SlowPieces
         };
 
         public Centaur(PieceColor color, Position position) :
-            base(color, PieceType.Knight, position)
+            base(color, PieceType.Centaur, position)
         { }
 
         public override IEnumerable<PieceMove> MoveSet => moveSet.Select(x => new PieceMove(x.Shift, x.MoveTypes.Select(y => y).ToArray()));
