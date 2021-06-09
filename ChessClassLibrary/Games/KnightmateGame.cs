@@ -30,11 +30,13 @@ namespace ChessClassLibrary.Games
         private bool InsufficientMatingMaterial(PieceColor color)
         {
             var colorPieces = Board.Where(x => x != null && x.Color == color);
-            var kingCount = colorPieces.Count(x => x.Type == PieceType.King);
-            var knightCount = colorPieces.Count(x => x.Type == PieceType.Knight);
+            var otherColorPieces = Board.Where(x => x != null && x.Color != color);
+            var centaurCount = colorPieces.Count(x => x.Type == PieceType.Centaur);
+            var rookCount = colorPieces.Count(x => x.Type == PieceType.Rook);
+            var commonerCount = colorPieces.Count(x => x.Type == PieceType.Commoner);
             var bishopCount = colorPieces.Count(x => x.Type == PieceType.Bishop);
-            var otherCount = colorPieces.Count() - kingCount - knightCount - bishopCount;
-            return (knightCount <= 1 && bishopCount == 0) || (knightCount == 1 && bishopCount <= 1) && otherCount == 0;
+            var otherCount = colorPieces.Count() - centaurCount - commonerCount - bishopCount - rookCount;
+            return (commonerCount <= 1 || rookCount <= 1 || bishopCount <= 1) && otherCount == 0 && otherColorPieces.Count() == 1;
         }
 
 
