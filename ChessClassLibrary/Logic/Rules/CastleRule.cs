@@ -61,6 +61,7 @@ namespace ChessClassLibrary.Logic.Rules
             : base(pieceDecorator)
         {
             this.protectedPieceRule = pieceDecorator;
+            this.protectedPieceRule.AtackedPiece = AtackedPiece;
         }
 
         private bool CanRightCastle()
