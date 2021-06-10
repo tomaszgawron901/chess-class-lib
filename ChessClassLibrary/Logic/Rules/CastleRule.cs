@@ -17,10 +17,17 @@ namespace ChessClassLibrary.Logic.Rules
     {
         public override IPiece AtackedPiece { 
             get {
-                return this.protectedPieceRule.AtackedPiece;
+                if(this.protectedPieceRule != null)
+                {
+                    return this.protectedPieceRule.AtackedPiece;
+                }
+                return null;
             }
             set {
-                this.protectedPieceRule.AtackedPiece = value;
+                if (this.protectedPieceRule !=  null)
+                {
+                    this.protectedPieceRule.AtackedPiece = value;
+                }
             }
         }
 
