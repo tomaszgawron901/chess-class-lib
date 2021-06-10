@@ -47,6 +47,9 @@ namespace ChessClassLibrary.Games
             WhiteKing = CreateKing(new Centaur(PieceColor.White, new Position(4, 0)));
             BlackKing = CreateKing(new Centaur(PieceColor.Black, new Position(4, 7)));
 
+            WhiteKing.AtackedPiece = BlackKing;
+            BlackKing.AtackedPiece = WhiteKing;
+
             InsertRichRow(PieceColor.White, 0);
             InsertPawnRow(PieceColor.White, 1);
             InsertEmptyRow(2);
