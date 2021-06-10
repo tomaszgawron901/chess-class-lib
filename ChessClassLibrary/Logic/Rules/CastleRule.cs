@@ -15,6 +15,15 @@ namespace ChessClassLibrary.Logic.Rules
 
     public class CastleRule: ProtectedPieceRule, IBasePieceDecorator, IPiece
     {
+        public override IPiece AtackedPiece { 
+            get {
+                return this.protectedPieceRule.AtackedPiece;
+            }
+            set {
+                this.protectedPieceRule.AtackedPiece = value;
+            }
+        }
+
         protected static PieceMove leftCastleMove = new PieceMove(new Position(-2, 0), MoveType.Move);
         protected static PieceMove rightCastleMove = new PieceMove(new Position(2, 0), MoveType.Move);
 
@@ -61,7 +70,6 @@ namespace ChessClassLibrary.Logic.Rules
             : base(pieceDecorator)
         {
             this.protectedPieceRule = pieceDecorator;
-            this.protectedPieceRule.AtackedPiece = AtackedPiece;
         }
 
         private bool CanRightCastle()
