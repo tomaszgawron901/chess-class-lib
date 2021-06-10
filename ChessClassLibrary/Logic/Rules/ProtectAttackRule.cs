@@ -12,8 +12,8 @@ namespace ChessClassLibrary.Logic.Rules
 {
     public class ProtectAttackRule : BasePieceRule
     {
-        public IPiece ProtectedPiece { get; protected set; }
-        public IPiece AtackedPiece { get; protected set; }
+        public IPiece ProtectedPiece { get; set; }
+        public IPiece AtackedPiece { get; set; }
         public ProtectAttackRule(BasePieceDecorator piece, IPiece protectedPiece, IPiece atackedPiece=null)
             : base(piece)
         {

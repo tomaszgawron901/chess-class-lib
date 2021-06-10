@@ -41,6 +41,9 @@ namespace ChessClassLibrary.Games.ClassicGame
             WhiteKing = CreateKing(new King(PieceColor.White, new Position(4, 0)));
             BlackKing = CreateKing(new King(PieceColor.Black, new Position(4, 7)));
 
+            WhiteKing.AtackedPiece = BlackKing;
+            BlackKing.AtackedPiece = WhiteKing;
+
             InsertRichRow(PieceColor.White, 0);
             InsertPawnRow(PieceColor.White, 1);
             InsertEmptyRow(2);
