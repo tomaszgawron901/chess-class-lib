@@ -10,7 +10,7 @@ namespace ChessClassLibrary.Games.ClassicGame
     /// <summary>
     /// Standard Chess Game.
     /// </summary>
-    public class ClassicGame: BaseClassicGame, IGame, IClassicGame
+    public class ClassicGame: BaseClassicGame
     {
         public ClassicGame(): base() {}
 
