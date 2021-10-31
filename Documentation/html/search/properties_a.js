@@ -1,0 +1,10 @@
+var searchData=
+[
+  ['piece_0',['Piece',['../class_chess_class_library_1_1_logic_1_1_base_piece_container.html#a45fc5a49994d4023e6473a32a058ec06',1,'ChessClassLibrary.Logic.BasePieceContainer.Piece()'],['../class_chess_class_library_1_1_logic_1_1_base_piece_decorator.html#aafe29117cb32e278833365603121012e',1,'ChessClassLibrary.Logic.BasePieceDecorator.Piece()'],['../class_chess_class_library_1_1_logic_1_1_base_piece_rule.html#ac21143666e23de3f40250436d6b6b5a9',1,'ChessClassLibrary.Logic.BasePieceRule.Piece()'],['../class_chess_class_library_1_1_logic_1_1_base_piece_transformation.html#abb25bcf1bd94091f59e1ba8018025479',1,'ChessClassLibrary.Logic.BasePieceTransformation.Piece()']]],
+  ['pieces_1',['Pieces',['../class_chess_class_library_1_1_boards_1_1_classic_board.html#ad958b7d755c5a3d12553feea3d6037ed',1,'ChessClassLibrary::Boards::ClassicBoard']]],
+  ['player1_2',['Player1',['../class_chess_class_library_1_1_models_1_1_game_options.html#a0ee0eb45bec006b55d146cab13b7f77c',1,'ChessClassLibrary::Models::GameOptions']]],
+  ['player2_3',['Player2',['../class_chess_class_library_1_1_models_1_1_game_options.html#a184c15f0e2df3a3e333d6f5d232067f0',1,'ChessClassLibrary::Models::GameOptions']]],
+  ['position_4',['Position',['../class_chess_class_library_1_1_logic_1_1_base_piece_decorator.html#a693f3d2accb7ad7cf3dd0c68b625b5de',1,'ChessClassLibrary.Logic.BasePieceDecorator.Position()'],['../interface_chess_class_library_1_1_pieces_1_1_i_piece.html#ad1f28e39671e9d5006cab79959e52dd1',1,'ChessClassLibrary.Pieces.IPiece.Position()'],['../class_chess_class_library_1_1_pieces_1_1_piece.html#a63a766ce95e556e23120a3ed8f611520',1,'ChessClassLibrary.Pieces.Piece.Position()']]],
+  ['positions_5',['Positions',['../class_chess_class_library_1_1_logic_1_1_piece_transformation_1_1_after_move_to_position_transformation.html#ae8ef443aabece83ac86da843c288a1d0',1,'ChessClassLibrary::Logic::PieceTransformation::AfterMoveToPositionTransformation']]],
+  ['protectedpiece_6',['ProtectedPiece',['../class_chess_class_library_1_1_logic_1_1_rules_1_1_protect_attack_rule.html#a685eada13e3703fb9ad8aa909013bd9a',1,'ChessClassLibrary::Logic::Rules::ProtectAttackRule']]]
+];
