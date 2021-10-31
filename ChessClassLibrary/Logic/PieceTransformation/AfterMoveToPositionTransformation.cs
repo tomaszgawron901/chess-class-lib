@@ -1,13 +1,12 @@
 ﻿using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic.PieceTransformation
 {
+    /// <summary>
+    /// Rule responsible for transforming Piece after moving to given Position.
+    /// </summary>
     public class AfterMoveToPositionTransformation: BasePieceTransformation, IPieceTransformation
     {
         public IEnumerable<Position> Positions { get; private set; }

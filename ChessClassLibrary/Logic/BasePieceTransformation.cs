@@ -1,12 +1,7 @@
 ﻿using ChessClassLibrary.Boards;
-using ChessClassLibrary.enums;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic
 {
@@ -18,10 +13,24 @@ namespace ChessClassLibrary.Logic
         void Transform();
     }
 
+    /// <summary>
+    /// Base class responsible for transforming one Piece to the other.
+    /// </summary>
     public abstract class BasePieceTransformation: BasePieceDecorator, IPieceTransformation
     {
+        /// <summary>
+        /// Determines if piece was transformed.
+        /// </summary>
         public bool Transformed {get; protected set; }
+
+        /// <summary>
+        /// Current piece.
+        /// </summary>
         public IBasePieceDecorator Current { get; private set; }
+
+        /// <summary>
+        /// Piece after transformation.
+        /// </summary>
         public IBasePieceDecorator After { get; private set; }
         public BasePieceTransformation(IBasePieceDecorator current, IBasePieceDecorator after)
         {
@@ -31,7 +40,7 @@ namespace ChessClassLibrary.Logic
         }
 
         public override IPiece Piece => Current;
-        public override Board Board => Current.Board;
+        public override IBoard Board => Current.Board;
 
         public override IEnumerable<PieceMove> MoveSet => Current.MoveSet;
 

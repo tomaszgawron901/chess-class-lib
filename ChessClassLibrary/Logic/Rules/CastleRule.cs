@@ -1,18 +1,14 @@
-﻿using ChessClassLibrary.Boards;
-using ChessClassLibrary.enums;
+﻿using ChessClassLibrary.enums;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
-using ChessClassLibrary.Pieces.FasePieces;
-using ChessClassLibrary.Pieces.SlowPieces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic.Rules
 {
-
+    /// <summary>
+    /// Rule for handling castle move.
+    /// </summary>
     public class CastleRule: ProtectedPieceRule, IBasePieceDecorator, IPiece
     {
         public override IPiece AtackedPiece { 
@@ -40,7 +36,7 @@ namespace ChessClassLibrary.Logic.Rules
         private ProtectedPieceRule protectedPieceRule;
         public override KingState KingState { get => protectedPieceRule.KingState; set => protectedPieceRule.KingState = value; }
 
-        IEnumerable<PieceMove> IPiece.MoveSet
+        public override IEnumerable<PieceMove> MoveSet
         {
             get
             {
@@ -79,6 +75,10 @@ namespace ChessClassLibrary.Logic.Rules
             this.protectedPieceRule = pieceDecorator;
         }
 
+        /// <summary>
+        /// Checks if left castle can be performed.
+        /// </summary>
+        /// <returns></returns>
         private bool CanRightCastle()
         {
             if (IsChecked) return false;
@@ -97,6 +97,11 @@ namespace ChessClassLibrary.Logic.Rules
             }
             return false;
         }
+
+        /// <summary>
+        /// Checks if right castle can be performed.
+        /// </summary>
+        /// <returns></returns>
         private bool CanLeftCastle()
         {
             if (IsChecked) return false;
@@ -116,12 +121,18 @@ namespace ChessClassLibrary.Logic.Rules
             return false;
         }
 
+        /// <summary>
+        /// Performs left castle.
+        /// </summary>
         private void DoLeftCastle()
         {
             Piece.MoveToPosition(new Position(2, Position.Y));
             Board.GetPiece(new Position(0, Position.Y)).MoveToPosition(new Position(3, Position.Y));
         }
 
+        /// <summary>
+        /// Performs right castle.
+        /// </summary>
         private void DoRightCastle()
         {
             Piece.MoveToPosition(new Position(6, Position.Y));

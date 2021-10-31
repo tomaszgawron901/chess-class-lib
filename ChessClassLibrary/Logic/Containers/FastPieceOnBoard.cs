@@ -1,19 +1,18 @@
 ﻿using ChessClassLibrary.Boards;
-using ChessClassLibrary.enums;
-using ChessClassLibrary.Games.ClassicGame;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic.Containers
 {
+    /// <summary>
+    /// Container class for fast pieces.
+    /// </summary>
     public class FastPieceOnBoard: BasePieceContainer
     {
-        public FastPieceOnBoard(IPiece piece, Board board)
+        public FastPieceOnBoard(IPiece piece, IBoard board)
             : base(piece, board)
         {}
 
@@ -50,6 +49,12 @@ namespace ChessClassLibrary.Logic.Containers
         }
 
 
+        /// <summary>
+        /// Check if there is no Piece between current Piece Position and PieceMove destination.
+        /// </summary>
+        /// <param name="destination"></param>
+        /// <param name="move"></param>
+        /// <returns></returns>
         private bool IsPathClear(Position destination, PieceMove move)
         {
             for (
@@ -65,6 +70,12 @@ namespace ChessClassLibrary.Logic.Containers
             return true;
         }
 
+        /// <summary>
+        /// Check if destination is in reach of multiplicity of given PieceMove.
+        /// </summary>
+        /// <param name="destination"></param>
+        /// <param name="move"></param>
+        /// <returns></returns>
         public bool isInLine(Position destination, PieceMove move)
         {
             Position destinationMove = destination - this.Position;

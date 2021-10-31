@@ -1,21 +1,15 @@
 ﻿using ChessClassLibrary.Boards;
 using ChessClassLibrary.enums;
-using ChessClassLibrary.Logic;
-using ChessClassLibrary.Logic.Containers;
-using ChessClassLibrary.Logic.PieceTransformation;
-using ChessClassLibrary.Logic.Rules;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
-using ChessClassLibrary.Pieces.FasePieces;
 using ChessClassLibrary.Pieces.SlowPieces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Games
 {
+    /// <summary>
+    /// Knightmate Chess Game.
+    /// </summary>
     public class KnightmateGame: BaseClassicGame, IGame, IClassicGame
     {
         public KnightmateGame(): base() 
@@ -60,22 +54,6 @@ namespace ChessClassLibrary.Games
             InsertRichRow(PieceColor.Black, 7);
         }
 
-        private void InsertEmptyRow(int row)
-        {
-            for (int i = 0; i < Board.Width; i++)
-            {
-                Board.SetPiece(null, new Position(1, row));
-            }
-        }
-
-        private void InsertPawnRow(PieceColor color, int row)
-        {
-            for (int i = 0; i < Board.Width; i++)
-            {
-                Board.SetPiece(CreatePawn(color, new Position(i, row)));
-            }
-        }
-
         private void InsertRichRow(PieceColor color, int row)
         {
             Board.SetPiece(CreateRook(color, new Position(0, row)));
@@ -93,55 +71,6 @@ namespace ChessClassLibrary.Games
             Board.SetPiece(CreateBishop(color, new Position(5, row)));
             Board.SetPiece(CreateCommoner(color, new Position(6, row)));
             Board.SetPiece(CreateRook(color, new Position(7, row)));
-        }
-        #endregion
-
-
-        #region Piece Creators
-        private BasePieceDecorator CreatePawn(PieceColor color, Position position)
-        {
-            if (color == PieceColor.White)
-            {
-                var currentPiece = new WhitePawnFirstMoveRule(new PieceOnBoard(new WhitePawn(position), Board));
-                var afterPiece = new FastPieceOnBoard(new Queen(PieceColor.White, position), Board);
-                IEnumerable<Position> positions = Enumerable.Range(0, Board.Width).Select(x => new Position(x, Board.Height - 1));
-
-                return CreateProtector(new KillRule(new MoveRule(new AfterMoveToPositionTransformation(currentPiece, afterPiece, positions))));
-            }
-            else if (color == PieceColor.Black)
-            {
-                var currentPiece = new BlackPawnFirstMoveRule(new PieceOnBoard(new BlackPawn(position), Board));
-                var afterPiece = new FastPieceOnBoard(new Queen(PieceColor.Black, position), Board);
-                IEnumerable<Position> positions = Enumerable.Range(0, Board.Width).Select(x => new Position(x, 0));
-
-                return CreateProtector(new KillRule(new MoveRule(new AfterMoveToPositionTransformation(currentPiece, afterPiece, positions))));
-            }
-            throw new Exception();
-        }
-
-        private BasePieceDecorator CreateRook(PieceColor color, Position position)
-        {
-            return CreateProtector(CreateFastPiece(new Rook(color, position)));
-        }
-
-        private BasePieceDecorator CreateCommoner(PieceColor color, Position position)
-        {
-            return CreateProtector(CreateSlowPiece(new Commoner(color, position)));
-        }
-
-        private BasePieceDecorator CreateBishop(PieceColor color, Position position)
-        {
-            return CreateProtector(CreateFastPiece(new Bishop(color, position)));
-        }
-
-        private BasePieceDecorator CreateQueen(PieceColor color, Position position)
-        {
-            return CreateProtector(CreateFastPiece(new Queen(color, position)));
-        }
-
-        private ProtectedPieceRule CreateKing(IPiece piece)
-        {
-            return new CastleRule(new ProtectedPieceRule(new KillRule(new MoveRule(new PieceOnBoard(piece, Board)))));
         }
         #endregion
     }
