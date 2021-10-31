@@ -10,7 +10,7 @@ namespace ChessClassLibrary.Games
     /// <summary>
     /// Knightmate Chess Game.
     /// </summary>
-    public class KnightmateGame: BaseClassicGame, IGame, IClassicGame
+    public class KnightmateGame: BaseClassicGame
     {
         public KnightmateGame(): base() 
         {}
