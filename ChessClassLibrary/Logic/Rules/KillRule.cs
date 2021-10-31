@@ -1,15 +1,12 @@
-﻿using ChessClassLibrary.Boards;
-using ChessClassLibrary.enums;
+﻿using ChessClassLibrary.enums;
 using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic.Rules
 {
+    /// <summary>
+    /// Rule which checks if Piece could be moved by PieceMove with 'Kill' MoveType.
+    /// </summary>
     class KillRule : BasePieceRule
     {
         public KillRule(BasePieceDecorator piece)

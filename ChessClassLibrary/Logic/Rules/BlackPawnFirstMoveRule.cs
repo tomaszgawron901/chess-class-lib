@@ -1,14 +1,14 @@
 ﻿using ChessClassLibrary.enums;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic.Rules
 {
+    /// <summary>
+    /// Rule that allows moving Piece two fields straight backward if and only if it was not yet moved.
+    /// </summary>
     class BlackPawnFirstMoveRule : BasePieceRule, IBasePieceDecorator, IPiece
     {
         private static PieceMove longMove = new PieceMove(new Position(0, -2), MoveType.Move);
@@ -24,7 +24,7 @@ namespace ChessClassLibrary.Logic.Rules
 
         protected PieceMove LongMove => new PieceMove(longMove.Shift, longMove.MoveTypes.Select(x => x).ToArray());
 
-        IEnumerable<PieceMove> IPiece.MoveSet {
+        public override IEnumerable<PieceMove> MoveSet {
             get
             {
                 var newMoveSet = Piece.MoveSet;
@@ -55,6 +55,10 @@ namespace ChessClassLibrary.Logic.Rules
             return true;
         }
 
+        /// <summary>
+        /// Checks if Piece can move two fields straight backward.
+        /// </summary>
+        /// <returns></returns>
         private bool CanLongMove()
         {
             return !this.WasMoved && Board.GetPiece(Position + new Position(0, -1)) == null && Board.GetPiece(Position + new Position(0, -2)) == null;

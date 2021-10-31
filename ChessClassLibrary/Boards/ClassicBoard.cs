@@ -10,8 +10,14 @@ using System.Linq;
 
 namespace ChessClassLibrary.Boards
 {
-    public class ClassicBoard : Board, IEnumerable<IPiece>
+    /// <summary>
+    /// Rectangular Board.
+    /// </summary>
+    public class ClassicBoard : IBoard
     {
+        /// <summary>
+        /// Class responsible for enumerating through the Board Pieces.
+        /// </summary>
         private sealed class ClassicBoardIterator : IEnumerator<IPiece>
         {
             private ClassicBoard board;
@@ -61,25 +67,40 @@ namespace ChessClassLibrary.Boards
             this.Width = pieces.GetLength(0);
         }
 
-        public override IEnumerator<IPiece> GetEnumerator()
+        public IEnumerator<IPiece> GetEnumerator()
         {
             return new ClassicBoardIterator(this);
         }
 
-        public override bool IsInRange(Position position)
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        /// <summary>
+        /// Checks if given position is in range of the Board.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public bool IsInRange(Position position)
         {
             return position.X >= 0 && position.X < Width && position.Y >= 0 && position.Y < Height;
         }
 
-        public override IPiece GetPiece(Position position)
+        /// <summary>
+        /// Gets Piece at given Position.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public IPiece GetPiece(Position position)
         {
             return this.Pieces[position.X, position.Y];
         }
 
         /// <summary>
-        /// Add piece to the board at given position.
+        /// Add Piece to the Board at the given Position.
         /// </summary>
-        public override void SetPiece(IPiece piece, Position position)
+        public void SetPiece(IPiece piece, Position position)
         {
             if (IsInRange(position))
             {
@@ -91,12 +112,19 @@ namespace ChessClassLibrary.Boards
             }
         }
 
-        public override void SetPiece(IPiece piece)
+        /// <summary>
+        /// Add Piece to the Board at its Position.
+        /// </summary>
+        /// <param name="piece"></param>
+        public void SetPiece(IPiece piece)
         {
             SetPiece(piece, piece.Position);
         }
 
-        public override void Clear()
+        /// <summary>
+        /// Clears Board by assigning null all its fields.
+        /// </summary>
+        public void Clear()
         {
             for (int y = 0; y < Height; y++)
             {

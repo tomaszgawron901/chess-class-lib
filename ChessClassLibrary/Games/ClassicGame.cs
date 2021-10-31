@@ -1,19 +1,15 @@
 ﻿using ChessClassLibrary.Boards;
 using ChessClassLibrary.enums;
-using ChessClassLibrary.Logic;
-using ChessClassLibrary.Logic.Containers;
-using ChessClassLibrary.Logic.PieceTransformation;
-using ChessClassLibrary.Logic.Rules;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
-using ChessClassLibrary.Pieces.FasePieces;
 using ChessClassLibrary.Pieces.SlowPieces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ChessClassLibrary.Games.ClassicGame
 {
+    /// <summary>
+    /// Standard Chess Game.
+    /// </summary>
     public class ClassicGame: BaseClassicGame, IGame, IClassicGame
     {
         public ClassicGame(): base() {}
@@ -23,6 +19,11 @@ namespace ChessClassLibrary.Games.ClassicGame
             return InsufficientMatingMaterial(PieceColor.White) && InsufficientMatingMaterial(PieceColor.Black);
         }
 
+        /// <summary>
+        /// Checks if there is enough Pieces with given color to play the Game.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         private bool InsufficientMatingMaterial(PieceColor color)
         {
             var colorPieces = Board.Where(x => x != null && x.Color == color);
@@ -54,22 +55,6 @@ namespace ChessClassLibrary.Games.ClassicGame
             InsertRichRow(PieceColor.Black, 7);
         }
 
-        private void InsertEmptyRow(int row)
-        {
-            for (int i = 0; i < Board.Width; i++)
-            {
-                Board.SetPiece(null, new Position(1, row));
-            }
-        }
-
-        private void InsertPawnRow(PieceColor color, int row)
-        {
-            for (int i = 0; i < Board.Width; i++)
-            {
-                Board.SetPiece(CreatePawn(color, new Position(i, row)));
-            }
-        }
-
         private void InsertRichRow(PieceColor color, int row)
         {
             Board.SetPiece(CreateRook(color, new Position(0, row)));
@@ -87,94 +72,6 @@ namespace ChessClassLibrary.Games.ClassicGame
             Board.SetPiece(CreateBishop(color, new Position(5, row)));
             Board.SetPiece(CreateKnight(color, new Position(6, row)));
             Board.SetPiece(CreateRook(color, new Position(7, row)));
-        }
-        #endregion
-
-        #region Move manager
-        public bool CanPerformMove(BoardMove move)
-        {
-            IPiece pickedPiece = Board.GetPiece(move.Current);
-            if (pickedPiece != null && pickedPiece.Color == CurrentPlayerColor)
-            {
-                return pickedPiece.GetMoveTo(move.Destination) != null;
-            }
-            return false;
-        }
-
-        public void TryPerformMove(BoardMove move)
-        {
-            if (CanPerformMove(move))
-            {
-                PerformMove(move);
-            }
-            else
-            {
-                throw new Exception();
-            }
-        }
-
-        public void PerformMove(BoardMove move)
-        {
-            if (GameState == GameState.NotStarted)
-            {
-                GameState = GameState.InProgress;
-            }
-            Board.GetPiece(move.Current).MoveToPosition(move.Destination);
-            AfterMovePerformed();
-        }
-
-        public void AfterMovePerformed()
-        {
-            UpdateGameStatus();
-            SwapPlayers();
-        }
-        #endregion Move manager
-
-        #region Piece Creators
-        private BasePieceDecorator CreatePawn(PieceColor color, Position position)
-        {
-            if (color == PieceColor.White)
-            {
-                var currentPiece = new WhitePawnFirstMoveRule(new PieceOnBoard(new WhitePawn(position), Board));
-                var afterPiece = new FastPieceOnBoard(new Queen(PieceColor.White, position), Board);
-                IEnumerable<Position> positions = Enumerable.Range(0, Board.Width).Select(x => new Position(x, Board.Height - 1));
-
-                return CreateProtector(new KillRule(new MoveRule(new AfterMoveToPositionTransformation(currentPiece, afterPiece, positions))));
-            }
-            else if(color == PieceColor.Black)
-            {
-                var currentPiece = new BlackPawnFirstMoveRule(new PieceOnBoard(new BlackPawn(position), Board));
-                var afterPiece = new FastPieceOnBoard(new Queen(PieceColor.Black, position), Board);
-                IEnumerable<Position> positions = Enumerable.Range(0, Board.Width).Select(x => new Position(x, 0));
-
-                return CreateProtector(new KillRule(new MoveRule(new AfterMoveToPositionTransformation(currentPiece, afterPiece, positions))));
-            }
-            throw new Exception();
-        }
-
-        private BasePieceDecorator CreateRook(PieceColor color, Position position)
-        {
-            return CreateProtector(CreateFastPiece(new Rook(color, position)));
-        }
-
-        private BasePieceDecorator CreateKnight(PieceColor color, Position position)
-        {
-            return CreateProtector(CreateSlowPiece(new Knight(color, position)));
-        }
-
-        private BasePieceDecorator CreateBishop(PieceColor color, Position position)
-        {
-            return CreateProtector(CreateFastPiece(new Bishop(color, position)));
-        }
-
-        private BasePieceDecorator CreateQueen(PieceColor color, Position position)
-        {
-            return CreateProtector(CreateFastPiece(new Queen(color, position)));
-        }
-
-        private ProtectedPieceRule CreateKing(IPiece piece)
-        {
-            return new CastleRule(new ProtectedPieceRule(new KillRule(new MoveRule(new PieceOnBoard(piece, Board)))));
         }
         #endregion
     }

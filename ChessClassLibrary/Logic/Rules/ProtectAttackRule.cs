@@ -1,15 +1,14 @@
-﻿using ChessClassLibrary.Boards;
-using ChessClassLibrary.enums;
+﻿using ChessClassLibrary.enums;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic.Rules
 {
+    /// <summary>
+    /// Rule that disables moves all after which given Piece could be killed except moves after which attacked Piece could be killed.
+    /// </summary>
     public class ProtectAttackRule : BasePieceRule
     {
         public IPiece ProtectedPiece { get; set; }
@@ -21,8 +20,13 @@ namespace ChessClassLibrary.Logic.Rules
             this.AtackedPiece = atackedPiece;
         }
 
-        public new IEnumerable<PieceMove> MoveSet => Piece.MoveSet.Where(isProtectedPieceSafeAfterMove);
+        public override IEnumerable<PieceMove> MoveSet => Piece.MoveSet.Where(isProtectedPieceSafeAfterMove);
 
+        /// <summary>
+        /// Checks if protected Piece couldn't be killed or attacked Piece could be killed after performing PieceMove.
+        /// </summary>
+        /// <param name="move"></param>
+        /// <returns></returns>
         protected bool isProtectedPieceSafeAfterMove(PieceMove move)
         {
             var destinationPostion = Position + move.Shift;

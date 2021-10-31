@@ -1,13 +1,12 @@
 ﻿using ChessClassLibrary.enums;
 using ChessClassLibrary.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic.Rules
 {
+    /// <summary>
+    /// Rule that disables moves after which given Piece could be killed.
+    /// </summary>
     public class ProtectedPieceRule : ProtectAttackRule
     {
         public virtual KingState KingState { get; set; }
@@ -19,6 +18,9 @@ namespace ChessClassLibrary.Logic.Rules
             :base(pieceDecorator, pieceDecorator)
         {}
 
+        /// <summary>
+        /// Updates ProtectedPiece state.
+        /// </summary>
         public void UpdateState()
         {
             KingState = KingState.None;
@@ -37,6 +39,11 @@ namespace ChessClassLibrary.Logic.Rules
             }
         }
 
+        /// <summary>
+        /// Check if given PieceMove contains 'Kill' MoveType.
+        /// </summary>
+        /// <param name="move"></param>
+        /// <returns></returns>
         private bool moveContainsKill(PieceMove move) => move != null && move.MoveTypes.Contains(MoveType.Kill);
     }
 }

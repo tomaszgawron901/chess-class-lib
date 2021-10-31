@@ -1,23 +1,26 @@
 ﻿using ChessClassLibrary.Boards;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic
 {
+    /// <summary>
+    /// Base class responsible for chaining piece behaviors and constrains.
+    /// </summary>
     public abstract class BasePieceRule : BasePieceDecorator
     {
+        /// <summary>
+        /// Base PieceDecorator that is being decorated.
+        /// </summary>
         protected IBasePieceDecorator pieceDecorator;
         public BasePieceRule(IBasePieceDecorator pieceDecorator)
         {
             this.pieceDecorator = pieceDecorator;
         }
 
-        public override Board Board => this.pieceDecorator.Board;
+        public override IBoard Board => this.pieceDecorator.Board;
 
         public override IPiece Piece => pieceDecorator;
         public IBasePieceDecorator InnerPieceDecorator => pieceDecorator;

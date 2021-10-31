@@ -1,19 +1,17 @@
 ﻿using ChessClassLibrary.Boards;
-using ChessClassLibrary.enums;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
-using ChessClassLibrary.Pieces.SlowPieces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Logic.Containers
 {
+    /// <summary>
+    /// Container class for slow pieces.
+    /// </summary>
     public class PieceOnBoard : BasePieceContainer
     {
-        public PieceOnBoard(IPiece piece, Board board)
+        public PieceOnBoard(IPiece piece, IBoard board)
             : base(piece, board)
         {}
 
