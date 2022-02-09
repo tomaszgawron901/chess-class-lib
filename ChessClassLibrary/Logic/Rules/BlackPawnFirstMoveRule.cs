@@ -64,9 +64,8 @@ namespace ChessClassLibrary.Logic.Rules
             return !this.WasMoved && Board.GetPiece(Position + new Position(0, -1)) == null && Board.GetPiece(Position + new Position(0, -2)) == null;
         }
 
-        public override PieceMove GetMoveTo(Position position)
+        public override PieceMove GetShiftMove(Position moveShift)
         {
-            var moveShift = position - Position;
             if (moveShift == this.LongMove.Shift && InnerPieceDecorator.ValidateNewMove(LongMove) && CanLongMove())
             {
                 return longMove;

@@ -1,14 +1,13 @@
 ﻿using ChessClassLibrary.enums;
 using ChessClassLibrary.Models;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace ChessClassLibrary.Pieces.SlowPieces
+namespace ChessClassLibrary.PiecesMoveSets
 {
-    public class King : Piece
+    internal static partial class PieceMoveSets
     {
-        protected readonly static PieceMove[] moveSet = new PieceMove[]
-        {
+        public readonly static IEnumerable<PieceMove> CommonerMoveSet = new PieceMoveSet
+        (
             new PieceMove(new Position(-1, 1), MoveType.Move, MoveType.Kill ),
             new PieceMove(new Position(0, 1), MoveType.Move, MoveType.Kill ),
             new PieceMove(new Position(1, 1), MoveType.Move, MoveType.Kill ),
@@ -16,13 +15,7 @@ namespace ChessClassLibrary.Pieces.SlowPieces
             new PieceMove(new Position(1, 0), MoveType.Move, MoveType.Kill ),
             new PieceMove(new Position(-1, -1), MoveType.Move, MoveType.Kill ),
             new PieceMove(new Position(0, -1), MoveType.Move, MoveType.Kill ),
-            new PieceMove(new Position(1, -1), MoveType.Move, MoveType.Kill ),
-        };
-
-        public King(PieceColor color, Position position) :
-            base(color, PieceType.King, position)
-        { }
-
-        public override IEnumerable<PieceMove> MoveSet => moveSet.Select(x => new PieceMove(x.Shift, x.MoveTypes.Select(y => y).ToArray()));
+            new PieceMove(new Position(1, -1), MoveType.Move, MoveType.Kill )
+        );
     }
 }

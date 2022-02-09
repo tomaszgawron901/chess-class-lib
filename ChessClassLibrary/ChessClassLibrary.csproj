@@ -73,15 +73,16 @@
     <Compile Include="Games\IGame.cs" />
     <Compile Include="Models\BoardMove.cs" />
     <Compile Include="Models\PieceBackup.cs" />
-    <Compile Include="Pieces\FasePieces\Bishop.cs" />
-    <Compile Include="Pieces\FasePieces\Queen.cs" />
-    <Compile Include="Pieces\FasePieces\Rook.cs" />
-    <Compile Include="Pieces\Piece.cs" />
-    <Compile Include="Pieces\SlowPieces\Centaur.cs" />
-    <Compile Include="Pieces\SlowPieces\Commoner.cs" />
-    <Compile Include="Pieces\SlowPieces\King.cs" />
-    <Compile Include="Pieces\SlowPieces\Knight.cs" />
-    <Compile Include="Pieces\SlowPieces\Pawn.cs" />
+    <Compile Include="Models\PieceMoveSet.cs" />
+    <Compile Include="PieceMoveSets\FasePieces\BishopMoveSet.cs" />
+    <Compile Include="PieceMoveSets\FasePieces\QueenMoveSet.cs" />
+    <Compile Include="PieceMoveSets\FasePieces\RookMoveSet.cs" />
+    <Compile Include="PieceMoveSets\Piece.cs" />
+    <Compile Include="PieceMoveSets\SlowPieces\CentaurMoveSet.cs" />
+    <Compile Include="PieceMoveSets\SlowPieces\CommonerMoveSet.cs" />
+    <Compile Include="PieceMoveSets\SlowPieces\KingMoveSet.cs" />
+    <Compile Include="PieceMoveSets\SlowPieces\KnightMoveSet.cs" />
+    <Compile Include="PieceMoveSets\SlowPieces\PawnMoveSet.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

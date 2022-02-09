@@ -94,7 +94,7 @@ namespace ChessClassLibrary.Games
             IPiece pickedPiece = Board.GetPiece(move.Current);
             if (pickedPiece != null && pickedPiece.Color == CurrentPlayerColor)
             {
-                return pickedPiece.GetMoveTo(move.Destination) != null;
+                return pickedPiece.GetShiftMove(move.Destination) != null;
             }
             return false;
         }

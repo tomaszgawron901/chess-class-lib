@@ -24,7 +24,7 @@ namespace ChessClassLibrary.Logic.Rules
         public void UpdateState()
         {
             KingState = KingState.None;
-            if (Board.Any(piece => piece != null && piece.Color != Color && moveContainsKill(piece.GetMoveTo(Position))))
+            if (Board.Any(piece => piece != null && piece.Color != Color && moveContainsKill(piece.GetShiftMove(Position))))
             {
                 KingState = KingState.Checked;
                 if (!Board.Any(piece => piece != null && piece.Color == Color && piece.MoveSet.Any()))

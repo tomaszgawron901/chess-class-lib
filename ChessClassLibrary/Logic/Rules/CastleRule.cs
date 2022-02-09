@@ -179,7 +179,7 @@ namespace ChessClassLibrary.Logic.Rules
             }
         }
 
-        public override PieceMove GetMoveTo(Position position)
+        public override PieceMove GetShiftMove(Position position)
         {
             var moveShift = position - Position;
 
@@ -201,7 +201,7 @@ namespace ChessClassLibrary.Logic.Rules
                 return null;
             }
 
-            return Piece.GetMoveTo(position);
+            return Piece.GetShiftMove(position);
         }
     }
 }

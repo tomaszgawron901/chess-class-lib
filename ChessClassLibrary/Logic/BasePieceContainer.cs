@@ -44,7 +44,7 @@ namespace ChessClassLibrary.Logic
         /// Moves piece to given position on the board.
         /// </summary>
         /// <param name="position"></param>
-        public override void MoveToPosition(Position position)
+        public void MoveToPosition(Position position)
         {
             Board.SetPiece(Board.GetPiece(Position), position);
             Board.SetPiece(null, Position);

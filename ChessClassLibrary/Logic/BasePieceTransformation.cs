@@ -47,14 +47,13 @@ namespace ChessClassLibrary.Logic
         public override PieceMove MoveModifier(PieceMove move) => move;
 
         public override bool ValidateNewMove(PieceMove move) => Current.ValidateNewMove(move);
-        public override PieceMove GetMoveTo(Position position) => Current.GetMoveTo(position);
+        public override PieceMove GetShiftMove(Position position) => Current.GetShiftMove(position);
         public override void MoveToPosition(Position position) => Current.MoveToPosition(position);
 
         public void Transform()
         {
             if (!Transformed)
             {
-                After.Position = Current.Position;
                 Current = After;
                 Transformed = true;
             }

@@ -12,7 +12,7 @@ namespace ChessClassLibrary.Models
         /// <summary>
         /// Available Piece MoveTypes.
         /// </summary>
-        public MoveType[] MoveTypes { get; set; }
+        public IEnumerable<MoveType> MoveTypes { get; set; }
         /// <summary>
         /// Vector by with Piece will be shifted.
         /// </summary>

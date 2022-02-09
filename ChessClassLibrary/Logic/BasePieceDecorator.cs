@@ -3,14 +3,15 @@ using ChessClassLibrary.enums;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessClassLibrary.Logic
 {
     public interface IBasePieceDecorator: IPiece
     {
+        IPiece Piece { get; }
         PieceMove MoveModifier(PieceMove move);
         bool ValidateNewMove(PieceMove move);
-        IBoard Board { get; }
     }
 
     /// <summary>
@@ -18,31 +19,25 @@ namespace ChessClassLibrary.Logic
     /// </summary>
     public abstract class BasePieceDecorator : IBasePieceDecorator
     {
-        public BasePieceDecorator(){}
+        public BasePieceDecorator(IPiece Piece)
+        {
+            this.Piece = Piece;
+            this.Color = Piece.Color;
+            this.Type = Piece.Type;
+        }
 
         /// <summary>
         /// Base Piece witch is being decorated.
         /// </summary>
-        public abstract IPiece Piece { get; }
-
-        /// <summary>
-        /// Board on witch Piece is located.
-        /// </summary>
-        public abstract IBoard Board { get; }
+        public IPiece Piece { get; }
 
         /// <summary>
         /// Available PieceMoves.
         /// </summary>
-        public abstract IEnumerable<PieceMove> MoveSet { get; }
+        public virtual IEnumerable<PieceMove> MoveSet { get => Piece.MoveSet.Select(MoveModifier).Where(x => x.MoveTypes.Any()); }
 
-        /// <summary>
-        /// Determines if piece was moved.
-        /// </summary>
-        public bool WasMoved => Piece.WasMoved;
-
-        public Position Position { get => Piece.Position; set => Piece.Position = value; }
-        public PieceColor Color { get => Piece.Color; set => Piece.Color = value; }
-        public PieceType Type { get => Piece.Type; set => Piece.Type = value; }
+        public PieceColor Color { get; }
+        public PieceType Type { get; }
 
         /// <summary>
         /// Applies new behaviors and constrains to the PieceMove.
@@ -63,12 +58,6 @@ namespace ChessClassLibrary.Logic
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        public abstract PieceMove GetMoveTo(Position position);
-
-        /// <summary>
-        /// Moves piece to given position.
-        /// </summary>
-        /// <param name="position"></param>
-        public abstract void MoveToPosition(Position position);
+        public virtual PieceMove GetShiftMove(Position shift) => MoveSet.FirstOrDefault(x => x.Shift == shift);
     }
 }

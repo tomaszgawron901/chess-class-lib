@@ -32,9 +32,9 @@ namespace ChessClassLibrary.Logic
             Piece.MoveToPosition(position);
         }
 
-        public override PieceMove GetMoveTo(Position position)
+        public override PieceMove GetShiftMove(Position position)
         {
-            var baseMove = Piece.GetMoveTo(position);
+            var baseMove = Piece.GetShiftMove(position);
             if (baseMove == null) return null;
 
             return MoveModifier(baseMove);
