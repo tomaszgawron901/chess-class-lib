@@ -14,7 +14,7 @@ namespace ChessClassLibrary.Models
 
         public override string ToString()
         {
-            return $"{(char)(Current.X+ 'A')}{Current.Y+1} to {(char)(Destination.X + 'A')}{Destination.Y+1}";
+            return $"{Current} to {Destination}";
         }
     }
 }

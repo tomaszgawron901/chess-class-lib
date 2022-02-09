@@ -1,4 +1,5 @@
 ﻿using ChessClassLibrary.enums;
+using ChessClassLibrary.Extensions;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace ChessClassLibrary.Logic.Rules
     /// </summary>
     public class WhitePawnFirstMoveRule: BasePieceRule, IBasePieceDecorator, IPiece
     {
-        private static PieceMove longMove = new PieceMove(new Position(0, 2), MoveType.Move);
+        protected readonly static PieceMove longMove = new PieceMove(new Position(0, 2), MoveType.Move);
 
         public WhitePawnFirstMoveRule(BasePieceDecorator pieceDecorator)
             : base(pieceDecorator)
@@ -22,24 +23,14 @@ namespace ChessClassLibrary.Logic.Rules
             return move;
         }
 
-        protected PieceMove LongMove => new PieceMove(longMove.Shift, longMove.MoveTypes.Select(x => x).ToArray());
-
         public override IEnumerable<PieceMove> MoveSet
         {
             get
             {
                 var newMoveSet = Piece.MoveSet;
-                if (InnerPieceDecorator.ValidateNewMove(LongMove) && CanLongMove())
+                if (InnerPieceDecorator.ValidateNewMove(longMove) && CanLongMove())
                 {
-                    var existingMove = newMoveSet.FirstOrDefault(x => x.Shift == LongMove.Shift);
-                    if (existingMove == null)
-                    {
-                        newMoveSet = newMoveSet.Append(LongMove);
-                    }
-                    else
-                    {
-                        existingMove.MoveTypes = new MoveType[] { MoveType.Move };
-                    }
+                    return Piece.MoveSet.AddOrUpdatePieceMove(longMove);
                 }
                 return newMoveSet;
             }
@@ -49,7 +40,7 @@ namespace ChessClassLibrary.Logic.Rules
         {
             if (!InnerPieceDecorator.ValidateNewMove(move)) return false;
 
-            if (move.MoveTypes.Contains(MoveType.Move) && move.Shift == LongMove.Shift)
+            if (move.MoveTypes.Contains(MoveType.Move) && move.Shift == longMove.Shift)
             {
                 return CanLongMove();
             }
@@ -69,7 +60,7 @@ namespace ChessClassLibrary.Logic.Rules
         public override PieceMove GetMoveTo(Position position)
         {
             var moveShift = position - Position;
-            if (moveShift == this.LongMove.Shift && InnerPieceDecorator.ValidateNewMove(LongMove) && CanLongMove())
+            if (moveShift == longMove.Shift && InnerPieceDecorator.ValidateNewMove(longMove) && CanLongMove())
             {
                 return longMove;
             }

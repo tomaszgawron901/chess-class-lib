@@ -12,16 +12,28 @@ namespace ChessClassLibrary.Models
         /// <summary>
         /// Available Piece MoveTypes.
         /// </summary>
-        public MoveType[] MoveTypes { get; set; }
+        public IEnumerable<MoveType> MoveTypes { get; }
         /// <summary>
         /// Vector by with Piece will be shifted.
         /// </summary>
-        public Position Shift { get; set; }
+        public Position Shift { get; }
 
         public PieceMove(Position shift, params MoveType[] moveTypes)
         {
             this.MoveTypes = moveTypes;
             this.Shift = shift;
+        }
+
+        public override string ToString()
+        {
+            var st = new StringBuilder();
+            st.Append(Shift.ToString());
+            foreach (var moveType in MoveTypes)
+            {
+                st.Append(' ');
+                st.Append(moveType.ToString());
+            }
+            return st.ToString();
         }
     }
 }

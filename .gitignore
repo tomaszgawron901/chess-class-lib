@@ -3,8 +3,8 @@
 ################################################################################
 
 /.vs/chess-class-lib/v16
-/ChessClassLibrary/obj
-/ChessClassLibrary/bin
+/ChessClassLib/obj
+/ChessClassLib/bin
 /ChessClassLibraryTests/obj
 /ChessClassLibraryTests/bin
 /packages

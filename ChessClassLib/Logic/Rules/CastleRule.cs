@@ -1,4 +1,5 @@
 ﻿using ChessClassLibrary.enums;
+using ChessClassLibrary.Extensions;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using System.Collections.Generic;
@@ -27,11 +28,8 @@ namespace ChessClassLibrary.Logic.Rules
             }
         }
 
-        protected static PieceMove leftCastleMove = new PieceMove(new Position(-2, 0), MoveType.Move);
-        protected static PieceMove rightCastleMove = new PieceMove(new Position(2, 0), MoveType.Move);
-
-        public PieceMove LeftCastleMove { get => new PieceMove(leftCastleMove.Shift, leftCastleMove.MoveTypes.Select(x => x).ToArray()); }
-        public PieceMove RightCastleMove { get => new PieceMove(rightCastleMove.Shift, rightCastleMove.MoveTypes.Select(x => x).ToArray()); }
+        protected readonly static PieceMove leftCastleMove = new PieceMove(new Position(-2, 0), MoveType.Move);
+        protected readonly static PieceMove rightCastleMove = new PieceMove(new Position(2, 0), MoveType.Move);
 
         private ProtectedPieceRule protectedPieceRule;
         public override KingState KingState { get => protectedPieceRule.KingState; set => protectedPieceRule.KingState = value; }
@@ -41,29 +39,13 @@ namespace ChessClassLibrary.Logic.Rules
             get
             {
                 var newMoveSet = Piece.MoveSet;
-                if (InnerPieceDecorator.ValidateNewMove(LeftCastleMove) && CanLeftCastle())
+                if (InnerPieceDecorator.ValidateNewMove(leftCastleMove) && CanLeftCastle())
                 {
-                    var existingMove = newMoveSet.FirstOrDefault(x => x.Shift == LeftCastleMove.Shift);
-                    if (existingMove == null)
-                    {
-                        newMoveSet = newMoveSet.Append(LeftCastleMove);
-                    }
-                    else
-                    {
-                        existingMove.MoveTypes = new MoveType[] { MoveType.Move };
-                    }
+                    newMoveSet = newMoveSet.AddOrUpdatePieceMove(leftCastleMove);
                 }
-                if (InnerPieceDecorator.ValidateNewMove(RightCastleMove) && CanRightCastle())
+                if (InnerPieceDecorator.ValidateNewMove(rightCastleMove) && CanRightCastle())
                 {
-                    var existingMove = newMoveSet.FirstOrDefault(x => x.Shift == RightCastleMove.Shift);
-                    if (existingMove == null)
-                    {
-                        newMoveSet = newMoveSet.Append(RightCastleMove);
-                    }
-                    else
-                    {
-                        existingMove.MoveTypes = new MoveType[] { MoveType.Move };
-                    }
+                    newMoveSet = newMoveSet.AddOrUpdatePieceMove(rightCastleMove);
                 }
                 return newMoveSet;
             }
@@ -148,13 +130,13 @@ namespace ChessClassLibrary.Logic.Rules
         {
             if (!InnerPieceDecorator.ValidateNewMove(move)) return false;
 
-            if (move.MoveTypes.Contains(MoveType.Move) && (move.Shift == this.LeftCastleMove.Shift || move.Shift == this.RightCastleMove.Shift))
+            if (move.MoveTypes.Contains(MoveType.Move) && (move.Shift == leftCastleMove.Shift || move.Shift == rightCastleMove.Shift))
             {
-                if (move.Shift == this.LeftCastleMove.Shift)
+                if (move.Shift == leftCastleMove.Shift)
                 {
                     return CanLeftCastle();
                 }
-                else if (move.Shift == this.RightCastleMove.Shift)
+                else if (move.Shift == rightCastleMove.Shift)
                 {
                     return CanRightCastle();
                 }
@@ -165,11 +147,11 @@ namespace ChessClassLibrary.Logic.Rules
         public override void MoveToPosition(Position position)
         {
             var moveShift = position - Position;
-            if (moveShift == this.LeftCastleMove.Shift)
+            if (moveShift == leftCastleMove.Shift)
             {
                 DoLeftCastle();
             }
-            else if(moveShift == this.RightCastleMove.Shift)
+            else if(moveShift == rightCastleMove.Shift)
             {
                 DoRightCastle();
             }
@@ -183,20 +165,20 @@ namespace ChessClassLibrary.Logic.Rules
         {
             var moveShift = position - Position;
 
-            if (moveShift == this.LeftCastleMove.Shift)
+            if (moveShift == leftCastleMove.Shift)
             {
-                if (InnerPieceDecorator.ValidateNewMove(LeftCastleMove) && CanLeftCastle())
+                if (InnerPieceDecorator.ValidateNewMove(leftCastleMove) && CanLeftCastle())
                 {
-                    return LeftCastleMove;
+                    return leftCastleMove;
                 }
                 return null;
             }
 
-            if (moveShift == this.RightCastleMove.Shift)
+            if (moveShift == rightCastleMove.Shift)
             {
-                if (InnerPieceDecorator.ValidateNewMove(RightCastleMove) && CanRightCastle())
+                if (InnerPieceDecorator.ValidateNewMove(rightCastleMove) && CanRightCastle())
                 {
-                    return RightCastleMove;
+                    return rightCastleMove;
                 }
                 return null;
             }
