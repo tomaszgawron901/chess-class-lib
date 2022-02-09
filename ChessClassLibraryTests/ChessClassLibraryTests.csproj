@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChessClassLibrary\ChessClassLibrary.csproj" />
+    <ProjectReference Include="..\ChessClassLib\ChessClassLib.csproj" />
   </ItemGroup>
 
 </Project>
