@@ -29,7 +29,7 @@ namespace ChessClassLibrary.Logic.Containers
                         var checkingPosition = Position + nextShift;
                         if (!Board.IsInRange(checkingPosition)) break;
 
-                        newMoveSet.Add(new PieceMove(nextShift, move.MoveTypes));
+                        newMoveSet.Add(new PieceMove(nextShift, move.MoveTypes.ToArray()));
 
                         if (Board.GetPiece(checkingPosition) != null) break;
                     }
@@ -45,7 +45,7 @@ namespace ChessClassLibrary.Logic.Containers
             var slowMove = Piece.MoveSet.FirstOrDefault(move => isInLine(position, move));
             if (slowMove == null || !IsPathClear(position, slowMove)) return null;
 
-            return new PieceMove(position - Position, slowMove.MoveTypes);
+            return new PieceMove(position - Position, slowMove.MoveTypes.ToArray());
         }
 
 

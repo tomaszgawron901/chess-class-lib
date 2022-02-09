@@ -51,6 +51,8 @@
     <Compile Include="enums\PieceColor.cs" />
     <Compile Include="enums\PieceType.cs" />
     <Compile Include="Exceptions\GameExceptions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\PieceMoveSetExtensions.cs" />
     <Compile Include="Games\BaseClassicGame.cs" />
     <Compile Include="Games\ClassicGame.cs" />
     <Compile Include="Games\KnightmateGame.cs" />

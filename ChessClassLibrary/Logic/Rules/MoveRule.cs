@@ -20,17 +20,13 @@ namespace ChessClassLibrary.Logic.Rules
             {
                 if (pieceAtDestination == null)
                 {
-                    move.MoveTypes = new MoveType[] { MoveType.Move };
+                    return new PieceMove(move.Shift, MoveType.Move);
                 }
-                else
+                var newMoveTypes = move.MoveTypes.Where(m => m != MoveType.Move).ToArray();
+                if (move.MoveTypes.Count() != 0)
                 {
-                    move.MoveTypes = move.MoveTypes.Where(m => m != MoveType.Move).ToArray();
-                    if (move.MoveTypes.Length == 0)
-                    {
-                        return null;
-                    }
+                    return new PieceMove(move.Shift, newMoveTypes);
                 }
-                return move;
             }
             return null;
         }

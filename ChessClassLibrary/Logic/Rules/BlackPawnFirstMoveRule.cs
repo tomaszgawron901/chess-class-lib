@@ -1,6 +1,8 @@
 ﻿using ChessClassLibrary.enums;
+using ChessClassLibrary.Extensions;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,20 +29,11 @@ namespace ChessClassLibrary.Logic.Rules
         public override IEnumerable<PieceMove> MoveSet {
             get
             {
-                var newMoveSet = Piece.MoveSet;
                 if (InnerPieceDecorator.ValidateNewMove(LongMove) && CanLongMove())
                 {
-                    var existingMove = newMoveSet.FirstOrDefault(x => x.Shift == LongMove.Shift);
-                    if (existingMove == null)
-                    {
-                        newMoveSet = newMoveSet.Append(LongMove);
-                    }
-                    else
-                    {
-                        existingMove.MoveTypes = new MoveType[] { MoveType.Move };
-                    }
+                    return Piece.MoveSet.AddOrUpdatePieceMove(LongMove);
                 }
-                return newMoveSet;
+                return Piece.MoveSet;
             }
         }
 

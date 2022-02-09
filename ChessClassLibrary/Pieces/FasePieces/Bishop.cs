@@ -7,7 +7,7 @@ namespace ChessClassLibrary.Pieces.FasePieces
 {
     public class Bishop : Piece
     {
-        protected readonly static PieceMove[] moveSet = new PieceMove[]
+        protected readonly static IEnumerable<PieceMove> moveSet = new PieceMove[]
         {
             new PieceMove(new Position(-1, 1), MoveType.Move, MoveType.Kill ),
             new PieceMove(new Position(1, 1), MoveType.Move, MoveType.Kill ),
@@ -19,6 +19,6 @@ namespace ChessClassLibrary.Pieces.FasePieces
             base(color, PieceType.Bishop, position)
         { }
 
-        public override IEnumerable<PieceMove> MoveSet => moveSet.Select(x => new PieceMove(x.Shift, x.MoveTypes.Select(y => y).ToArray()));
+        public override IEnumerable<PieceMove> MoveSet => moveSet;
     }
 }

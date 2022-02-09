@@ -91,5 +91,10 @@ namespace ChessClassLibrary.Models
         {
             return left.Minus(right);
         }
+
+        public override string ToString()
+        {
+            return $"{(char)(X + 'A')}{Y + 1}";
+        }
     }
 }
