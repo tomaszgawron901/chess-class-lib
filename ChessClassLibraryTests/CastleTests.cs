@@ -1,10 +1,6 @@
-﻿using ChessClassLibrary;
-using ChessClassLibrary.Games.ClassicGame;
+﻿using ChessClassLibrary.Games.ClassicGame;
 using ChessClassLibrary.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ChessClassLibraryTests
 {

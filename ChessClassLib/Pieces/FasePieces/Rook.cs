@@ -1,7 +1,6 @@
 ﻿using ChessClassLibrary.enums;
 using ChessClassLibrary.Models;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ChessClassLibrary.Pieces.FasePieces
 {
