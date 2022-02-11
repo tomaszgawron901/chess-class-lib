@@ -1,5 +1,6 @@
 ﻿using ChessClassLibrary.Games.ClassicGame;
 using ChessClassLibrary.Models;
+using ChessClassLibraryTests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ChessClassLibraryTests
@@ -26,8 +27,8 @@ namespace ChessClassLibraryTests
             var game = new ClassicGame();
             for (int x = 0; x < game.Board.Width; x++)
             {
-                ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(x, 1), new Position(x, 2)));
-                ChessAssert.IsMoveCorrect(game, new BoardMove(new Position(x, 6), new Position(x, 5)));
+                ChessAssert.PerformMoveAndStandardCheck(game, new BoardMove(new Position(x, 1), new Position(x, 2)));
+                ChessAssert.PerformMoveAndStandardCheck(game, new BoardMove(new Position(x, 6), new Position(x, 5)));
             }
         }
 
