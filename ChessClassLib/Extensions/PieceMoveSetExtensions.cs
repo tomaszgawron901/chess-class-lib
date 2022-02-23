@@ -1,9 +1,6 @@
 ﻿using ChessClassLibrary.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessClassLibrary.Extensions
 {
@@ -16,14 +13,23 @@ namespace ChessClassLibrary.Extensions
 
         public static IEnumerable<PieceMove> AddOrUpdatePieceMove(this IEnumerable<PieceMove> moveSet, PieceMove move)
         {
-            foreach (var m in moveSet)
+            using (var enumerator = moveSet.GetEnumerator())
             {
-                if(m.Shift == move.Shift)
+                while (enumerator.MoveNext())
                 {
-                    return moveSet.SwapFirst(m, move);
+                    if (enumerator.Current.Shift == move.Shift)
+                    {
+                        yield return move;
+                        while (enumerator.MoveNext())
+                        {
+                            yield return enumerator.Current;
+                        }
+                        yield break;
+                    }
+                    yield return enumerator.Current;
                 }
+                yield return move;
             }
-            return moveSet.Add(move);
         }
     }
 }

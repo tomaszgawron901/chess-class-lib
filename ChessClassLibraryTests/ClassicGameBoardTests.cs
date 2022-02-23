@@ -3,6 +3,7 @@ using ChessClassLibrary.enums;
 using ChessClassLibrary.Games.ClassicGame;
 using ChessClassLibrary.Logic;
 using ChessClassLibrary.Models;
+using ChessClassLib.Logic;
 
 namespace ChessClassLibrary.Tests
 {
@@ -65,8 +66,8 @@ namespace ChessClassLibrary.Tests
         [TestMethod()]
         public void game_kings_Are_equal_board_kings()
         {
-            Assert.AreSame(WhiteKing, Board.GetPiece(new Position(4, 0)));
-            Assert.AreSame(BlackKing, Board.GetPiece(new Position(4, 7)));
+            Assert.AreSame(WhiteKingManager.Piece, Board.GetPiece(new Position(4, 0)));
+            Assert.AreSame(BlackKingManager.Piece, Board.GetPiece(new Position(4, 7)));
         }
 
         [TestMethod]
@@ -74,10 +75,10 @@ namespace ChessClassLibrary.Tests
         {
             foreach (var piece in Board)
             {
-                if (piece !=null && piece is BasePieceDecorator)
+                if (piece !=null && piece is IPieceRule)
                 {
-                    Assert.IsNotNull((piece as BasePieceDecorator).Board);
-                    Assert.AreSame((piece as BasePieceDecorator).Board, Board);
+                    Assert.IsNotNull((piece as IPieceRule).Board);
+                    Assert.AreSame((piece as IPieceRule).Board, Board);
                 }
             }
         }

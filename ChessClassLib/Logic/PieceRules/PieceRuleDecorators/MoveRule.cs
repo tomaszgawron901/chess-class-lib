@@ -2,18 +2,26 @@
 using ChessClassLibrary.Models;
 using System.Linq;
 
-namespace ChessClassLibrary.Logic.Rules
+namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators
 {
+    public static partial class IPieceRuleExtensions
+    {
+        public static MoveRule AddMoveRule(this IPieceRule innerPieceRule)
+        {
+            return new MoveRule(innerPieceRule);
+        }
+    }
+
     /// <summary>
     /// Rule which checks if Piece could be moved by PieceMove with 'Move' MoveType.
     /// </summary>
-    class MoveRule: BasePieceRule
+    public class MoveRule: PieceRuleDecorator
     {
-        public MoveRule(BasePieceDecorator piece)
-            : base(piece)
-        {}
+        public MoveRule(IPieceRule innerPieceRule)
+            : base(innerPieceRule)
+        { }
 
-        public override PieceMove MoveModifier(PieceMove move)
+        public override PieceMove ConstrainMove(PieceMove move)
         {
             var pieceAtDestination = Board.GetPiece(Position + move.Shift);
             if (pieceAtDestination != null || move.MoveTypes.Contains(MoveType.Move))
@@ -23,7 +31,7 @@ namespace ChessClassLibrary.Logic.Rules
                     return new PieceMove(move.Shift, MoveType.Move);
                 }
                 var newMoveTypes = move.MoveTypes.Where(m => m != MoveType.Move).ToArray();
-                if (move.MoveTypes.Count() != 0)
+                if (newMoveTypes.Length != 0)
                 {
                     return new PieceMove(move.Shift, newMoveTypes);
                 }
@@ -31,9 +39,9 @@ namespace ChessClassLibrary.Logic.Rules
             return null;
         }
 
-        public override bool ValidateNewMove(PieceMove move)
+        public override bool ValidateMove(PieceMove move)
         {
-            if (!InnerPieceDecorator.ValidateNewMove(move)) return false;
+            if (!InnerPieceRule.ValidateMove(move)) return false;
             var pieceAtDestination = Board.GetPiece(Position + move.Shift);
 
             var containsMove = move.MoveTypes.Contains(MoveType.Move);

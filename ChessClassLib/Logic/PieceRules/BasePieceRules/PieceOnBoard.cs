@@ -1,27 +1,29 @@
 ﻿using ChessClassLibrary.Boards;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace ChessClassLibrary.Logic
+namespace ChessClassLib.Logic.PieceRules.BasePieceRules
 {
-    /// <summary>
-    /// Base class responsible for handling actions on the given Board.
-    /// </summary>
-    public abstract class BasePieceContainer : BasePieceDecorator
+    public static partial class IPieceExtensions
     {
-        protected IPiece piece;
-        protected IBoard board;
-        public override IBoard Board => board;
-
-        public BasePieceContainer(IPiece piece, IBoard board)
+        public static PieceOnBoard AddPieceOnBoard(this IPiece innerPiece, IBoard board)
         {
-            this.piece = piece;
-            this.board = board;
+            return new PieceOnBoard(innerPiece, board);
         }
+    }
 
-        public override IPiece Piece => this.piece;
+    /// <summary>
+    /// Container class for slow pieces.
+    /// </summary>
+    public class PieceOnBoard : BasePieceRule
+    {
+        public PieceOnBoard(IPiece innerPiece, IBoard board)
+            : base(innerPiece, board)
+        {}
 
-        public override PieceMove MoveModifier(PieceMove move)
+        public override PieceMove ConstrainMove(PieceMove move)
         {
             if (Board.IsInRange(Position + move.Shift))
             {
@@ -35,7 +37,7 @@ namespace ChessClassLibrary.Logic
         /// </summary>
         /// <param name="move"></param>
         /// <returns></returns>
-        public override bool ValidateNewMove(PieceMove move)
+        public override bool ValidateMove(PieceMove move)
         {
             return Board.IsInRange(Position + move.Shift);
         }
@@ -48,7 +50,7 @@ namespace ChessClassLibrary.Logic
         {
             Board.SetPiece(Board.GetPiece(Position), position);
             Board.SetPiece(null, Position);
-            this.Piece.MoveToPosition(position);
+            InnerPiece.MoveToPosition(position);
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿using ChessClassLibrary.enums;
-using ChessClassLibrary.Models;
+﻿using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
-using ChessClassLibrary.Pieces.FasePieces;
-using ChessClassLibrary.Pieces.SlowPieces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ChessClassLibrary.Boards
 {

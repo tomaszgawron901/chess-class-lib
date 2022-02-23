@@ -10,7 +10,7 @@ namespace ChessClassLibrary.Pieces
         Position Position { get; set; }
         PieceColor Color { get; set; }
         PieceType Type { get; set; }
-        bool WasMoved { get; }
+        bool WasMoved { get; set; }
         IEnumerable<PieceMove> MoveSet { get; }
         void MoveToPosition(Position position);
         PieceMove GetMoveTo(Position position);
@@ -21,7 +21,7 @@ namespace ChessClassLibrary.Pieces
         public PieceColor Color { get; set; }
         public PieceType Type { get; set; }
         public Position Position { get; set; }
-        public bool WasMoved { get; protected set; }
+        public bool WasMoved { get; set; }
 
         /// <summary>
         /// Piece available moves.

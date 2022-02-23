@@ -1,6 +1,5 @@
 ﻿using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace ChessClassLibrary.Boards
