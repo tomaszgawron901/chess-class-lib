@@ -1,15 +1,17 @@
-﻿using ChessClassLibrary.Boards;
+﻿using ChessClassLib.Helpers;
+using ChessClassLib.Logic;
+using ChessClassLib.Logic.PieceRules.BasePieceRules;
+using ChessClassLib.Logic.PieceRules.PieceRuleDecorators;
+using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.NewMoveRules;
+using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.ProtectionRules;
+using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.TransformationRules;
+using ChessClassLibrary.Boards;
 using ChessClassLibrary.enums;
 using ChessClassLibrary.Exceptions;
-using ChessClassLibrary.Logic;
-using ChessClassLibrary.Logic.Containers;
-using ChessClassLibrary.Logic.PieceTransformation;
-using ChessClassLibrary.Logic.Rules;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using ChessClassLibrary.Pieces.FasePieces;
 using ChessClassLibrary.Pieces.SlowPieces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,9 +31,8 @@ namespace ChessClassLibrary.Games
         public PieceColor CurrentPlayerColor { get; protected set; }
         public GameState GameState { get; protected set; }
 
-        public ProtectedPieceRule WhiteKing { get; protected set; }
-        public ProtectedPieceRule BlackKing { get; protected set; }
-
+        public KingStateProvider WhiteKingManager { get; protected set; }
+        public KingStateProvider BlackKingManager { get; protected set; }
 
         public BaseClassicGame()
         {
@@ -45,13 +46,13 @@ namespace ChessClassLibrary.Games
         /// </summary>
         public void UpdateGameStatus()
         {
-            WhiteKing.UpdateState();
-            BlackKing.UpdateState();
+            WhiteKingManager.UpdateState();
+            BlackKingManager.UpdateState();
             if (
-                WhiteKing.IsCheckmated
-                || WhiteKing.IsStalemated
-                || BlackKing.IsCheckmated
-                || BlackKing.IsStalemated
+                WhiteKingManager.IsCheckmated
+                || WhiteKingManager.IsStalemated
+                || BlackKingManager.IsCheckmated
+                || BlackKingManager.IsStalemated
                 || InsufficientMatingMaterial())
             {
                 GameState = GameState.Ended;
@@ -157,17 +158,16 @@ namespace ChessClassLibrary.Games
         /// <returns></returns>
         public PieceColor? GetWinner()
         {
-            if (this.WhiteKing.IsCheckmated)
+            if (this.WhiteKingManager.IsCheckmated)
             {
                 return PieceColor.Black;
             }
-            if (this.BlackKing.IsCheckmated)
+            if (this.BlackKingManager.IsCheckmated)
             {
                 return PieceColor.White;
             }
             return null;
         }
-
 
         /// <summary>
         /// Clears row at given index.
@@ -194,96 +194,93 @@ namespace ChessClassLibrary.Games
             }
         }
 
-
-        #region Piece Creator Helpers
-
-        protected BasePieceDecorator CreateSlowPiece(IPiece piece)
-        {
-            return new KillRule(new MoveRule(new PieceOnBoard(piece, Board)));
-        }
-
-        protected BasePieceDecorator CreateFastPiece(IPiece piece)
-        {
-            return new KillRule(new MoveRule(new FastPieceOnBoard(piece, Board)));
-        }
-
-        #region Protector
-        protected BasePieceDecorator CreateWhiteProtector(BasePieceDecorator piece)
-        {
-            return new ProtectAttackRule(piece, WhiteKing, BlackKing);
-        }
-
-        protected BasePieceDecorator CreateBlackProtector(BasePieceDecorator piece)
-        {
-            return new ProtectAttackRule(piece, BlackKing, WhiteKing);
-        }
-
-        protected BasePieceDecorator CreateProtector(BasePieceDecorator piece)
-        {
-            if (piece.Color == PieceColor.White)
-            {
-                return this.CreateWhiteProtector(piece);
-            }
-            else if (piece.Color == PieceColor.Black)
-            {
-                return this.CreateBlackProtector(piece);
-            }
-            return piece;
-        }
-        #endregion Protector
-
-        #endregion
-
         #region Piece Creators
-        protected BasePieceDecorator CreatePawn(PieceColor color, Position position)
+        protected IPiece CreatePawn(PieceColor color, Position position)
         {
             if (color == PieceColor.White)
             {
-                var currentPiece = new WhitePawnFirstMoveRule(new PieceOnBoard(new WhitePawn(position), Board));
-                var afterPiece = new FastPieceOnBoard(new Queen(PieceColor.White, position), Board);
-                IEnumerable<Position> positions = Enumerable.Range(0, Board.Width).Select(x => new Position(x, Board.Height - 1));
-
-                return CreateProtector(new KillRule(new MoveRule(new AfterMoveToPositionTransformation(currentPiece, afterPiece, positions))));
+                return this.CreateWhitePawn(position);
             }
             else if (color == PieceColor.Black)
             {
-                var currentPiece = new BlackPawnFirstMoveRule(new PieceOnBoard(new BlackPawn(position), Board));
-                var afterPiece = new FastPieceOnBoard(new Queen(PieceColor.Black, position), Board);
-                IEnumerable<Position> positions = Enumerable.Range(0, Board.Width).Select(x => new Position(x, 0));
-
-                return CreateProtector(new KillRule(new MoveRule(new AfterMoveToPositionTransformation(currentPiece, afterPiece, positions))));
+                return this.CreateBlackPawn(position);
             }
-            throw new Exception();
+            return null;
         }
 
-        protected BasePieceDecorator CreateRook(PieceColor color, Position position)
+        protected IPiece CreateWhitePawn(Position position)
         {
-            return CreateProtector(CreateFastPiece(new Rook(color, position)));
+            return new WhitePawn(position)
+                .AddPieceOnBoard(Board)
+                .AddWhitePawnFirstMoveRule()
+                .AddMoveRule()
+                .AddKillRule()
+                .AddOnMoveToYPositionTransformation(this.CreateQueen(PieceColor.White, position), Board.Height - 1)
+                .AddProtectAttackRule(WhiteKingManager.Piece, BlackKingManager.Piece);
         }
 
-        protected BasePieceDecorator CreateBishop(PieceColor color, Position position)
+        protected IPiece CreateBlackPawn(Position position)
         {
-            return CreateProtector(CreateFastPiece(new Bishop(color, position)));
+            return new BlackPawn(position)
+                .AddPieceOnBoard(Board)
+                .AddBlackPawnFirstMoveRule()
+                .AddMoveRule()
+                .AddKillRule()
+                .AddOnMoveToYPositionTransformation(this.CreateQueen(PieceColor.Black, position), 0)
+                .AddProtectAttackRule(BlackKingManager.Piece, WhiteKingManager.Piece);
         }
 
-        protected BasePieceDecorator CreateQueen(PieceColor color, Position position)
+        protected IPieceRule CreateStandardFastPiece(IPiece piece)
         {
-            return CreateProtector(CreateFastPiece(new Queen(color, position)));
+            return CreateStandardPiece(piece.AddFastPieceOnBoard(Board));
         }
 
-        protected BasePieceDecorator CreateKnight(PieceColor color, Position position)
+        protected IPieceRule CreateStandardSlowPiece(IPiece piece)
         {
-            return CreateProtector(CreateSlowPiece(new Knight(color, position)));
+            return CreateStandardPiece(piece.AddPieceOnBoard(Board));
         }
 
-        protected ProtectedPieceRule CreateKing(IPiece piece)
+        private IPieceRule CreateStandardPiece(IPieceRule piece)
         {
-            return new CastleRule(new ProtectedPieceRule(new KillRule(new MoveRule(new PieceOnBoard(piece, Board)))));
+            piece = piece
+                .AddMoveRule()
+                .AddKillRule();
+
+            if (piece.Color == PieceColor.White)
+            {
+                piece = piece.AddProtectAttackRule(WhiteKingManager.Piece, BlackKingManager.Piece);
+            }
+            else if (piece.Color == PieceColor.Black)
+            {
+                piece = piece.AddProtectAttackRule(BlackKingManager.Piece, WhiteKingManager.Piece);
+            }
+
+            return piece;
         }
 
-        protected BasePieceDecorator CreateCommoner(PieceColor color, Position position)
+        protected IPieceRule CreateRook(PieceColor color, Position position)
         {
-            return CreateProtector(CreateSlowPiece(new Commoner(color, position)));
+            return CreateStandardFastPiece(new Rook(color, position));
+        }
+
+        protected IPieceRule CreateBishop(PieceColor color, Position position)
+        {
+            return CreateStandardFastPiece(new Bishop(color, position));
+        }
+
+        protected IPieceRule CreateQueen(PieceColor color, Position position)
+        {
+            return CreateStandardFastPiece(new Queen(color, position));
+        }
+
+        protected IPieceRule CreateKnight(PieceColor color, Position position)
+        {
+            return CreateStandardSlowPiece(new Knight(color, position));
+        }
+
+        protected IPieceRule CreateCommoner(PieceColor color, Position position)
+        {
+            return CreateStandardSlowPiece(new Commoner(color, position));
         }
         #endregion
     }

@@ -5,24 +5,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChessClassLibrary.Logic.Containers
+namespace ChessClassLib.Logic.PieceRules.BasePieceRules
 {
+    public static partial class IPieceExtensions
+    {
+        public static FastPieceOnBoard AddFastPieceOnBoard(this IPiece innerPiece, IBoard board)
+        {
+            return new FastPieceOnBoard(innerPiece, board);
+        }
+    }
+
     /// <summary>
     /// Container class for fast pieces.
     /// </summary>
-    public class FastPieceOnBoard: BasePieceContainer
+    public class FastPieceOnBoard: PieceOnBoard
     {
-        public FastPieceOnBoard(IPiece piece, IBoard board)
-            : base(piece, board)
+        public FastPieceOnBoard(IPiece innerPiece, IBoard board)
+            : base(innerPiece, board)
         {}
-
 
         public override IEnumerable<PieceMove> MoveSet
         {
             get
             {
                 var newMoveSet = new List<PieceMove>();
-                foreach (PieceMove move in Piece.MoveSet)
+                foreach (PieceMove move in InnerPiece.MoveSet)
                 {
                     for (Position nextShift = move.Shift; true; nextShift += move.Shift)
                     {
@@ -42,7 +49,7 @@ namespace ChessClassLibrary.Logic.Containers
         {
             if (!Board.IsInRange(position)) return null;
 
-            var slowMove = Piece.MoveSet.FirstOrDefault(move => isInLine(position, move));
+            var slowMove = InnerPiece.MoveSet.FirstOrDefault(move => isInLine(position, move));
             if (slowMove == null || !IsPathClear(position, slowMove)) return null;
 
             return new PieceMove(position - Position, slowMove.MoveTypes.ToArray());

@@ -1,4 +1,9 @@
-﻿using ChessClassLibrary.Boards;
+﻿using ChessClassLib.Helpers;
+using ChessClassLib.Logic.PieceRules.BasePieceRules;
+using ChessClassLib.Logic.PieceRules.PieceRuleDecorators;
+using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.CastleRules;
+using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.ProtectionRules;
+using ChessClassLibrary.Boards;
 using ChessClassLibrary.enums;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
@@ -39,11 +44,26 @@ namespace ChessClassLibrary.Games.ClassicGame
         protected override void CreateBoard()
         {
             Board = new ClassicBoard(new IPiece[8, 8]);
-            WhiteKing = CreateKing(new King(PieceColor.White, new Position(4, 0)));
-            BlackKing = CreateKing(new King(PieceColor.Black, new Position(4, 7)));
 
-            WhiteKing.AtackedPiece = BlackKing;
-            BlackKing.AtackedPiece = WhiteKing;
+            WhiteKingManager = new KingStateProvider(null, Board);
+            var whiteKingPiece = new King(PieceColor.White, new Position(4, 0))
+                .AddPieceOnBoard(Board)
+                .AddKillRule()
+                .AddMoveRule()
+                .AddLeftCastleRule(WhiteKingManager)
+                .AddRightCastleRule(WhiteKingManager)
+                .AddSelfProtectRule();
+            WhiteKingManager.Piece = whiteKingPiece;
+
+            BlackKingManager = new KingStateProvider(null, Board);
+            var blackKingPiece = new King(PieceColor.Black, new Position(4, 7))
+                .AddPieceOnBoard(Board)
+                .AddKillRule()
+                .AddMoveRule()
+                .AddLeftCastleRule(BlackKingManager)
+                .AddRightCastleRule(BlackKingManager)
+                .AddSelfProtectRule();
+            BlackKingManager.Piece = blackKingPiece;
 
             InsertRichRow(PieceColor.White, 0);
             InsertPawnRow(PieceColor.White, 1);
@@ -63,11 +83,11 @@ namespace ChessClassLibrary.Games.ClassicGame
             Board.SetPiece(CreateQueen(color, new Position(3, row)));
             if (color == PieceColor.White)
             {
-                Board.SetPiece(WhiteKing);
+                Board.SetPiece(WhiteKingManager.Piece);
             }
             else if (color == PieceColor.Black)
             {
-                Board.SetPiece(BlackKing);
+                Board.SetPiece(BlackKingManager.Piece);
             }
             Board.SetPiece(CreateBishop(color, new Position(5, row)));
             Board.SetPiece(CreateKnight(color, new Position(6, row)));

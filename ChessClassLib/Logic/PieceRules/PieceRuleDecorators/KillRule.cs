@@ -2,18 +2,26 @@
 using ChessClassLibrary.Models;
 using System.Linq;
 
-namespace ChessClassLibrary.Logic.Rules
+namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators
 {
+    public static partial class IPieceRuleExtensions
+    {
+        public static KillRule AddKillRule(this IPieceRule innerPieceRule)
+        {
+            return new KillRule(innerPieceRule);
+        }
+    }
+
     /// <summary>
     /// Rule which checks if Piece could be moved by PieceMove with 'Kill' MoveType.
     /// </summary>
-    class KillRule : BasePieceRule
+    public class KillRule: PieceRuleDecorator
     {
-        public KillRule(BasePieceDecorator piece)
-            : base(piece)
+        public KillRule(IPieceRule innerPieceRule)
+            : base(innerPieceRule)
         {}
 
-        public override PieceMove MoveModifier(PieceMove move)
+        public override PieceMove ConstrainMove(PieceMove move)
         {
             var pieceAtDestination = Board.GetPiece(Position + move.Shift);
             if (pieceAtDestination == null || pieceAtDestination.Color == Color || move.MoveTypes.Contains(MoveType.Kill))
@@ -31,9 +39,9 @@ namespace ChessClassLibrary.Logic.Rules
             return null;
         }
 
-        public override bool ValidateNewMove(PieceMove move)
+        public override bool ValidateMove(PieceMove move)
         {
-            if (!InnerPieceDecorator.ValidateNewMove(move)) return false;
+            if (!InnerPieceRule.ValidateMove(move)) return false;
             var pieceAtDestination = Board.GetPiece(Position + move.Shift);
 
             var containsMove = move.MoveTypes.Contains(MoveType.Kill);
