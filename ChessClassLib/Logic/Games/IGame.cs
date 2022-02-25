@@ -1,5 +1,5 @@
-﻿using ChessClassLibrary.Enums;
-using ChessClassLibrary.Models;
+﻿using ChessClassLib.Enums;
+using ChessClassLib.Models;
 using System.Collections.Generic;
 
 namespace hessClassLibrary.Logic.Games

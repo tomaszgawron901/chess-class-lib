@@ -1,23 +1,18 @@
-﻿using ChessClassLibrary.Enums;
+﻿using ChessClassLib.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ChessClassLibrary.Models
+namespace ChessClassLib.Models
 {
     public class PieceMove: IEquatable<PieceMove>
     {
-        /// <summary>
-        /// Available Piece MoveTypes.
-        /// </summary>
         public IEnumerable<MoveType> MoveTypes { get; }
-        /// <summary>
-        /// Vector by with Piece will be shifted.
-        /// </summary>
-        public Position Shift { get; }
 
-        public PieceMove(Position shift, params MoveType[] moveTypes)
+        public Shift Shift { get; }
+
+        public PieceMove(Shift shift, params MoveType[] moveTypes)
         {
             this.MoveTypes = moveTypes;
             this.Shift = shift;

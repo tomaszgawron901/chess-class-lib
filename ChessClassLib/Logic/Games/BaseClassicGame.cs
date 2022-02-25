@@ -6,18 +6,17 @@ using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.NewMoveRules;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.ProtectionRules;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.TransformationRules;
 using ChessClassLib.Pieces;
-using ChessClassLibrary.Enums;
-using ChessClassLibrary.Exceptions;
-using ChessClassLibrary.Logic.Boards;
-using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
-using ChessClassLibrary.Pieces.FasePieces;
-using ChessClassLibrary.Pieces.SlowPieces;
+using ChessClassLib.Enums;
+using ChessClassLib.Exceptions;
+using ChessClassLib.Logic.Boards;
+using ChessClassLib.Models;
+using ChessClassLib.Pieces.FasePieces;
+using ChessClassLib.Pieces.SlowPieces;
 using hessClassLibrary.Logic.Games;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChessClassLibrary.Logic.Games
+namespace ChessClassLib.Logic.Games
 {
     public interface IClassicGame : IGame
     {

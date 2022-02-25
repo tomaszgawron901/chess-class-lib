@@ -1,6 +1,5 @@
 ﻿using ChessClassLib.Pieces;
-using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
+using ChessClassLib.Models;
 using System.Collections.Generic;
 using System.Linq;
 

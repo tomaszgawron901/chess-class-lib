@@ -1,20 +1,10 @@
-﻿using ChessClassLib.Pieces;
-using ChessClassLibrary.Logic.Boards;
-using ChessClassLibrary.Logic.PieceRules;
-using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
+﻿using ChessClassLib.Logic.Boards;
+using ChessClassLib.Models;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ChessClassLib.Logic.PieceRules
 {
-    public interface IPieceRule: IPiece
-    {
-        IBoard Board { get; }
-        PieceMove ConstrainMove(PieceMove move);
-        bool ValidateMove(PieceMove move);
-    }
-
     public abstract class PieceRule : PieceDecorator, IPieceRule
     {
         public abstract IBoard Board { get; }

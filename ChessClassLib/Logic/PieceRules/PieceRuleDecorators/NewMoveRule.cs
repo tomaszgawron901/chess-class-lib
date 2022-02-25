@@ -1,5 +1,5 @@
-﻿using ChessClassLibrary.Extensions;
-using ChessClassLibrary.Models;
+﻿using ChessClassLib.Extensions;
+using ChessClassLib.Models;
 using System.Collections.Generic;
 using System.Linq;
 

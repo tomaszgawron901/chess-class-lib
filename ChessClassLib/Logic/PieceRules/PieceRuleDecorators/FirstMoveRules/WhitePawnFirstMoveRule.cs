@@ -1,5 +1,5 @@
-﻿using ChessClassLibrary.Enums;
-using ChessClassLibrary.Models;
+﻿using ChessClassLib.Enums;
+using ChessClassLib.Models;
 
 namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.NewMoveRules
 {
@@ -16,7 +16,7 @@ namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.NewMoveRules
     /// </summary>
     public class WhitePawnFirstMoveRule: NewMoveRule
     {
-        protected readonly static PieceMove longMove = new PieceMove(new Position(0, 2), MoveType.Move);
+        protected readonly static PieceMove longMove = new PieceMove(new Shift(0, 2), MoveType.Move);
 
         public WhitePawnFirstMoveRule(IPieceRule pieceDecorator)
             : base(pieceDecorator)
@@ -26,7 +26,7 @@ namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.NewMoveRules
 
         protected override bool CanPerformNewMove()
         {
-            return !this.WasMoved && Board.GetPiece(Position + new Position(0, 1)) == null && Board.GetPiece(Position + new Position(0, 2)) == null;
+            return !this.WasMoved && Board.GetPiece(Position + new Shift(0, 1)) == null && Board.GetPiece(Position + new Shift(0, 2)) == null;
         }
     }
 }

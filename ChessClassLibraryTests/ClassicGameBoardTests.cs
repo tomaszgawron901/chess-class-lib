@@ -1,12 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ChessClassLibrary.Logic;
-using ChessClassLibrary.Models;
-using ChessClassLib.Logic;
+using ChessClassLib.Models;
 using hessClassLibrary.Logic.Games;
-using ChessClassLibrary.Enums;
+using ChessClassLib.Enums;
 using ChessClassLib.Logic.PieceRules;
 
-namespace ChessClassLibrary.Tests
+namespace ChessClassLib.Tests
 {
     [TestClass()]
     public class ClassicGameBoardTests: ClassicGame

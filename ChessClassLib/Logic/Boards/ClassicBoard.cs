@@ -1,11 +1,10 @@
 ﻿using ChessClassLib.Pieces;
-using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
+using ChessClassLib.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ChessClassLibrary.Logic.Boards
+namespace ChessClassLib.Logic.Boards
 {
     /// <summary>
     /// Rectangular Board.

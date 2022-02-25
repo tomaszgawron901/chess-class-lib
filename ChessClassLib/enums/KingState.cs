@@ -1,4 +1,4 @@
-﻿namespace ChessClassLibrary.Enums
+﻿namespace ChessClassLib.Enums
 {
     public enum KingState
     {

@@ -1,4 +1,4 @@
-﻿using ChessClassLibrary.Models;
+﻿using ChessClassLib.Models;
 
 namespace ChessClassLibraryTests.Helpers
 {

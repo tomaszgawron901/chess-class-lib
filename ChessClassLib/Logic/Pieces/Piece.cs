@@ -1,10 +1,9 @@
-﻿using ChessClassLib.Pieces;
-using ChessClassLibrary.Enums;
-using ChessClassLibrary.Models;
+﻿using ChessClassLib.Enums;
+using ChessClassLib.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChessClassLibrary.Pieces
+namespace ChessClassLib.Pieces
 {
     public abstract class Piece : IPiece
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChessClassLibrary.Exceptions
+namespace ChessClassLib.Exceptions
 {
     public class CouldNotPerformMoveException: Exception
     {

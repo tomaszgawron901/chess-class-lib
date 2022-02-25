@@ -1,9 +1,8 @@
 ﻿using ChessClassLib.Pieces;
-using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
+using ChessClassLib.Models;
 using System.Collections.Generic;
 
-namespace ChessClassLibrary.Logic.Boards
+namespace ChessClassLib.Logic.Boards
 {
     public interface IBoard : IEnumerable<IPiece>
     {

@@ -1,6 +1,5 @@
 ﻿using ChessClassLib.Pieces;
-using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
+using ChessClassLib.Models;
 
 namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.TransformationRules
 {

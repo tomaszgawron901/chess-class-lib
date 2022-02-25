@@ -4,12 +4,11 @@ using ChessClassLib.Logic.PieceRules.PieceRuleDecorators;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.CastleRules;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.ProtectionRules;
 using ChessClassLib.Pieces;
-using ChessClassLibrary.Enums;
-using ChessClassLibrary.Logic.Boards;
-using ChessClassLibrary.Logic.Games;
-using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
-using ChessClassLibrary.Pieces.SlowPieces;
+using ChessClassLib.Enums;
+using ChessClassLib.Logic.Boards;
+using ChessClassLib.Logic.Games;
+using ChessClassLib.Models;
+using ChessClassLib.Pieces.SlowPieces;
 using System.Linq;
 
 namespace hessClassLibrary.Logic.Games

@@ -1,4 +1,4 @@
-﻿using ChessClassLibrary.Models;
+﻿using ChessClassLib.Models;
 using ChessClassLibraryTests.Helpers;
 using hessClassLibrary.Logic.Games;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
