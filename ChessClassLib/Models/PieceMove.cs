@@ -1,4 +1,4 @@
-﻿using ChessClassLibrary.enums;
+﻿using ChessClassLibrary.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

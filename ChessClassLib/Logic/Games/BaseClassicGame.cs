@@ -1,21 +1,23 @@
 ﻿using ChessClassLib.Helpers;
-using ChessClassLib.Logic;
+using ChessClassLib.Logic.PieceRules;
 using ChessClassLib.Logic.PieceRules.BasePieceRules;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.NewMoveRules;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.ProtectionRules;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.TransformationRules;
-using ChessClassLibrary.Boards;
-using ChessClassLibrary.enums;
+using ChessClassLib.Pieces;
+using ChessClassLibrary.Enums;
 using ChessClassLibrary.Exceptions;
+using ChessClassLibrary.Logic.Boards;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using ChessClassLibrary.Pieces.FasePieces;
 using ChessClassLibrary.Pieces.SlowPieces;
+using hessClassLibrary.Logic.Games;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChessClassLibrary.Games
+namespace ChessClassLibrary.Logic.Games
 {
     public interface IClassicGame : IGame
     {

@@ -1,4 +1,5 @@
-﻿using ChessClassLibrary.enums;
+﻿using ChessClassLib.Pieces;
+using ChessClassLibrary.Enums;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using System;

@@ -1,6 +1,6 @@
-﻿using ChessClassLibrary.enums;
-using ChessClassLibrary.Games.ClassicGame;
+﻿using ChessClassLibrary.Enums;
 using ChessClassLibraryTests.Helpers;
+using hessClassLibrary.Logic.Games;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ChessClassLibraryTests

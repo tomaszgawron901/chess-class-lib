@@ -1,5 +1,6 @@
-﻿using ChessClassLibrary.Boards;
-using ChessClassLibrary.enums;
+﻿using ChessClassLib.Pieces;
+using ChessClassLibrary.Enums;
+using ChessClassLibrary.Logic.Boards;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using System.Linq;

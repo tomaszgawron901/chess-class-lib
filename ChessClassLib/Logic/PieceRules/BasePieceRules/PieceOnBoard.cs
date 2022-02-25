@@ -1,8 +1,7 @@
-﻿using ChessClassLibrary.Boards;
+﻿using ChessClassLib.Pieces;
+using ChessClassLibrary.Logic.Boards;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ChessClassLib.Logic.PieceRules.BasePieceRules
 {

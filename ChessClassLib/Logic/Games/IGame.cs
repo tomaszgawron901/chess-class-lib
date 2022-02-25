@@ -1,8 +1,8 @@
-﻿using ChessClassLibrary.enums;
+﻿using ChessClassLibrary.Enums;
 using ChessClassLibrary.Models;
 using System.Collections.Generic;
 
-namespace ChessClassLibrary.Games
+namespace hessClassLibrary.Logic.Games
 {
     public interface IGame
     {

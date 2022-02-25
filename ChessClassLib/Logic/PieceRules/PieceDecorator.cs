@@ -1,9 +1,10 @@
-﻿using ChessClassLibrary.enums;
+﻿using ChessClassLib.Pieces;
+using ChessClassLibrary.Enums;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using System.Collections.Generic;
 
-namespace ChessClassLibrary.Logic
+namespace ChessClassLibrary.Logic.PieceRules
 {
     public abstract class PieceDecorator : IPiece
     {

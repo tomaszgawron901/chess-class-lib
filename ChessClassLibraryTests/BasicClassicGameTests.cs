@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ChessClassLibrary.Games.ClassicGame;
-using ChessClassLibrary.enums;
 using ChessClassLibrary.Models;
+using hessClassLibrary.Logic.Games;
+using ChessClassLibrary.Enums;
 
 namespace ChessClassLibrary.Tests
 {

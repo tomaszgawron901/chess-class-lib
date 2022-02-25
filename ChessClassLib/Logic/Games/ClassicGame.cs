@@ -3,40 +3,44 @@ using ChessClassLib.Logic.PieceRules.BasePieceRules;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.CastleRules;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.ProtectionRules;
-using ChessClassLibrary.Boards;
-using ChessClassLibrary.enums;
+using ChessClassLib.Pieces;
+using ChessClassLibrary.Enums;
+using ChessClassLibrary.Logic.Boards;
+using ChessClassLibrary.Logic.Games;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using ChessClassLibrary.Pieces.SlowPieces;
 using System.Linq;
 
-namespace ChessClassLibrary.Games
+namespace hessClassLibrary.Logic.Games
 {
     /// <summary>
-    /// Knightmate Chess Game.
+    /// Standard Chess Game.
     /// </summary>
-    public class KnightmateGame: BaseClassicGame
+    public class ClassicGame: BaseClassicGame
     {
-        public KnightmateGame(): base() 
-        {}
-
+        public ClassicGame(): base() {}
 
         protected override bool InsufficientMatingMaterial()
         {
             return InsufficientMatingMaterial(PieceColor.White) && InsufficientMatingMaterial(PieceColor.Black);
         }
 
+        /// <summary>
+        /// Checks if there is enough Pieces with given color to play the Game.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         private bool InsufficientMatingMaterial(PieceColor color)
         {
             var colorPieces = Board.Where(x => x != null && x.Color == color);
-            var otherColorPieces = Board.Where(x => x != null && x.Color != color);
-            var centaurCount = colorPieces.Count(x => x.Type == PieceType.Centaur);
-            var rookCount = colorPieces.Count(x => x.Type == PieceType.Rook);
-            var commonerCount = colorPieces.Count(x => x.Type == PieceType.Commoner);
+            var kingCount = colorPieces.Count(x => x.Type == PieceType.King);
+            var knightCount = colorPieces.Count(x => x.Type == PieceType.Knight);
             var bishopCount = colorPieces.Count(x => x.Type == PieceType.Bishop);
-            var otherCount = colorPieces.Count() - centaurCount - commonerCount - bishopCount - rookCount;
-            return (commonerCount <= 1 || rookCount <= 1 || bishopCount <= 1) && otherCount == 0 && otherColorPieces.Count() == 1;
+            var otherCount = colorPieces.Count() - kingCount - knightCount - bishopCount;
+            return (knightCount <= 1 && bishopCount == 0) || (knightCount == 1 && bishopCount <= 1) && otherCount == 0;
         }
+
 
         #region Create Board
         protected override void CreateBoard()
@@ -44,24 +48,24 @@ namespace ChessClassLibrary.Games
             Board = new ClassicBoard(new IPiece[8, 8]);
 
             WhiteKingManager = new KingStateProvider(null, Board);
-            var whiteKingProtectAtackRule = new Centaur(PieceColor.White, new Position(4, 0))
+            var whiteKingPiece = new King(PieceColor.White, new Position(4, 0))
                 .AddPieceOnBoard(Board)
                 .AddKillRule()
                 .AddMoveRule()
                 .AddLeftCastleRule(WhiteKingManager)
                 .AddRightCastleRule(WhiteKingManager)
                 .AddSelfProtectRule();
-            WhiteKingManager.Piece = whiteKingProtectAtackRule;
+            WhiteKingManager.Piece = whiteKingPiece;
 
             BlackKingManager = new KingStateProvider(null, Board);
-            var blackKingProtectAtackRule = new Centaur(PieceColor.Black, new Position(4, 7))
+            var blackKingPiece = new King(PieceColor.Black, new Position(4, 7))
                 .AddPieceOnBoard(Board)
                 .AddKillRule()
                 .AddMoveRule()
                 .AddLeftCastleRule(BlackKingManager)
                 .AddRightCastleRule(BlackKingManager)
                 .AddSelfProtectRule();
-            BlackKingManager.Piece = blackKingProtectAtackRule;
+            BlackKingManager.Piece = blackKingPiece;
 
             InsertRichRow(PieceColor.White, 0);
             InsertPawnRow(PieceColor.White, 1);
@@ -76,7 +80,7 @@ namespace ChessClassLibrary.Games
         private void InsertRichRow(PieceColor color, int row)
         {
             Board.SetPiece(CreateRook(color, new Position(0, row)));
-            Board.SetPiece(CreateCommoner(color, new Position(1, row)));
+            Board.SetPiece(CreateKnight(color, new Position(1, row)));
             Board.SetPiece(CreateBishop(color, new Position(2, row)));
             Board.SetPiece(CreateQueen(color, new Position(3, row)));
             if (color == PieceColor.White)
@@ -88,7 +92,7 @@ namespace ChessClassLibrary.Games
                 Board.SetPiece(BlackKingManager.Piece);
             }
             Board.SetPiece(CreateBishop(color, new Position(5, row)));
-            Board.SetPiece(CreateCommoner(color, new Position(6, row)));
+            Board.SetPiece(CreateKnight(color, new Position(6, row)));
             Board.SetPiece(CreateRook(color, new Position(7, row)));
         }
         #endregion

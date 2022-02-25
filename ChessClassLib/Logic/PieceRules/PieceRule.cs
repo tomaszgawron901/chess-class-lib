@@ -1,11 +1,12 @@
-﻿using ChessClassLibrary.Boards;
-using ChessClassLibrary.Logic;
+﻿using ChessClassLib.Pieces;
+using ChessClassLibrary.Logic.Boards;
+using ChessClassLibrary.Logic.PieceRules;
 using ChessClassLibrary.Models;
 using ChessClassLibrary.Pieces;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChessClassLib.Logic
+namespace ChessClassLib.Logic.PieceRules
 {
     public interface IPieceRule: IPiece
     {

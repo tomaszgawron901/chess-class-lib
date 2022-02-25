@@ -1,5 +1,5 @@
 ﻿using ChessClassLib.Helpers;
-using ChessClassLibrary.enums;
+using ChessClassLibrary.Enums;
 using ChessClassLibrary.Models;
 
 namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.CastleRules

@@ -1,5 +1,5 @@
-﻿using ChessClassLibrary.Games.ClassicGame;
-using ChessClassLibrary.Models;
+﻿using ChessClassLibrary.Models;
+using hessClassLibrary.Logic.Games;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ChessClassLibraryTests.Helpers

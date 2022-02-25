@@ -1,4 +1,5 @@
-﻿using ChessClassLibrary.Pieces;
+﻿using ChessClassLib.Pieces;
+using ChessClassLibrary.Pieces;
 
 namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators
 {
