@@ -1,6 +1,6 @@
 ﻿using ChessClassLib.Models;
 
-namespace ChessClassLibraryTests.Helpers
+namespace ChessClassLibraryTests.Extensions
 {
     public static class ConvertStringExtensions
     {
