@@ -9,7 +9,7 @@ namespace hessClassLibrary.Logic.Games
         PieceColor CurrentPlayerColor { get;}
         GameState GameState { get;}
         bool CanPerformMove(BoardMove move);
-        void TryPerformMove(BoardMove move);
+        bool TryPerformMove(BoardMove move);
         void PerformMove(BoardMove move);
         IEnumerable<PieceMove> GetPieceMoveSetAtPosition(Position position);
         PieceColor? GetWinner();

@@ -4,7 +4,7 @@ using hessClassLibrary.Logic.Games;
 using ChessClassLib.Enums;
 using ChessClassLib.Logic.PieceRules;
 
-namespace ChessClassLib.Tests
+namespace ChessClassLibraryTests
 {
     [TestClass()]
     public class ClassicGameBoardTests: ClassicGame
@@ -18,7 +18,7 @@ namespace ChessClassLib.Tests
         [DataRow(5)]
         public void correct_empy_row_create(int row)
         {
-            for (int x = 0; x < this.Board.Width; x++)
+            for (int x = 0; x < Board.Width; x++)
             {
                 Assert.IsNull(Board.GetPiece(new Position(x, row)));
             }
@@ -29,7 +29,7 @@ namespace ChessClassLib.Tests
         [DataRow(6, PieceColor.Black)]
         public void correct_pawn_row_create(int row, PieceColor color)
         {
-            for (int x = 0; x < this.Board.Width; x++)
+            for (int x = 0; x < Board.Width; x++)
             {
                 var piece = Board.GetPiece(new Position(x, row));
                 Assert.IsNotNull(piece);
@@ -44,7 +44,7 @@ namespace ChessClassLib.Tests
         [DataRow(7, PieceColor.Black)]
         public void correct_rith_row_create(int row, PieceColor color)
         {
-            for (int x = 0; x < this.Board.Width; x++)
+            for (int x = 0; x < Board.Width; x++)
             {
                 var piece = Board.GetPiece(new Position(x, row));
                 Assert.IsNotNull(piece);

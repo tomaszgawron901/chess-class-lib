@@ -1,5 +1,4 @@
 ﻿using ChessClassLib.Helpers;
-using ChessClassLib.Logic.PieceRules.BasePieceRules;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.CastleRules;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.ProtectionRules;
@@ -10,6 +9,7 @@ using ChessClassLib.Logic.Games;
 using ChessClassLib.Models;
 using ChessClassLib.Pieces.SlowPieces;
 using System.Linq;
+using ChessClassLib.Logic.PieceRules;
 
 namespace hessClassLibrary.Logic.Games
 {
@@ -46,7 +46,8 @@ namespace hessClassLibrary.Logic.Games
 
             WhiteKingManager = new KingStateProvider(null, Board);
             var whiteKingProtectAtackRule = new Centaur(PieceColor.White, new Position(4, 0))
-                .AddPieceOnBoard(Board)
+                .AddBasePieceRule(Board)
+                .AddPieceOnBoardRule()
                 .AddKillRule()
                 .AddMoveRule()
                 .AddLeftCastleRule(WhiteKingManager)
@@ -56,7 +57,8 @@ namespace hessClassLibrary.Logic.Games
 
             BlackKingManager = new KingStateProvider(null, Board);
             var blackKingProtectAtackRule = new Centaur(PieceColor.Black, new Position(4, 7))
-                .AddPieceOnBoard(Board)
+                .AddBasePieceRule(Board)
+                .AddPieceOnBoardRule()
                 .AddKillRule()
                 .AddMoveRule()
                 .AddLeftCastleRule(BlackKingManager)

@@ -12,7 +12,7 @@
     {
         public SelftProtectRule(IPieceRule innerPieceRule) : base(innerPieceRule)
         {
-            this.ProtectedPiece = this;
+            ProtectedPiece = this;
         }
     }
 }

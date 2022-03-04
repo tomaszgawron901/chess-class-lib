@@ -12,8 +12,8 @@ namespace ChessClassLib.Models
 
         public Shift(int x, int y)
         {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
 
         public Shift Plus(Shift shift)

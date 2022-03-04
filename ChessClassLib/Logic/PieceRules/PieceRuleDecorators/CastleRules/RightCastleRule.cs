@@ -30,7 +30,7 @@ namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.CastleRules
             if (WasMoved) return false;
             var rookPosition = new Position(7, Position.Y);
             var rightRook = Board.GetPiece(rookPosition);
-            if (rightRook != null && rightRook.Type == PieceType.Rook && !rightRook.WasMoved && rightRook.Color == this.Color)
+            if (rightRook != null && rightRook.Type == PieceType.Rook && !rightRook.WasMoved && rightRook.Color == Color)
             {
                 return InnerPieceRule.ValidateMove(new PieceMove(new Shift(1, 0), MoveType.Move)) &&
                     InnerPieceRule.ValidateMove(new PieceMove(new Shift(2, 0), MoveType.Move));

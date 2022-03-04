@@ -26,7 +26,7 @@ namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.NewMoveRules
 
         protected override bool CanPerformNewMove()
         {
-            return !this.WasMoved && Board.GetPiece(Position + new Shift(0, 1)) == null && Board.GetPiece(Position + new Shift(0, 2)) == null;
+            return !WasMoved && Board.GetPiece(Position + new Shift(0, 1)) == null && Board.GetPiece(Position + new Shift(0, 2)) == null;
         }
     }
 }

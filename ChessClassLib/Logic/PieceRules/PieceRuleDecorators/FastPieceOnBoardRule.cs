@@ -1,27 +1,25 @@
-﻿using ChessClassLib.Pieces;
-using ChessClassLib.Logic.Boards;
-using ChessClassLib.Models;
+﻿using ChessClassLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChessClassLib.Logic.PieceRules.BasePieceRules
+namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators
 {
-    public static partial class IPieceExtensions
+    public static partial class IPieceRuleExtensions
     {
-        public static FastPieceOnBoard AddFastPieceOnBoard(this IPiece innerPiece, IBoard board)
+        public static FastPieceOnBoardRule AddFastPieceOnBoardRule(this IPieceRule innerPieceRule)
         {
-            return new FastPieceOnBoard(innerPiece, board);
+            return new FastPieceOnBoardRule(innerPieceRule);
         }
     }
 
     /// <summary>
     /// Container class for fast pieces.
     /// </summary>
-    public class FastPieceOnBoard: PieceOnBoard
+    public class FastPieceOnBoardRule: PieceOnBoardRule
     {
-        public FastPieceOnBoard(IPiece innerPiece, IBoard board)
-            : base(innerPiece, board)
+        public FastPieceOnBoardRule(IPieceRule innerPieceRule)
+            : base(innerPieceRule)
         {}
 
         public override IEnumerable<PieceMove> MoveSet
@@ -85,7 +83,7 @@ namespace ChessClassLib.Logic.PieceRules.BasePieceRules
         /// <returns></returns>
         public bool isInLine(Position destination, PieceMove move)
         {
-            Shift destinationShift = destination - this.Position;
+            Shift destinationShift = destination - Position;
             if (Math.Sign(destinationShift.X) != Math.Sign(move.Shift.X))
                 return false;
             if (Math.Sign(destinationShift.Y) != Math.Sign(move.Shift.Y))

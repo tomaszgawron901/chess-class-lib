@@ -37,7 +37,7 @@ namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators
             Board.SetPiece(currentPiece);
 
             bool KingIsChecked = Board
-                .Where(piece => piece != null && piece.Color != this.Color)
+                .Where(piece => piece != null && piece.Color != Color)
                 .Select(piece => piece.GetMoveTo(ProtectedPiece.Position))
                 .Any(m => m != null && m.MoveTypes.Contains(MoveType.Kill));
 

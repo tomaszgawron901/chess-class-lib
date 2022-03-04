@@ -14,8 +14,8 @@ namespace ChessClassLib.Models
 
         public PieceMove(Shift shift, params MoveType[] moveTypes)
         {
-            this.MoveTypes = moveTypes;
-            this.Shift = shift;
+            MoveTypes = moveTypes;
+            Shift = shift;
         }
 
         public bool HasType(MoveType moveType) => MoveTypes.Any(mt => mt == moveType);
@@ -44,7 +44,7 @@ namespace ChessClassLib.Models
 
         public bool Equals(PieceMove other)
         {
-            return this.Shift.Equals(other.Shift) && this.MoveTypes.Count() == other.MoveTypes.Count() && MoveTypes.All(mt => other.MoveTypes.Contains(mt));
+            return Shift.Equals(other.Shift) && MoveTypes.Count() == other.MoveTypes.Count() && MoveTypes.All(mt => other.MoveTypes.Contains(mt));
         }
     }
 }

@@ -28,9 +28,9 @@ namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.CastleRules
         {
             if (KingStateProvider.IsChecked) return false;
             if (WasMoved) return false;
-            var rookPosition = new Position(0, this.Position.Y);
+            var rookPosition = new Position(0, Position.Y);
             var leftRook = Board.GetPiece(rookPosition);
-            if (leftRook != null && leftRook.Type == PieceType.Rook && !leftRook.WasMoved && leftRook.Color == this.Color && Board.GetPiece(new Position(1, this.Position.Y)) == null)
+            if (leftRook != null && leftRook.Type == PieceType.Rook && !leftRook.WasMoved && leftRook.Color == Color && Board.GetPiece(new Position(1, Position.Y)) == null)
             {
                 return InnerPieceRule.ValidateMove(new PieceMove(new Shift(-1, 0), MoveType.Move)) &&
                     InnerPieceRule.ValidateMove(new PieceMove(new Shift(-2, 0), MoveType.Move));

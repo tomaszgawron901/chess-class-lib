@@ -22,8 +22,8 @@ namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.ProtectionRules
         public ProtectAttackRule(IPieceRule innerPieceRule, IPiece protectedPiece, IPiece atackedPiece=null)
             : base(innerPieceRule)
         {
-            this.ProtectedPiece = protectedPiece;
-            this.AtackedPiece = atackedPiece;
+            ProtectedPiece = protectedPiece;
+            AtackedPiece = atackedPiece;
         }
 
         public override IEnumerable<PieceMove> MoveSet => InnerPiece.MoveSet.Where(isProtectedPieceSafeAfterMove);

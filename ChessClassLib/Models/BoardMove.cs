@@ -8,8 +8,8 @@ namespace ChessClassLib.Models
 
         public BoardMove(Position current, Position destination)
         {
-            this.Current = current;
-            this.Destination = destination;
+            Current = current;
+            Destination = destination;
         }
 
         public override string ToString()

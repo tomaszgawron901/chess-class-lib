@@ -3,7 +3,7 @@ using ChessClassLib.Models;
 using hessClassLibrary.Logic.Games;
 using ChessClassLib.Enums;
 
-namespace ChessClassLib.Tests
+namespace ChessClassLibraryTests
 {
     [TestClass()]
     public class BasicClassicGameTests: ClassicGame
