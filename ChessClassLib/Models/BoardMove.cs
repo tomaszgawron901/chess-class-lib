@@ -1,5 +1,5 @@
 ﻿
-namespace ChessClassLibrary.Models
+namespace ChessClassLib.Models
 {
     public struct BoardMove
     {
@@ -8,8 +8,8 @@ namespace ChessClassLibrary.Models
 
         public BoardMove(Position current, Position destination)
         {
-            this.Current = current;
-            this.Destination = destination;
+            Current = current;
+            Destination = destination;
         }
 
         public override string ToString()

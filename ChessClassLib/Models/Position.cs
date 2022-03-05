@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChessClassLibrary.Models
+namespace ChessClassLib.Models
 {
     public struct Position : IEquatable<Position>
     {
@@ -10,15 +10,10 @@ namespace ChessClassLibrary.Models
 
         public Position(int x, int y)
         {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
 
-        /// <summary>
-        /// Check whether other Point equals this Point.
-        /// </summary>
-        /// <param name="other">Point to compare.</param>
-        /// <returns>True when Points are equal, otherwise false.</returns>
         public bool Equals(Position other)
         {
             if (X == other.X && Y == other.Y)
@@ -26,11 +21,6 @@ namespace ChessClassLibrary.Models
             return false;
         }
 
-        /// <summary>
-        /// Check whether other object equals this Point.
-        /// </summary>
-        /// <param name="other">Object to compare.</param>
-        /// <returns>True when given object equals this Point, otherwise false.</returns>
         public override bool Equals(object other)
         {
             if (other is Position)
@@ -40,10 +30,6 @@ namespace ChessClassLibrary.Models
             return false;
         }
 
-        /// <summary>
-        /// Calculate and returns a hashcode.
-        /// </summary>
-        /// <returns>The intiger hashcode.</returns>
         public override int GetHashCode()
         {
             var hashCode = 1502939027;
@@ -52,24 +38,19 @@ namespace ChessClassLibrary.Models
             return hashCode;
         }
 
-        /// <summary>
-        /// Adds other Point to this Point and returns the outcome.
-        /// </summary>
-        /// <param name="other">Point to add.</param>
-        /// <returns>New Point which is the sum of two Points.</returns>
-        public Position Plus(Position other)
+        public Position Plus(Shift shift)
         {
-            return new Position(X + other.X, Y + other.Y);
+            return new Position(X + shift.X, Y + shift.Y);
         }
 
-        /// <summary>
-        /// Subtracts other Point from this Point and returns the outcome.
-        /// </summary>
-        /// <param name="other">Point to subtract.</param>
-        /// <returns>New Point which is the subtraction of this Point and given other Point..</returns>
-        public Position Minus(Position other)
+        public Position Minus(Shift shift)
         {
-            return new Position(X - other.X, Y - other.Y);
+            return new Position(X - shift.X, Y - shift.Y);
+        }
+
+        public Shift Minus(Position other)
+        {
+            return new Shift(X - other.X, Y - other.Y);
         }
 
         public static bool operator ==(Position p1, Position p2)
@@ -82,12 +63,17 @@ namespace ChessClassLibrary.Models
             return !p1.Equals(p2);
         }
 
-        public static Position operator +(Position left, Position right)
+        public static Position operator +(Position position, Shift shift)
         {
-            return left.Plus(right);
+            return position.Plus(shift);
         }
 
-        public static Position operator -(Position left, Position right)
+        public static Position operator -(Position position, Shift shift)
+        {
+            return position.Minus(shift);
+        }
+
+        public static Shift operator -(Position left, Position right)
         {
             return left.Minus(right);
         }

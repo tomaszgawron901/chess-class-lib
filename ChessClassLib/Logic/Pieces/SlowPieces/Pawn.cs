@@ -1,17 +1,17 @@
-﻿using ChessClassLibrary.enums;
-using ChessClassLibrary.Models;
+﻿using ChessClassLib.Enums;
+using ChessClassLib.Models;
 using System.Collections.Generic;
 
-namespace ChessClassLibrary.Pieces.SlowPieces
+namespace ChessClassLib.Pieces.SlowPieces
 {
 
     public class WhitePawn : Piece
     {
         protected readonly static IEnumerable<PieceMove> moveSet = new PieceMove[] 
         { 
-            new PieceMove(new Position(0, 1), MoveType.Move ),
-            new PieceMove(new Position(-1, 1), MoveType.Kill ),
-            new PieceMove(new Position(1, 1), MoveType.Kill ),
+            new PieceMove(new Shift(0, 1), MoveType.Move ),
+            new PieceMove(new Shift(-1, 1), MoveType.Kill ),
+            new PieceMove(new Shift(1, 1), MoveType.Kill ),
         };
 
 
@@ -26,9 +26,9 @@ namespace ChessClassLibrary.Pieces.SlowPieces
     {
         protected readonly static IEnumerable<PieceMove> moveSet = new PieceMove[]
         {
-            new PieceMove(new Position(0, -1), MoveType.Move ),
-            new PieceMove(new Position(-1, -1), MoveType.Kill ),
-            new PieceMove(new Position(1, -1), MoveType.Kill ),
+            new PieceMove(new Shift(0, -1), MoveType.Move ),
+            new PieceMove(new Shift(-1, -1), MoveType.Kill ),
+            new PieceMove(new Shift(1, -1), MoveType.Kill ),
         };
 
 

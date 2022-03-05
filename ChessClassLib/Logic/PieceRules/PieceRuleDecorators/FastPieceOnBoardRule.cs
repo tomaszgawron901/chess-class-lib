@@ -1,27 +1,25 @@
-﻿using ChessClassLibrary.Boards;
-using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
+﻿using ChessClassLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChessClassLib.Logic.PieceRules.BasePieceRules
+namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators
 {
-    public static partial class IPieceExtensions
+    public static partial class IPieceRuleExtensions
     {
-        public static FastPieceOnBoard AddFastPieceOnBoard(this IPiece innerPiece, IBoard board)
+        public static FastPieceOnBoardRule AddFastPieceOnBoardRule(this IPieceRule innerPieceRule)
         {
-            return new FastPieceOnBoard(innerPiece, board);
+            return new FastPieceOnBoardRule(innerPieceRule);
         }
     }
 
     /// <summary>
     /// Container class for fast pieces.
     /// </summary>
-    public class FastPieceOnBoard: PieceOnBoard
+    public class FastPieceOnBoardRule: PieceOnBoardRule
     {
-        public FastPieceOnBoard(IPiece innerPiece, IBoard board)
-            : base(innerPiece, board)
+        public FastPieceOnBoardRule(IPieceRule innerPieceRule)
+            : base(innerPieceRule)
         {}
 
         public override IEnumerable<PieceMove> MoveSet
@@ -31,7 +29,7 @@ namespace ChessClassLib.Logic.PieceRules.BasePieceRules
                 var newMoveSet = new List<PieceMove>();
                 foreach (PieceMove move in InnerPiece.MoveSet)
                 {
-                    for (Position nextShift = move.Shift; true; nextShift += move.Shift)
+                    for (Shift nextShift = move.Shift; true; nextShift += move.Shift)
                     {
                         var checkingPosition = Position + nextShift;
                         if (!Board.IsInRange(checkingPosition)) break;
@@ -85,39 +83,39 @@ namespace ChessClassLib.Logic.PieceRules.BasePieceRules
         /// <returns></returns>
         public bool isInLine(Position destination, PieceMove move)
         {
-            Position destinationMove = destination - this.Position;
-            if (Math.Sign(destinationMove.X) != Math.Sign(move.Shift.X))
+            Shift destinationShift = destination - Position;
+            if (Math.Sign(destinationShift.X) != Math.Sign(move.Shift.X))
                 return false;
-            if (Math.Sign(destinationMove.Y) != Math.Sign(move.Shift.Y))
+            if (Math.Sign(destinationShift.Y) != Math.Sign(move.Shift.Y))
                 return false;
-            if (move.Shift == new Position(0, 0))
+            if (move.Shift == new Shift(0, 0))
             {
-                if (move.Shift == destinationMove)
+                if (move.Shift == destinationShift)
                     return true;
                 else return false;
             }
 
             if (move.Shift.X == 0)
             {
-                if (destinationMove.X != 0)
+                if (destinationShift.X != 0)
                     return false;
-                if (destinationMove.Y % move.Shift.Y != 0)
+                if (destinationShift.Y % move.Shift.Y != 0)
                     return false;
             }
             else if (move.Shift.Y == 0)
             {
-                if (destinationMove.Y != 0)
+                if (destinationShift.Y != 0)
                     return false;
-                if (destinationMove.X % move.Shift.X != 0)
+                if (destinationShift.X % move.Shift.X != 0)
                     return false;
             }
             else
             {
-                if (destinationMove.X == 0 || destinationMove.Y == 0)
+                if (destinationShift.X == 0 || destinationShift.Y == 0)
                     return false;
-                if (destinationMove.X % move.Shift.X != 0 || destinationMove.Y % move.Shift.Y != 0)
+                if (destinationShift.X % move.Shift.X != 0 || destinationShift.Y % move.Shift.Y != 0)
                     return false;
-                if (destinationMove.X / move.Shift.X != destinationMove.Y / move.Shift.Y)
+                if (destinationShift.X / move.Shift.X != destinationShift.Y / move.Shift.Y)
                     return false;
 
             }

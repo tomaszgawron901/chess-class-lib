@@ -1,5 +1,5 @@
-﻿using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
+﻿using ChessClassLib.Pieces;
+using ChessClassLib.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,8 +22,8 @@ namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.ProtectionRules
         public ProtectAttackRule(IPieceRule innerPieceRule, IPiece protectedPiece, IPiece atackedPiece=null)
             : base(innerPieceRule)
         {
-            this.ProtectedPiece = protectedPiece;
-            this.AtackedPiece = atackedPiece;
+            ProtectedPiece = protectedPiece;
+            AtackedPiece = atackedPiece;
         }
 
         public override IEnumerable<PieceMove> MoveSet => InnerPiece.MoveSet.Where(isProtectedPieceSafeAfterMove);

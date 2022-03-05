@@ -1,7 +1,7 @@
-﻿using ChessClassLibrary.Boards;
-using ChessClassLibrary.enums;
-using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
+﻿using ChessClassLib.Pieces;
+using ChessClassLib.Enums;
+using ChessClassLib.Logic.Boards;
+using ChessClassLib.Models;
 using System.Linq;
 
 namespace ChessClassLib.Helpers

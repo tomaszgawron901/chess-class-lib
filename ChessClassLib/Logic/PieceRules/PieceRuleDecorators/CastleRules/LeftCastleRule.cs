@@ -1,6 +1,6 @@
 ﻿using ChessClassLib.Helpers;
-using ChessClassLibrary.enums;
-using ChessClassLibrary.Models;
+using ChessClassLib.Enums;
+using ChessClassLib.Models;
 
 namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.CastleRules
 {
@@ -14,7 +14,7 @@ namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.CastleRules
 
     public class LeftCastleRule : NewMoveRule
     {
-        protected readonly static PieceMove leftCastleMove = new PieceMove(new Position(-2, 0), MoveType.Move);
+        protected readonly static PieceMove leftCastleMove = new PieceMove(new Shift(-2, 0), MoveType.Move);
         private IKingStateProvider KingStateProvider { get; }
 
         public LeftCastleRule(IPieceRule innerPieceRule, IKingStateProvider kingStateProvider) : base(innerPieceRule)
@@ -28,12 +28,12 @@ namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators.CastleRules
         {
             if (KingStateProvider.IsChecked) return false;
             if (WasMoved) return false;
-            var rookPosition = new Position(0, this.Position.Y);
+            var rookPosition = new Position(0, Position.Y);
             var leftRook = Board.GetPiece(rookPosition);
-            if (leftRook != null && leftRook.Type == PieceType.Rook && !leftRook.WasMoved && leftRook.Color == this.Color && Board.GetPiece(new Position(1, this.Position.Y)) == null)
+            if (leftRook != null && leftRook.Type == PieceType.Rook && !leftRook.WasMoved && leftRook.Color == Color && Board.GetPiece(new Position(1, Position.Y)) == null)
             {
-                return InnerPieceRule.ValidateMove(new PieceMove(new Position(-1, 0), MoveType.Move)) &&
-                    InnerPieceRule.ValidateMove(new PieceMove(new Position(-2, 0), MoveType.Move));
+                return InnerPieceRule.ValidateMove(new PieceMove(new Shift(-1, 0), MoveType.Move)) &&
+                    InnerPieceRule.ValidateMove(new PieceMove(new Shift(-2, 0), MoveType.Move));
             }
             return false;
         }

@@ -1,5 +1,5 @@
-﻿using ChessClassLibrary.Boards;
-using ChessClassLibrary.Pieces;
+﻿using ChessClassLib.Pieces;
+using ChessClassLib.Logic.Boards;
 
 namespace ChessClassLib.Logic.PieceRules
 {

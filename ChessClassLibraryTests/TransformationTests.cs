@@ -1,7 +1,15 @@
-﻿using ChessClassLibrary.enums;
-using ChessClassLibrary.Games.ClassicGame;
+﻿using ChessClassLib.Enums;
+using ChessClassLib.Logic.Boards;
+using ChessClassLib.Logic.PieceRules;
+using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.TransformationRules;
+using ChessClassLib.Pieces;
+using ChessClassLib.Pieces.FasePieces;
+using ChessClassLib.Pieces.SlowPieces;
+using ChessClassLibraryTests.Extensions;
 using ChessClassLibraryTests.Helpers;
+using hessClassLibrary.Logic.Games;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ChessClassLib.Logic.PieceRules.PieceRuleDecorators;
 
 namespace ChessClassLibraryTests
 {
@@ -10,6 +18,26 @@ namespace ChessClassLibraryTests
     {
         [TestMethod]
         public void white_piece_to_queen_transformation_correct()
+        {
+            var board = new ClassicBoard(new IPiece[8, 8]);
+            var whiteQueen = new Queen(PieceColor.White, "a1".ToPosition())
+                .AddBasePieceRule(board)
+                .AddPieceOnBoardRule();
+            var whitePawn = new WhitePawn("a1".ToPosition())
+                .AddBasePieceRule(board)
+                .AddPieceOnBoardRule()
+                .AddOnMoveToYPositionTransformation(whiteQueen, 1);
+            board.SetPiece(whitePawn);
+
+            whitePawn.MoveToPosition("a2".ToPosition());
+
+            Assert.AreSame(whiteQueen, board.GetPiece("a2".ToPosition()));
+            Assert.IsNull(board.GetPiece("a1".ToPosition()));
+        }
+
+
+        [TestMethod]
+        public void white_piece_to_queen_transformation_in_classic_game_correct()
         {
             var game = new ClassicGame();
 

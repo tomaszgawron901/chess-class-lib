@@ -1,4 +1,4 @@
-﻿namespace ChessClassLibrary.enums
+﻿namespace ChessClassLib.Enums
 {
     public enum GameVarient
     {

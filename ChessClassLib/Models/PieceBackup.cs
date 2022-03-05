@@ -1,6 +1,6 @@
-﻿using ChessClassLibrary.Pieces;
+﻿using ChessClassLib.Pieces;
 
-namespace ChessClassLibrary.Models
+namespace ChessClassLib.Models
 {
     public class PieceBackup
     {

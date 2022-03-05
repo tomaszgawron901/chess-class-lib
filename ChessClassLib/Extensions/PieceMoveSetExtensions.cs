@@ -1,12 +1,12 @@
-﻿using ChessClassLibrary.Models;
+﻿using ChessClassLib.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChessClassLibrary.Extensions
+namespace ChessClassLib.Extensions
 {
     public static class PieceMoveSetExtensions
     {
-        public static PieceMove GetPieceMoveByShift(this IEnumerable<PieceMove> moveSet, Position shift)
+        public static PieceMove GetPieceMoveByShift(this IEnumerable<PieceMove> moveSet, Shift shift)
         {
             return moveSet.FirstOrDefault(move => move.Shift == shift);
         }

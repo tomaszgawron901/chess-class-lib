@@ -1,7 +1,7 @@
-﻿using ChessClassLibrary.enums;
-using ChessClassLibrary.Games.ClassicGame;
-using ChessClassLibrary.Models;
+﻿using ChessClassLib.Enums;
+using ChessClassLib.Models;
 using ChessClassLibraryTests.Helpers;
+using hessClassLibrary.Logic.Games;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
@@ -58,12 +58,13 @@ namespace ChessClassLibraryTests
             var game = new ClassicGame();
             
             var piece = game.Board.GetPiece(new Position(column, 1));
-            Assert.AreEqual(piece.MoveSet.Count(), 2);
-            Assert.IsTrue(piece.MoveSet.Any(move => move.Equals(new PieceMove(new Position(0, 1), MoveType.Move))));
-            Assert.IsTrue(piece.MoveSet.Any(move => move.Equals(new PieceMove(new Position(0, 2), MoveType.Move))));
 
-            Assert.IsFalse(piece.MoveSet.Any(x => x.Shift == new Position(-1, 1)));
-            Assert.IsFalse(piece.MoveSet.Any(x => x.Shift == new Position(1, 1)));
+            ChessAssert.MoveSetContainsOnly(piece.MoveSet, 
+                new PieceMove(new Shift(0, 1), MoveType.Move), 
+                new PieceMove(new Shift(0, 2), MoveType.Move));
+
+            Assert.IsFalse(piece.MoveSet.Any(x => x.Shift == new Shift(-1, 1)));
+            Assert.IsFalse(piece.MoveSet.Any(x => x.Shift == new Shift(1, 1)));
         }
 
 
@@ -80,12 +81,13 @@ namespace ChessClassLibraryTests
             var game = new ClassicGame();
 
             var piece = game.Board.GetPiece(new Position(column, 6));
-            Assert.AreEqual(piece.MoveSet.Count(), 2);
-            Assert.IsTrue(piece.MoveSet.Any(move => move.Equals(new PieceMove(new Position(0, -1), MoveType.Move))));
-            Assert.IsTrue(piece.MoveSet.Any(move => move.Equals(new PieceMove(new Position(0, -2), MoveType.Move))));
 
-            Assert.IsFalse(piece.MoveSet.Any(x => x.Shift == new Position(-1, -1)));
-            Assert.IsFalse(piece.MoveSet.Any(x => x.Shift == new Position(1, -1)));
+            ChessAssert.MoveSetContainsOnly(piece.MoveSet,
+                new PieceMove(new Shift(0, -1), MoveType.Move),
+                new PieceMove(new Shift(0, -2), MoveType.Move));
+
+            Assert.IsFalse(piece.MoveSet.Any(x => x.Shift == new Shift(-1, -1)));
+            Assert.IsFalse(piece.MoveSet.Any(x => x.Shift == new Shift(1, -1)));
         }
 
     }

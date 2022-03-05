@@ -1,5 +1,5 @@
-﻿using ChessClassLibrary.enums;
-using ChessClassLibrary.Models;
+﻿using ChessClassLib.Enums;
+using ChessClassLib.Models;
 using System.Linq;
 
 namespace ChessClassLib.Logic.PieceRules.PieceRuleDecorators

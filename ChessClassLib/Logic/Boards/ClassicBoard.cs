@@ -1,19 +1,14 @@
-﻿using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
+﻿using ChessClassLib.Pieces;
+using ChessClassLib.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ChessClassLib.Exceptions;
 
-namespace ChessClassLibrary.Boards
+namespace ChessClassLib.Logic.Boards
 {
-    /// <summary>
-    /// Rectangular Board.
-    /// </summary>
     public class ClassicBoard : IBoard
     {
-        /// <summary>
-        /// Class responsible for enumerating through the Board Pieces.
-        /// </summary>
         private sealed class ClassicBoardIterator : IEnumerator<IPiece>
         {
             private ClassicBoard board;
@@ -30,9 +25,7 @@ namespace ChessClassLibrary.Boards
 
             object IEnumerator.Current => Current;
 
-            public void Dispose()
-            {
-            }
+            public void Dispose() { }
 
             public bool MoveNext()
             {
@@ -58,68 +51,34 @@ namespace ChessClassLibrary.Boards
 
         public ClassicBoard(IPiece[,] pieces)
         {
-            this.Pieces = pieces;
-            this.Height = pieces.GetLength(1);
-            this.Width = pieces.GetLength(0);
+            Pieces = pieces;
+            Height = pieces.GetLength(1);
+            Width = pieces.GetLength(0);
         }
 
-        public IEnumerator<IPiece> GetEnumerator()
-        {
-            return new ClassicBoardIterator(this);
-        }
+        public IEnumerator<IPiece> GetEnumerator() => new ClassicBoardIterator(this);
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /// <summary>
-        /// Checks if given position is in range of the Board.
-        /// </summary>
-        /// <param name="position"></param>
-        /// <returns></returns>
         public bool IsInRange(Position position)
         {
             return position.X >= 0 && position.X < Width && position.Y >= 0 && position.Y < Height;
         }
 
-        /// <summary>
-        /// Gets Piece at given Position.
-        /// </summary>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        public IPiece GetPiece(Position position)
-        {
-            return this.Pieces[position.X, position.Y];
-        }
+        public IPiece GetPiece(Position position) => Pieces[position.X, position.Y];
 
-        /// <summary>
-        /// Add Piece to the Board at the given Position.
-        /// </summary>
         public void SetPiece(IPiece piece, Position position)
         {
-            if (IsInRange(position))
-            {
+            if (IsInRange(position)) {
                 Pieces[position.X, position.Y] = piece;
             }
-            else
-            {
-                throw new Exception();
+            else {
+                throw new PositionOutsideBoardRangeException();
             }
         }
 
-        /// <summary>
-        /// Add Piece to the Board at its Position.
-        /// </summary>
-        /// <param name="piece"></param>
-        public void SetPiece(IPiece piece)
-        {
-            SetPiece(piece, piece.Position);
-        }
+        public void SetPiece(IPiece piece) => SetPiece(piece, piece.Position);
 
-        /// <summary>
-        /// Clears Board by assigning null all its fields.
-        /// </summary>
         public void Clear()
         {
             for (int y = 0; y < Height; y++)

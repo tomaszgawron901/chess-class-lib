@@ -1,8 +1,8 @@
-﻿using ChessClassLibrary.enums;
+﻿using ChessClassLib.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ChessClassLibrary.Models
+namespace ChessClassLib.Models
 {
     public class GameOptions
     {

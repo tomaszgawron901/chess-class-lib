@@ -1,20 +1,18 @@
 ﻿using ChessClassLib.Helpers;
-using ChessClassLib.Logic.PieceRules.BasePieceRules;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.CastleRules;
 using ChessClassLib.Logic.PieceRules.PieceRuleDecorators.ProtectionRules;
-using ChessClassLibrary.Boards;
-using ChessClassLibrary.enums;
-using ChessClassLibrary.Models;
-using ChessClassLibrary.Pieces;
-using ChessClassLibrary.Pieces.SlowPieces;
+using ChessClassLib.Pieces;
+using ChessClassLib.Enums;
+using ChessClassLib.Logic.Boards;
+using ChessClassLib.Logic.Games;
+using ChessClassLib.Models;
+using ChessClassLib.Pieces.SlowPieces;
 using System.Linq;
+using ChessClassLib.Logic.PieceRules;
 
-namespace ChessClassLibrary.Games.ClassicGame
+namespace hessClassLibrary.Logic.Games
 {
-    /// <summary>
-    /// Standard Chess Game.
-    /// </summary>
     public class ClassicGame: BaseClassicGame
     {
         public ClassicGame(): base() {}
@@ -24,11 +22,6 @@ namespace ChessClassLibrary.Games.ClassicGame
             return InsufficientMatingMaterial(PieceColor.White) && InsufficientMatingMaterial(PieceColor.Black);
         }
 
-        /// <summary>
-        /// Checks if there is enough Pieces with given color to play the Game.
-        /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
         private bool InsufficientMatingMaterial(PieceColor color)
         {
             var colorPieces = Board.Where(x => x != null && x.Color == color);
@@ -47,7 +40,8 @@ namespace ChessClassLibrary.Games.ClassicGame
 
             WhiteKingManager = new KingStateProvider(null, Board);
             var whiteKingPiece = new King(PieceColor.White, new Position(4, 0))
-                .AddPieceOnBoard(Board)
+                .AddBasePieceRule(Board)
+                .AddPieceOnBoardRule()
                 .AddKillRule()
                 .AddMoveRule()
                 .AddLeftCastleRule(WhiteKingManager)
@@ -57,7 +51,8 @@ namespace ChessClassLibrary.Games.ClassicGame
 
             BlackKingManager = new KingStateProvider(null, Board);
             var blackKingPiece = new King(PieceColor.Black, new Position(4, 7))
-                .AddPieceOnBoard(Board)
+                .AddBasePieceRule(Board)
+                .AddPieceOnBoardRule()
                 .AddKillRule()
                 .AddMoveRule()
                 .AddLeftCastleRule(BlackKingManager)

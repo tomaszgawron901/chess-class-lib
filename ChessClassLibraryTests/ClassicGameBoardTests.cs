@@ -1,11 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ChessClassLibrary.enums;
-using ChessClassLibrary.Games.ClassicGame;
-using ChessClassLibrary.Logic;
-using ChessClassLibrary.Models;
-using ChessClassLib.Logic;
+using ChessClassLib.Models;
+using hessClassLibrary.Logic.Games;
+using ChessClassLib.Enums;
+using ChessClassLib.Logic.PieceRules;
 
-namespace ChessClassLibrary.Tests
+namespace ChessClassLibraryTests
 {
     [TestClass()]
     public class ClassicGameBoardTests: ClassicGame
@@ -19,7 +18,7 @@ namespace ChessClassLibrary.Tests
         [DataRow(5)]
         public void correct_empy_row_create(int row)
         {
-            for (int x = 0; x < this.Board.Width; x++)
+            for (int x = 0; x < Board.Width; x++)
             {
                 Assert.IsNull(Board.GetPiece(new Position(x, row)));
             }
@@ -30,7 +29,7 @@ namespace ChessClassLibrary.Tests
         [DataRow(6, PieceColor.Black)]
         public void correct_pawn_row_create(int row, PieceColor color)
         {
-            for (int x = 0; x < this.Board.Width; x++)
+            for (int x = 0; x < Board.Width; x++)
             {
                 var piece = Board.GetPiece(new Position(x, row));
                 Assert.IsNotNull(piece);
@@ -45,7 +44,7 @@ namespace ChessClassLibrary.Tests
         [DataRow(7, PieceColor.Black)]
         public void correct_rith_row_create(int row, PieceColor color)
         {
-            for (int x = 0; x < this.Board.Width; x++)
+            for (int x = 0; x < Board.Width; x++)
             {
                 var piece = Board.GetPiece(new Position(x, row));
                 Assert.IsNotNull(piece);

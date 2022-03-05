@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ChessClassLibrary.Games.ClassicGame;
-using ChessClassLibrary.enums;
-using ChessClassLibrary.Models;
+using ChessClassLib.Models;
+using hessClassLibrary.Logic.Games;
+using ChessClassLib.Enums;
 
-namespace ChessClassLibrary.Tests
+namespace ChessClassLibraryTests
 {
     [TestClass()]
     public class BasicClassicGameTests: ClassicGame
